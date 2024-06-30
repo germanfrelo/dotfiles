@@ -103,6 +103,7 @@ source $ZSH/oh-my-zsh.sh
 # else
 #   export EDITOR='mvim'
 # fi
+export EDITOR='code --wait'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -140,7 +141,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# 2. Call `nvm use` automatically in a directory with a `.nvmrc file` (https://github.com/nvm-sh/nvm#calling-nvm-use-automatically-in-a-directory-with-a-nvmrc-file)
+# 2. Call `nvm use` automatically in a directory with a `.nvmrc` file (https://github.com/nvm-sh/nvm#calling-nvm-use-automatically-in-a-directory-with-a-nvmrc-file)
 
 # place this after nvm initialization!
 
@@ -175,10 +176,3 @@ load-nvmrc
 
 # Enable iTerm2 shell integration
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
-
-# --------------------------------------------------
-# EDITOR
-# --------------------------------------------------
-
-export EDITOR="code -w"
