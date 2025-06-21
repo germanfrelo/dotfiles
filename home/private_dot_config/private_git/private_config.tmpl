@@ -1,0 +1,39 @@
+[user]
+	name = Germán Freixinós
+	email = {{ .email | quote }}
+
+[init]
+	defaultBranch = main
+
+[help]
+	autocorrect = prompt
+
+# Handle line endings properly.
+# See https://docs.github.com/en/get-started/getting-started-with-git/configuring-git-to-handle-line-endings.
+[core]
+	autocrlf = input # macOS + Linux
+	# autocrlf = true # Windows
+
+# Use VS Code as Git editor, diff tool and merge tool.
+# See https://code.visualstudio.com/docs/sourcecontrol/overview#_vs-code-as-git-editor.
+[core]
+	editor = code --wait
+[diff]
+	tool = vscode
+[difftool "vscode"]
+	cmd = code --wait --diff $LOCAL $REMOTE
+[merge]
+	tool = vscode
+[mergetool "vscode"]
+	cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
+
+# Commit signing with SSH and 1Password.
+# See https://developer.1password.com/docs/ssh/git-commit-signing/.
+[user]
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC29K0RIsZ7ZxscJSqyhwNPWK5wNorkYzu1I5eilpLTp
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+[commit]
+	gpgsign = true
