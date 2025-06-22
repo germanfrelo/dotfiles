@@ -1,6 +1,6 @@
 [user]
 	name = Germán Freixinós
-	email = {{ .email | quote }}
+	email = 14282156+germanfrelo@users.noreply.github.com
 
 [init]
 	defaultBranch = main
@@ -9,13 +9,13 @@
 	autocorrect = prompt
 
 # Handle line endings properly.
-# See https://docs.github.com/en/get-started/getting-started-with-git/configuring-git-to-handle-line-endings.
+# Ref. https://docs.github.com/en/get-started/git-basics/configuring-git-to-handle-line-endings
 [core]
 	autocrlf = input # macOS + Linux
 	# autocrlf = true # Windows
 
 # Use VS Code as Git editor, diff tool and merge tool.
-# See https://code.visualstudio.com/docs/sourcecontrol/overview#_vs-code-as-git-editor.
+# Ref. https://code.visualstudio.com/docs/sourcecontrol/overview#_vs-code-as-git-editor
 [core]
 	editor = code --wait
 [diff]
@@ -28,12 +28,14 @@
 	cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
 
 # Commit signing with SSH and 1Password.
-# See https://developer.1password.com/docs/ssh/git-commit-signing/.
+# Ref. https://developer.1password.com/docs/ssh/git-commit-signing/
 [user]
-	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC29K0RIsZ7ZxscJSqyhwNPWK5wNorkYzu1I5eilpLTp
-[gpg]
-	format = ssh
-[gpg "ssh"]
-	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+	signingkey = {{ onepasswordRead "op://jzkvauzqt3adjmfkfl6ros3gc4/rzvcj7ec56xzr2ys5otprcvdsq/public_key" "VAEUN74C7FFWJITFMLLEXLAYFA" }}
 [commit]
 	gpgsign = true
+[gpg]
+	format = ssh
+{{ if eq .chezmoi.os "darwin" }}
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+{{ end }}
