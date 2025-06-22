@@ -11,8 +11,13 @@
 # Handle line endings properly.
 # Ref. https://docs.github.com/en/get-started/git-basics/configuring-git-to-handle-line-endings
 [core]
-	autocrlf = input # macOS + Linux
-	# autocrlf = true # Windows
+{{- if or (eq .chezmoi.os "darwin") (eq .chezmoi.os "linux") }}
+	autocrlf = input # macOS & Linux
+{{- else if eq .chezmoi.os "windows" }}
+	autocrlf = true # Windows
+{{- else }}
+	autocrlf = input
+{{- end }}
 
 # Use VS Code as Git editor, diff tool and merge tool.
 # Ref. https://code.visualstudio.com/docs/sourcecontrol/overview#_vs-code-as-git-editor
