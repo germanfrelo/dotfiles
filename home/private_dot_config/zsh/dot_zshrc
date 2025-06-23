@@ -1,0 +1,238 @@
+# Personal Zsh configuration file. It is strongly recommended to keep all shell customization and configuration (including exported environment variables such as PATH) in this file or in files sourced from it.
+#
+# Documentation: https://github.com/romkatv/zsh4humans/blob/v5/README.md.
+
+# --------------------------------------------------
+
+# Periodic auto-update on Zsh startup: 'ask' or 'no'.
+# You can manually run `z4h update` to update everything.
+zstyle ':z4h:' auto-update      'ask'
+# Ask whether to auto-update this often; has no effect if auto-update is 'no'.
+zstyle ':z4h:' auto-update-days '7'
+
+# Keyboard type: 'mac' or 'pc'.
+zstyle ':z4h:bindkey' keyboard  'mac'
+
+# Don't start tmux.
+zstyle ':z4h:' start-tmux       no
+
+# Mark up shell's output with semantic information.
+zstyle ':z4h:' term-shell-integration 'yes'
+
+# Right-arrow key accepts one character ('partial-accept') from
+# command autosuggestions or the whole thing ('accept')?
+zstyle ':z4h:autosuggestions' forward-char 'accept'
+
+# Recursively traverse directories when TAB-completing files.
+zstyle ':z4h:fzf-complete' recurse-dirs 'no'
+
+# Enable direnv to automatically source .envrc files.
+zstyle ':z4h:direnv'         enable 'no'
+# Show "loading" and "unloading" notifications from direnv.
+zstyle ':z4h:direnv:success' notify 'yes'
+
+# Enable ('yes') or disable ('no') automatic teleportation of z4h over
+# SSH when connecting to these hosts.
+zstyle ':z4h:ssh:example-hostname1'   enable 'yes'
+zstyle ':z4h:ssh:*.example-hostname2' enable 'no'
+# The default value if none of the overrides above match the hostname.
+zstyle ':z4h:ssh:*'                   enable 'no'
+
+# Send these files over to the remote host when connecting over SSH to the enabled hosts.
+zstyle ':z4h:ssh:*' send-extra-files '~/.nanorc' '~/.env.zsh'
+
+# Oh My Zsh plugin: alias-finder
+zstyle ':omz:plugins:alias-finder' autoload yes
+zstyle ':omz:plugins:alias-finder' longer yes
+zstyle ':omz:plugins:alias-finder' exact yes
+zstyle ':omz:plugins:alias-finder' cheaper yes
+
+# --------------------------------------------------
+
+# Clone additional Git repositories from GitHub.
+#
+# This doesn't do anything apart from cloning the repositories and keeping them up-to-date. Cloned files can be used after `z4h init`.
+z4h install ohmyzsh/ohmyzsh || return
+z4h install lukechilds/zsh-nvm || return
+
+# --------------------------------------------------
+
+# Install or update core components (fzf, zsh-autosuggestions, etc.) and initialize Zsh. After this point console I/O is unavailable until Zsh is fully initialized. Everything that requires user interaction or can perform network I/O must be done above. Everything else is best done below.
+z4h init || return
+
+# --------------------------------------------------
+
+# Extend PATH.
+path=(~/bin $path)
+
+# --------------------------------------------------
+
+# Export environment variables.
+
+export GPG_TTY=$TTY
+
+# User directories
+# https://wiki.archlinux.org/title/XDG_Base_Directory#User_directories
+export XDG_CACHE_HOME="${HOME}/.cache"
+export XDG_CONFIG_HOME="${HOME}/.config"
+export XDG_DATA_HOME="${HOME}/.local/share"
+export XDG_STATE_HOME="${HOME}/.local/state"
+
+# Homebrew
+# https://github.com/Homebrew/homebrew-bundle#versions-and-lockfiles
+export HOMEBREW_BUNDLE_FILE="${XDG_CONFIG_HOME}/homebrew/Brewfile"
+export HOMEBREW_BUNDLE_FILE_GLOBAL="${XDG_CONFIG_HOME}/homebrew/Brewfile"
+export HOMEBREW_BUNDLE_NO_LOCK=1
+
+# nvm
+# https://wiki.archlinux.org/title/XDG_Base_Directory#Supported
+export NVM_DIR="${XDG_DATA_HOME}/nvm"
+# https://github.com/lukechilds/zsh-nvm
+export NVM_AUTO_USE=true
+# export NVM_LAZY_LOAD=true
+
+# npm
+# Source: https://wiki.archlinux.org/title/XDG_Base_Directory#Supported
+# More info:
+# - https://docs.npmjs.com/cli/v10/using-npm/config
+# - https://docs.npmjs.com/cli/v10/configuring-npm/npmrc
+# Important! Don't add `$NPM_CONFIG_PREFIX` or `$PREFIX`: nvm is not compatible with the npm config "prefix" option. See https://github.com/nvm-sh/nvm/blob/master/README.md#compatibility-issues and https://github.com/nvm-sh/nvm/blob/master/README.md#macos-troubleshooting.
+export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}/npm/npmrc"
+
+# tldr
+export TLDR_CACHE_DIR="${XDG_CACHE_HOME}/tldr"
+
+# man / less
+export LESSHISTFILE=- # avoid showing .lesshst file in $HOME when using `man' command
+
+# --------------------------------------------------
+
+# Source additional local files if they exist.
+z4h source ~/.env.zsh
+
+# --------------------------------------------------
+
+# Use additional Git repositories pulled in with `z4h install`.
+#
+# This is just an example that you should delete. It does nothing useful.
+# z4h source ohmyzsh/ohmyzsh/lib/diagnostics.zsh  # source an individual file
+# z4h load   ohmyzsh/ohmyzsh/plugins/emoji-clock  # load a plugin
+z4h load ohmyzsh/ohmyzsh/plugins/alias-finder
+z4h load ohmyzsh/ohmyzsh/plugins/dotenv
+z4h load lukechilds/zsh-nvm
+
+# --------------------------------------------------
+
+# Define key bindings.
+z4h bindkey undo Ctrl+/   Shift+Tab  # undo the last command line change
+z4h bindkey redo Option+/            # redo the last undone command line change
+
+z4h bindkey z4h-cd-back    Shift+Left   # cd into the previous directory
+z4h bindkey z4h-cd-forward Shift+Right  # cd into the next directory
+z4h bindkey z4h-cd-up      Shift+Up     # cd into the parent directory
+z4h bindkey z4h-cd-down    Shift+Down   # cd into a child directory
+
+# --------------------------------------------------
+
+# Autoload functions.
+autoload -Uz zmv
+
+# --------------------------------------------------
+
+# Define functions and completions.
+function md() { [[ $# == 1 ]] && mkdir -p -- "$1" && cd -- "$1" }
+compdef _directories md
+
+# --------------------------------------------------
+
+# Define named directories: ~w <=> Windows home directory on WSL.
+[[ -z $z4h_win_home ]] || hash -d w=$z4h_win_home
+
+# --------------------------------------------------
+
+# Define aliases.
+
+# Files and directories
+
+# Recently visited directories
+# List
+alias dirs="dirs -v"
+# Quick access by index
+for index ({1..9}) alias "$index"="cd +${index}"; unset index
+
+# Quick-access directories
+alias dev="$HOME/dev"
+
+# List all files and directories in columns
+alias eza="eza -F --all --group-directories-first"
+# Same as above, but displaying extended metadata as a table
+alias ezal="eza --long --header --smart-group --flags --time-style=iso --no-user --git-repos"
+# Same as above, but including recursive directory size and size of allocated file system blocks
+alias ezals="ezal --total-size --blocksize"
+# Show the contents of the current directory as a tree, including hidden files and directories
+alias tree="tree -a"
+alias tree1="tree -L 1"
+alias tree2="tree -L 2"
+alias tree3="tree -L 3"
+# List the size of files and directories of the current directory in ascending order (including a cumulative total)
+alias du="du -shc * | sort -h"
+
+# File contents
+alias bat="bat --paging=never"
+
+# Find patterns in files using regular expressions
+alias grep="grep -i"
+
+# Actions on files and directories
+alias cp="cp -iv"
+alias mv="mv -iv"
+alias rm="rm -iv"
+
+# Git
+alias gl="git log --oneline --graph"
+alias gla="gl --all"
+alias gls="gl --stat"
+alias glt="git log --graph --pretty=format:'%C(yellow)%h%Creset%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)%an%Creset'"
+alias gunstage="git restore --staged ." # restore the index
+alias gstashu="git stash --include-untracked"
+alias gstat="git status -sb"
+# https://github.com/Phantas0s/.dotfiles/blob/master/aliases/aliases
+# alias gs='git status'
+# alias gss='git status -s'
+# alias ga='git add'
+# alias gp='git push'
+# alias gpraise='git blame'
+# alias gpo='git push origin'
+# alias gpof='git push origin --force-with-lease'
+# alias gpofn='git push origin --force-with-lease --no-verify'
+# alias gpt='git push --tag'
+# alias gtd='git tag --delete'
+# alias gtdr='git tag --delete origin'
+# alias grb='git branch -r' # display remote branch
+# alias gplo='git pull origin'
+# alias gb='git branch '
+# alias gc='git commit'
+# alias gd='git diff'
+# alias gco='git checkout '
+# alias gl='git log --oneline'
+# alias gr='git remote'
+# alias grs='git remote show'
+# alias glol='git log --graph --abbrev-commit --oneline --decorate'
+# alias gclean="git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d" # Delete local branch merged with master
+# alias gblog="git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:red)%(refname:short)%(color:reset) - %(color:yellow)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:blue)%(committerdate:relative)%(color:reset))'" # git log for each branches
+# alias gsub="git submodule update --remote" # pull submodules
+# alias gj="git-jump" # Open in vim quickfix list files of interest (git diff, merged...)
+
+# wget (XDG location)
+alias wget="wget --hsts-file="${XDG_CACHE_HOME}/wget-hsts""
+
+# --------------------------------------------------
+
+# Add flags to existing aliases.
+alias ls="${aliases[ls]:-ls} -A"
+
+# --------------------------------------------------
+
+# Set shell options: http://zsh.sourceforge.net/Doc/Release/Options.html.
+setopt glob_dots     # no special treatment for file names with a leading dot
+setopt no_auto_menu  # require an extra TAB press to open the completion menu

@@ -1,0 +1,8 @@
+# Do not modify this file and keep it in the home directory (~/.zshenv) if:
+# you are using zsh4humans, and
+# your zsh dotfiles (.zshrc, etc.) are moved from the home directory to ~/.config/zsh
+#
+# Ref: https://github.com/romkatv/zsh4humans/blob/master/tips.md#alternative-zdotdir.
+
+ZDOTDIR=~/.config/zsh
+source -- "$ZDOTDIR"/.zshenv
