@@ -1,0 +1,142 @@
+{{- /* This entire script content is only for macOS (darwin). */ -}}
+{{- if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+
+# ==============================================================================
+# 1. SCRIPT CONFIGURATION
+# ==============================================================================
+
+# Exit immediately if a command exits with a non-zero status.
+set -eufo pipefail
+
+# ==============================================================================
+# 2. HOMEBREW INSTALLATION & UPDATE
+# ==============================================================================
+
+echo "Ensuring Homebrew is installed and configured..."
+
+# Install Homebrew if not already installed on macOS
+if ! command -v brew &> /dev/null; then
+	echo "Homebrew not found. Installing Homebrew..."
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+	# Ensure Homebrew is in PATH for the rest of the script and future sessions.
+	# On Apple Silicon Macs, Homebrew installs to /opt/homebrew
+	# On Intel Macs, it usually installs to /usr/local
+	eval "$(/opt/homebrew/bin/brew shellenv)" || eval "$(/usr/local/bin/brew shellenv)"
+	echo "Homebrew installed and shell environment configured."
+else
+	echo "Homebrew is already installed."
+	# Ensure Homebrew's shell environment is loaded for this script instance
+	eval "$(/opt/homebrew/bin/brew shellenv)" || eval "$(/usr/local/bin/brew shellenv)"
+	brew update || true # Update Homebrew to ensure it's current, ignore errors for now
+fi
+
+# ==============================================================================
+# 3. BREW BUNDLE PACKAGE INSTALLATION
+# ==============================================================================
+
+echo "Installing macOS packages for this {{ .machineType }} machine using Brew Bundle..."
+
+brew bundle --file=/dev/stdin <<EOF
+# ------------------------------------------------------------------------------
+# macOS packages: common (personal and work)
+# ------------------------------------------------------------------------------
+
+# --- Brew Taps ---
+{{- range .packages.darwin.common.taps }}
+tap {{ . | quote }}
+{{- end }}
+
+# --- Brew Formulae (CLI Apps) ---
+{{- range .packages.darwin.common.brews }}
+brew {{ .name | quote }}{{- if hasKey . "args" }}, args: [{{- range $i, $arg := (get . "args") -}}{{- if $i }}, {{ end -}}{{ $arg | quote -}}{{- end -}}]{{- end }}
+{{- end }}
+
+# --- Brew Casks (GUI Apps + Fonts) ---
+{{- range .packages.darwin.common.casks }}
+cask {{ .name | quote }}{{- if hasKey . "args" }}, args: [{{- range $i, $arg := (get . "args") -}}{{- if $i }}, {{ end -}}{{ $arg | quote -}}{{- end -}}]{{- end }}
+{{- end }}
+
+# --- Mac App Store Apps ---
+{{- range .packages.darwin.common.mas }}
+mas {{ .name | quote }}, id: {{ .id }}
+{{- end }}
+
+
+# ------------------------------------------------------------------------------
+# macOS packages: {{ .machineType }}
+# ------------------------------------------------------------------------------
+
+{{- if eq .machineType "personal" }}
+# --- Brew Taps ---
+{{- range .packages.darwin.personal.taps }}
+tap {{ . | quote }}
+{{- end }}
+
+# --- Brew Formulae (CLI Apps) ---
+{{- range .packages.darwin.personal.brews }}
+brew {{ .name | quote }}{{- if hasKey . "args" }}, args: [{{- range $i, $arg := (get . "args") -}}{{- if $i }}, {{ end -}}{{ $arg | quote -}}{{- end -}}]{{- end }}
+{{- end }}
+
+# --- Brew Casks (GUI Apps + Fonts) ---
+{{- range .packages.darwin.personal.casks }}
+cask {{ .name | quote }}{{- if hasKey . "args" }}, args: [{{- range $i, $arg := (get . "args") -}}{{- if $i }}, {{ end -}}{{ $arg | quote -}}{{- end -}}]{{- end }}
+{{- end }}
+
+# --- Mac App Store Apps ---
+{{- range .packages.darwin.personal.mas }}
+mas {{ .name | quote }}, id: {{ .id }}
+{{- end }}
+
+{{- else if eq .machineType "work" }}
+
+# --- Brew Taps ---
+{{- range .packages.darwin.work.taps }}
+tap {{ . | quote }}
+{{- end }}
+
+# --- Brew Formulae (CLI Apps) ---
+{{- range .packages.darwin.work.brews }}
+brew {{ .name | quote }}{{- if hasKey . "args" }}, args: [{{- range $i, $arg := (get . "args") -}}{{- if $i }}, {{ end -}}{{ $arg | quote -}}{{- end -}}]{{- end }}
+{{- end }}
+
+# --- Brew Casks (GUI Apps + Fonts) ---
+{{- range .packages.darwin.work.casks }}
+cask {{ .name | quote }}{{- if hasKey . "args" }}, args: [{{- range $i, $arg := (get . "args") -}}{{- if $i }}, {{ end -}}{{ $arg | quote -}}{{- end -}}]{{- end }}
+{{- end }} # <-- END of work.casks range
+
+# --- Mac App Store Apps ---
+{{- range .packages.darwin.work.mas }}
+mas {{ .name | quote }}, id: {{ .id }}
+{{- end }}
+
+{{- end }}
+EOF
+
+# ==============================================================================
+# 4. POST-INSTALLATION STEPS
+# ==============================================================================
+
+echo "Brew Bundle process complete."
+
+# --- FZF Key Bindings & Auto Completion ---
+# This ensures fzf's shell integrations are installed/updated after brew bundle.
+echo "Setting up FZF shell extensions..."
+if [ -f "$(brew --prefix)/opt/fzf/install" ]; then
+	"$(brew --prefix)/opt/fzf/install" --all --no-bash --no-zsh --no-fish || true
+	echo "FZF setup complete."
+else
+	echo "FZF install script not found. Please check Homebrew installation."
+fi
+
+# --- Additional post-install steps specific to machine type (e.g., work-related configuration) ---
+{{ if eq .machineType "work" }}
+echo "Running work-specific post-install scripts (if any defined)..."
+# Example: If you needed to fetch a token for work-related Homebrew taps
+# HOMEBREW_GITHUB_API_TOKEN='{{ onepasswordRead "op://..." }}' brew bundle ...
+# Or run specific configuration commands for work software
+{{- end }}
+
+echo "Package installation script finished."
+
+{{- end -}}

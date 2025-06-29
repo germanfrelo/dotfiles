@@ -1,7 +1,11 @@
 .
+├── .chezmoidata
+│   └── packages.yaml
 ├── .chezmoiscripts
 │   └── darwin
-│       └── install-packages-darwin.sh
+│       ├── 00-adopt-chezmoi.sh
+│       ├── install-packages-darwin.sh
+│       └── install-packages.sh
 ├── .config
 │   ├── gh
 │   │   └── config.yml
@@ -59,7 +63,7 @@
 │       └── com.MrKai77.Loop.plist
 └── svgo.config.js
 
-25 directories, 35 files
+26 directories, 38 files
 
 ## Enforced absent
 
