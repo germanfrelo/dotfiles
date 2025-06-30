@@ -10,8 +10,6 @@ packages:
       brews:
         - name: "bash" # Latest Bash version.
         - name: "bat" # Clone of cat with syntax highlighting and Git integration.
-        - name: "chezmoi" # Manage your dotfiles across multiple diverse machines, securely.
-          args: ["adopt"]
         - name: "eza" # Modern, maintained replacement for ls.
         - name: "fd" # Simple, fast and user-friendly alternative to find.
         - name: "fdupes" # Identify or delete duplicate files.
