@@ -6,6 +6,7 @@ packages:
   # macOS.
   darwin:
     common:
+      taps: []
       brews:
         - name: "bash" # Latest Bash version.
         - name: "bat" # Clone of cat with syntax highlighting and Git integration.
@@ -117,6 +118,7 @@ packages:
         - name: "VisBug"
           id: "1538509686"
     personal:
+      taps: []
       brews:
         - name: "mkvtoolnix" # Matroska media files manipulation tools.
       casks:
@@ -126,9 +128,12 @@ packages:
         - name: "openemu" # Retro video game emulation.
         - name: "porting-kit" # Install games and apps compiled for Microsoft Windows.
         - name: "qbittorrent" # Peer to peer Bitorrent client.
+      mas: []
     work:
+      taps: []
       brews:
         - name: "php" # General-purpose scripting language.
       casks:
         - name: "local" # WordPress local development tool by Flywheel.
         - name: "wordpresscom-studio" # WordPress local development environment.
+      mas: []
