@@ -1,0 +1,25 @@
+# Ref. https://www.chezmoi.io/user-guide/setup/
+
+{{- $email := promptStringOnce . "email" "Email address" -}}
+{{- $machineType := promptStringOnce . "machine_type" "Machine type (personal/work)" "personal" -}}
+
+[data]
+	email = {{ $email | quote }}
+	machine_type = "{{ $machineType }}"
+
+# Ref. https://www.chezmoi.io/user-guide/tools/diff/#use-vscode-as-the-diff-tool
+[diff]
+	command = "code"
+	args = ["--wait", "--diff"]
+
+# Ref. https://www.chezmoi.io/user-guide/tools/editor/
+[edit]
+	command = "code"
+	args = ["--wait"]
+
+# Show human-friendly diffs for binary files.
+# Ref. https://www.chezmoi.io/user-guide/tools/diff/#show-human-friendly-diffs-for-binary-files
+[[textconv]]
+	pattern = "**/*.plist"
+	command = "plutil"
+	args = ["-convert", "xml1", "-o", "-", "-"]
