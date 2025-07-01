@@ -95,3 +95,39 @@ mas "Speediness", id: 1596706466
 mas "Super Agent", id: 1568262835
 mas "Todoist", id: 585829637
 mas "VisBug", id: 1538509686
+
+
+# ~/.config/homebrew/Brewfile.personal - Personal macOS packages (managed by chezmoi)
+#
+# IMPORTANT: Do *NOT* install Node.js or nvm via Homebrew:
+# - node: use a Node version manager like nvm.
+# - nvm: managing nvm via Homebrew is unsupported.
+
+# --- Brew Formulae (CLI Apps) ---
+
+brew "mkvtoolnix" # Matroska media files manipulation tools.
+
+# --- Brew Casks (GUI Apps + Fonts) ---
+
+cask "autofirma" # Digital signature editor and validator.
+cask "gog-galaxy" # Game client.
+cask "hp-easy-start" # Set up your HP printer.
+cask "openemu" # Retro video game emulation.
+cask "porting-kit" # Install games and apps compiled for Microsoft Windows.
+cask "qbittorrent" # Peer to peer Bitorrent client.
+
+
+# ~/.config/homebrew/Brewfile.work - Work macOS packages (managed by chezmoi)
+#
+# IMPORTANT: Do *NOT* install Node.js or nvm via Homebrew:
+# - node: use a Node version manager like nvm.
+# - nvm: managing nvm via Homebrew is unsupported.
+
+# --- Brew Formulae (CLI Apps) ---
+
+brew "php" # General-purpose scripting language.
+
+# --- Brew Casks (GUI Apps + Fonts) ---
+
+cask "local" # WordPress local development tool by Flywheel.
+cask "wordpresscom-studio" # WordPress local development environment.
