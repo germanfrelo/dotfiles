@@ -1,0 +1,13 @@
+# ~/.config/homebrew/Brewfile - Main Brewfile (do not edit directly, managed by chezmoi)
+
+# Include common packages for all macOS machines
+include "Brewfile.common"
+
+{{- if eq .machineType "personal" }}
+# Include packages specific to personal macOS machines
+include "Brewfile.personal"
+
+{{- else if eq .machineType "work" }}
+# Include packages specific to work macOS machines
+include "Brewfile.work"
+{{- end }}
