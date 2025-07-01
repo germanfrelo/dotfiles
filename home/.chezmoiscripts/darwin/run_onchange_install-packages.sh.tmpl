@@ -7,7 +7,13 @@
 # ==============================================================================
 
 # Exit immediately if a command exits with a non-zero status.
-set -eufo pipefail
+# Add -x to print commands and their arguments for debugging.
+set -eufo pipefail -x # Added -x here
+
+# Define XDG_CONFIG_HOME explicitly for this script's environment.
+# This ensures it's set for the `brew bundle` commands, regardless of the shell
+# environment where `chezmoi apply` was invoked or if your .zshrc hasn't loaded yet.
+export XDG_CONFIG_HOME="${HOME}/.config"
 
 # ==============================================================================
 # 2. HOMEBREW INSTALLATION & UPDATE
@@ -35,83 +41,27 @@ fi
 # 3. BREW BUNDLE PACKAGE INSTALLATION
 # ==============================================================================
 
-echo "Installing macOS packages for this {{ .machineType }} machine using Brew Bundle..."
+# Ensure the target directory for the Brewfile exists.
+# `chezmoi` handles the creation of the Brewfile itself from the template.
+mkdir -p "${XDG_CONFIG_HOME}/homebrew"
 
-brew bundle --file=/dev/stdin <<EOF
-# ------------------------------------------------------------------------------
-# macOS packages: common (personal and work)
-# ------------------------------------------------------------------------------
+# --- DEBUGGING OUTPUT START ---
+echo "--- DEBUG INFO ---"
+echo "XDG_CONFIG_HOME is: '${XDG_CONFIG_HOME}'"
+echo "Expected Brewfile path: '${XDG_CONFIG_HOME}/homebrew/Brewfile'"
+echo "Listing contents of '${XDG_CONFIG_HOME}/homebrew/':"
+ls -l "${XDG_CONFIG_HOME}/homebrew/" # Check if the file exists here and its permissions
+echo "--- END DEBUG INFO ---"
+# --- DEBUGGING OUTPUT END ---
 
-# --- Brew Taps ---
-{{- range .packages.darwin.common.taps }}
-tap {{ . | quote }}
-{{- end }}
-
-# --- Brew Formulae (CLI Apps) ---
-{{- range .packages.darwin.common.brews }}
-brew {{ .name | quote }}{{- if hasKey . "args" }}, args: [{{- range $i, $arg := (get . "args") -}}{{- if $i }}, {{ end -}}{{ $arg | quote -}}{{- end -}}]{{- end }}
-{{- end }}
-
-# --- Brew Casks (GUI Apps + Fonts) ---
-{{- range .packages.darwin.common.casks }}
-cask {{ .name | quote }}{{- if hasKey . "args" }}, args: [{{- range $i, $arg := (get . "args") -}}{{- if $i }}, {{ end -}}{{ $arg | quote -}}{{- end -}}]{{- end }}
-{{- end }}
-
-# --- Mac App Store Apps ---
-{{- range .packages.darwin.common.mas }}
-mas {{ .name | quote }}, id: {{ .id }}
-{{- end }}
-
-
-# ------------------------------------------------------------------------------
-# macOS packages: {{ .machineType }}
-# ------------------------------------------------------------------------------
-
-{{- if eq .machineType "personal" }}
-# --- Brew Taps ---
-{{- range .packages.darwin.personal.taps }}
-tap {{ . | quote }}
-{{- end }}
-
-# --- Brew Formulae (CLI Apps) ---
-{{- range .packages.darwin.personal.brews }}
-brew {{ .name | quote }}{{- if hasKey . "args" }}, args: [{{- range $i, $arg := (get . "args") -}}{{- if $i }}, {{ end -}}{{ $arg | quote -}}{{- end -}}]{{- end }}
-{{- end }}
-
-# --- Brew Casks (GUI Apps + Fonts) ---
-{{- range .packages.darwin.personal.casks }}
-cask {{ .name | quote }}{{- if hasKey . "args" }}, args: [{{- range $i, $arg := (get . "args") -}}{{- if $i }}, {{ end -}}{{ $arg | quote -}}{{- end -}}]{{- end }}
-{{- end }}
-
-# --- Mac App Store Apps ---
-{{- range .packages.darwin.personal.mas }}
-mas {{ .name | quote }}, id: {{ .id }}
-{{- end }}
-
-{{- else if eq .machineType "work" }}
-
-# --- Brew Taps ---
-{{- range .packages.darwin.work.taps }}
-tap {{ . | quote }}
-{{- end }}
-
-# --- Brew Formulae (CLI Apps) ---
-{{- range .packages.darwin.work.brews }}
-brew {{ .name | quote }}{{- if hasKey . "args" }}, args: [{{- range $i, $arg := (get . "args") -}}{{- if $i }}, {{ end -}}{{ $arg | quote -}}{{- end -}}]{{- end }}
-{{- end }}
-
-# --- Brew Casks (GUI Apps + Fonts) ---
-{{- range .packages.darwin.work.casks }}
-cask {{ .name | quote }}{{- if hasKey . "args" }}, args: [{{- range $i, $arg := (get . "args") -}}{{- if $i }}, {{ end -}}{{ $arg | quote -}}{{- end -}}]{{- end }}
-{{- end }} # <-- END of work.casks range
-
-# --- Mac App Store Apps ---
-{{- range .packages.darwin.work.mas }}
-mas {{ .name | quote }}, id: {{ .id }}
-{{- end }}
-
-{{- end }}
-EOF
+echo "Checking Homebrew packages for this {{ .machineType }} machine using Brew Bundle..."
+# Check if all packages are installed. If not, proceed with installation.
+if brew bundle check --file "${XDG_CONFIG_HOME}/homebrew/Brewfile" &> /dev/null; then
+	echo "All Homebrew packages are already satisfied."
+else
+	echo "Missing Homebrew packages. Running brew bundle install..."
+	brew bundle install --file "${XDG_CONFIG_HOME}/homebrew/Brewfile"
+fi
 
 # ==============================================================================
 # 4. POST-INSTALLATION STEPS
