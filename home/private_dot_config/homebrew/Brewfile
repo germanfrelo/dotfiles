@@ -1,11 +1,10 @@
-# ~/.config/homebrew/Brewfile.common - Common macOS packages (managed by chezmoi)
-#
 # IMPORTANT: Do *NOT* install Node.js or nvm via Homebrew:
 # - node: use a Node version manager like nvm.
 # - nvm: managing nvm via Homebrew is unsupported.
 
-# --- Brew Formulae (CLI Apps) ---
+# --- Common macOS packages ---
 
+# Brew Formulae (CLI Apps)
 brew "bash" # Latest Bash version.
 brew "bat" # Clone of cat with syntax highlighting and Git integration.
 brew "eza" # Modern, maintained replacement for ls.
@@ -28,8 +27,7 @@ brew "wget" # Successor of GNU Wget, a file and recursive website downloader.
 brew "woff2" # Utilities to create and convert Web Open Font File (WOFF) files.
 brew "xdg-ninja", args: ["HEAD"] # Check your $HOME for unwanted files and directories.
 
-# --- Brew Casks (GUI Apps + Fonts) ---
-
+# Brew Casks (GUI Apps + Fonts)
 cask "1password" # Password manager that keeps all passwords secure behind one password.
 cask "1password-cli" # Command-line interface for 1Password.
 cask "appcleaner" # Application uninstaller.
@@ -72,8 +70,7 @@ cask "slack" # Team communication and collaboration software.
 cask "visual-studio-code" # Open-source code editor.
 cask "vlc" # Multimedia player.
 
-# --- Mac App Store Apps ---
-
+# Mac App Store Apps
 mas "1Password for Safari", id: 1569813296
 mas "Actions", id: 1586435171
 mas "Color Picker", id: 1545870783
@@ -96,19 +93,12 @@ mas "Super Agent", id: 1568262835
 mas "Todoist", id: 585829637
 mas "VisBug", id: 1538509686
 
+# --- Personal macOS packages ---
 
-# ~/.config/homebrew/Brewfile.personal - Personal macOS packages (managed by chezmoi)
-#
-# IMPORTANT: Do *NOT* install Node.js or nvm via Homebrew:
-# - node: use a Node version manager like nvm.
-# - nvm: managing nvm via Homebrew is unsupported.
-
-# --- Brew Formulae (CLI Apps) ---
-
+# Brew Formulae (CLI Apps)
 brew "mkvtoolnix" # Matroska media files manipulation tools.
 
-# --- Brew Casks (GUI Apps + Fonts) ---
-
+# Brew Casks (GUI Apps + Fonts)
 cask "autofirma" # Digital signature editor and validator.
 cask "gog-galaxy" # Game client.
 cask "hp-easy-start" # Set up your HP printer.
@@ -116,18 +106,11 @@ cask "openemu" # Retro video game emulation.
 cask "porting-kit" # Install games and apps compiled for Microsoft Windows.
 cask "qbittorrent" # Peer to peer Bitorrent client.
 
+# --- Work macOS packages ---
 
-# ~/.config/homebrew/Brewfile.work - Work macOS packages (managed by chezmoi)
-#
-# IMPORTANT: Do *NOT* install Node.js or nvm via Homebrew:
-# - node: use a Node version manager like nvm.
-# - nvm: managing nvm via Homebrew is unsupported.
-
-# --- Brew Formulae (CLI Apps) ---
-
+# Brew Formulae (CLI Apps)
 brew "php" # General-purpose scripting language.
 
-# --- Brew Casks (GUI Apps + Fonts) ---
-
+# Brew Casks (GUI Apps + Fonts)
 cask "local" # WordPress local development tool by Flywheel.
 cask "wordpresscom-studio" # WordPress local development environment.
