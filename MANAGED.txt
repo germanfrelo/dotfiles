@@ -2,7 +2,7 @@
 ├── .chezmoiscripts
 │   └── darwin
 │       ├── install-packages-darwin.sh
-│       └── install-packages.sh
+│       └── install-packages.sh.tmpl.DISABLED
 ├── .config
 │   ├── gh
 │   │   └── config.yml
