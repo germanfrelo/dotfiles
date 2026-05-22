@@ -1,0 +1,38 @@
+{
+	"name": "dotfiles",
+	"version": "0.1.0",
+	"private": true,
+	"description": "My dotfiles, managed with chezmoi.",
+	"keywords": [
+		"dotfiles",
+		"macos",
+		"chezmoi"
+	],
+	"homepage": "https://github.com/germanfrelo/dotfiles",
+	"bugs": {
+		"url": "https://github.com/germanfrelo/dotfiles/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/germanfrelo/dotfiles.git"
+	},
+	"license": "MIT",
+	"author": "Germán Freixinós",
+	"type": "module",
+	"main": "",
+	"scripts": {
+		"format": "prettier --write .",
+		"format:check": "prettier --check .",
+		"prepare": "husky"
+	},
+	"lint-staged": {
+		"*.*": [
+			"prettier --write --ignore-unknown"
+		]
+	},
+	"devDependencies": {
+		"husky": "9.1.7",
+		"lint-staged": "17.0.5",
+		"prettier": "3.8.3"
+	}
+}
