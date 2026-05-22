@@ -1,0 +1,33 @@
+{{- $machine_type := promptChoiceOnce . "machine_type" "Machine type" (list "personal" "work") -}}
+{{- $source_dir := joinPath .chezmoi.homeDir "repos/germanfrelo/dotfiles" -}}
+{{- if eq $machine_type "work" -}}
+{{-   $source_dir = promptStringOnce . "source_dir" "Dotfiles source directory" -}}
+{{- end -}}
+
+# Refs.:
+# https://www.chezmoi.io/user-guide/setup/
+# https://www.chezmoi.io/reference/configuration-file/
+
+# Ref. https://www.chezmoi.io/reference/configuration-file/variables/#sourcedir
+sourceDir = {{ $source_dir | quote }}
+
+# Ref. https://www.chezmoi.io/user-guide/manage-machine-to-machine-differences/
+[data]
+	machine_type = {{ $machine_type | quote }}
+
+# Ref. https://www.chezmoi.io/user-guide/tools/diff/#use-vscode-as-the-diff-tool
+[diff]
+	command = "code"
+	args = ["--wait", "--diff"]
+
+# Ref. https://www.chezmoi.io/user-guide/tools/editor/
+[edit]
+	command = "code"
+	args = ["--wait"]
+
+# Show human-friendly diffs for binary files.
+# Ref. https://www.chezmoi.io/user-guide/tools/diff/#show-human-friendly-diffs-for-binary-files
+[[textconv]]
+	pattern = "**/*.plist"
+	command = "plutil"
+	args = ["-convert", "xml1", "-o", "-", "-"]
