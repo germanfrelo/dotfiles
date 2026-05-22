@@ -1,0 +1,7 @@
+{
+	"recommendations": [
+		// Formatting
+		"EditorConfig.EditorConfig",
+		"esbenp.prettier-vscode"
+	]
+}

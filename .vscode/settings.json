@@ -1,0 +1,12 @@
+{
+	// Formatting
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"[markdown]": {
+		"editor.renderWhitespace": "boundary"
+	},
+	"editor.formatOnSave": true,
+
+	// Spell checking
+	"cSpell.ignoreWords": [],
+	"cSpell.words": []
+}
