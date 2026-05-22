@@ -12,6 +12,7 @@
 		"*.toml.tmpl": "toml",
 		"**/*git/*config*": "ini",
 		"**/*ncdu/*config*": "properties",
+		"**/*ssh/*config*": "ssh_config",
 		"*dot_editorconfig": "editorconfig",
 		"*ignore": "ignore",
 		"*npmrc": "properties", // See https://github.com/microsoft/vscode/pull/92397

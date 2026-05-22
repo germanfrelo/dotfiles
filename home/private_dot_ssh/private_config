@@ -1,4 +1,8 @@
+# Optional local escape hatch for machine-specific host aliases or private networks without committing them to dotfiles.
 Include ~/.ssh/config.local
 
+# Use 1Password as the SSH agent for all hosts.
+# Authenticates Git and SSH sessions without storing private keys on disk.
+# Ref. https://developer.1password.com/docs/ssh/agent/
 Host *
 	IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
