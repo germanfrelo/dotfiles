@@ -61,6 +61,18 @@ The architecture is confirmed by executing the bootstrap commands documented in 
 5. The `xargs` pipeline clones selected repositories into `$REPOS_DIR` (`~/Developer/repos`) and `$FORKS_DIR` (`~/Developer/forks`), printing a clean divider between each repository.
 6. Disposable scratch clones remain isolated in `~/Downloads/repos` and are untouched.
 
+### SSH and 1Password Authentication Chain
+
+On `personal` machines (`machine_type = "personal"`), Git network transport relies on 1Password for private key isolation and biometric authorization:
+
+1. **Invocation:** `gh repo clone <owner>/<repo>` invokes the system `git clone git@github.com:<owner>/<repo>.git`.
+2. **Transport protocol:** `git` delegates SSH transport to the OpenSSH client (`ssh`).
+3. **Configuration bridge:** OpenSSH reads [`~/.ssh/config`](/home/private_dot_ssh/private_config), which defines `IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"`.
+4. **Agent socket resolution:** OpenSSH forwards the public key challenge across the macOS App Group socket (`2BUA8C4S2C.com.1password`) to the unlocked 1Password desktop process.
+5. **Key authorization:** 1Password supplies the cryptographic challenge response using the stored `GitHub SSH Auth Key` (prompting via Touch ID if authorization has expired).
+6. **Separation of keys:** The `GitHub SSH Auth Key` is strictly reserved for network transport (SSH sessions, clone, push), whereas the `GitHub SSH Signing Key` is configured separately in [`.gitconfig`](/home/private_dot_config/private_git/private_config.tmpl) solely for cryptographic commit signing (`gpgsign = true`).
+7. **Transport vs signing independence:** Git commit signing is executed entirely locally via the 1Password agent socket, independent of the remote repository URL (HTTPS or SSH). Switching the dotfiles repository remote to SSH allows network operations (`git push`, `git fetch`) to authenticate through 1Password and the `GitHub SSH Auth Key` consistently with all other repositories.
+
 ## Pros and Cons of the Options
 
 ### Option 1A: 3-tier directory storage taxonomy
