@@ -108,8 +108,10 @@ export NVM_DIR="${HOME}/.nvm"
 export LESSHISTFILE=- # avoid showing .lesshst file in $HOME when using `man' command
 
 # Repositories
-# IMPORTANT: The path below defines where all my repositories live. If I ever change it to a new folder, I must search this entire dotfiles repository for the old path and update all occurrences to prevent breakage. (See ADR 0005 for details).
+# ❗️ IMPORTANT: These paths determine where my cloned repos live. They are defined as env variables because they are used by other scripts or projects, ensuring a single source of truth.
+# To change them, do it only here and run `exec zsh` to take effect.
 export REPOS_DIR="${REPOS_DIR:-$HOME/Developer/repos}"
+export FORKS_DIR="${FORKS_DIR:-$HOME/Downloads/repos}"
 
 # ==================================================
 

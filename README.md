@@ -24,6 +24,25 @@ See [MANAGED.txt](/MANAGED.txt) for the full file list.
 - **Guardrails on every commit** — Prettier formatting is enforced on staged files via Husky + lint-staged; post-checkout and post-merge hooks warn when `package-lock.json` changes and prompt to run `npm ci`.
 - **Automated dependency review** — a GitHub Action scans every pull request for dependency vulnerabilities and licence issues before merge.
 
+## Post-Installation / Bootstrapping
+
+After `chezmoi` completes its initial run on a fresh machine, remember to execute the following manual actions.
+
+### Clone your personal GitHub repos
+
+1. Reload your shell to load the newly-deployed `.zshrc` (which sets `$REPOS_DIR` and `$FORKS_DIR`):
+   ```sh
+   exec zsh
+   ```
+2. Authenticate with the GitHub CLI:
+   ```sh
+   gh auth login
+   ```
+3. Run the clone script:
+   ```sh
+   $(chezmoi source-path)/scripts/clone-github-repos.sh
+   ```
+
 ## npm scripts
 
 | Script         | Description                                                     |
