@@ -240,7 +240,7 @@ alias dirs="dirs -v"
 for index ({1..9}) alias "$index"="cd +${index}"; unset index
 
 # Quick-access directories
-alias dev="$HOME/dev"
+alias repos="$HOME/repos/germanfrelo"
 
 # List all files and directories in columns
 alias eza="eza -F --all --group-directories-first"
