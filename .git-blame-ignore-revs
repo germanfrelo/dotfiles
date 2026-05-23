@@ -10,3 +10,6 @@
 # - Precede each commit hash with a comment containing the first line of its commit message.
 # - Append new commits to the bottom of the file in chronological order.
 # - Use the full 40-character hash, not a short hash.
+
+# style(zsh): Reformat gbignore with tab indentation
+2d4083363063c0c811899a0018f22f2d40b1688d
