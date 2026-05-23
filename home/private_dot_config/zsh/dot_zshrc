@@ -181,44 +181,44 @@ function check-repos() {
 # Only runs if the commit title matches style*:*format* (case-insensitive).
 # Skips automatically if the commit is itself a .git-blame-ignore-revs update.
 function gbignore() {
-    local commit_hash commit_title title_lower
+	local commit_hash commit_title title_lower
 
-    commit_hash=$(git rev-parse HEAD 2>/dev/null) || {
-        print -P "%F{red}Error: not a git repository or no commits.%f" >&2
-        return 1
-    }
-    commit_title=$(git log -1 --format=%s)
-    title_lower=${commit_title:l}
+	commit_hash=$(git rev-parse HEAD 2>/dev/null) || {
+		print -P "%F{red}Error: not a git repository or no commits.%f" >&2
+		return 1
+	}
+	commit_title=$(git log -1 --format=%s)
+	title_lower=${commit_title:l}
 
-    case "$title_lower" in
-        *git-blame-ignore-revs*)
-            print -P "%F{yellow}Skipped: commit appears to be a .git-blame-ignore-revs update.%f" >&2
-            return 1
-            ;;
-    esac
+	case "$title_lower" in
+		*git-blame-ignore-revs*)
+			print -P "%F{yellow}Skipped: commit appears to be a .git-blame-ignore-revs update.%f" >&2
+			return 1
+			;;
+	esac
 
-    case "$title_lower" in
-        style*:*format*) ;;
-        *)
-            print -P "%F{red}Aborted: \"%s\" does not match style*:*format*.%f" "$commit_title" >&2
-            return 1
-            ;;
-    esac
+	case "$title_lower" in
+		style*:*format*) ;;
+		*)
+			print -P "%F{red}Aborted: \"%s\" does not match style*:*format*.%f" "$commit_title" >&2
+			return 1
+			;;
+	esac
 
-    if [[ ! -f .git-blame-ignore-revs ]]; then
-        print -P "%F{red}Error: .git-blame-ignore-revs not found in %~.%f" >&2
-        return 1
-    fi
+	if [[ ! -f .git-blame-ignore-revs ]]; then
+		print -P "%F{red}Error: .git-blame-ignore-revs not found in %~.%f" >&2
+		return 1
+	fi
 
-    if grep -qF "$commit_hash" .git-blame-ignore-revs; then
-        print -P "%F{yellow}Skipped: %s is already in .git-blame-ignore-revs.%f" "$commit_hash" >&2
-        return 0
-    fi
+	if grep -qF "$commit_hash" .git-blame-ignore-revs; then
+		print -P "%F{yellow}Skipped: %s is already in .git-blame-ignore-revs.%f" "$commit_hash" >&2
+		return 0
+	fi
 
-    printf "\n# %s\n%s\n" "$commit_title" "$commit_hash" >> .git-blame-ignore-revs
-    git add .git-blame-ignore-revs
-    git commit -m "chore: Update .git-blame-ignore-revs"
-    print -P "%F{green}Done: added %s to .git-blame-ignore-revs.%f" "$commit_hash"
+	printf "\n# %s\n%s\n" "$commit_title" "$commit_hash" >> .git-blame-ignore-revs
+	git add .git-blame-ignore-revs
+	git commit -m "chore: Update .git-blame-ignore-revs"
+	print -P "%F{green}Done: added %s to .git-blame-ignore-revs.%f" "$commit_hash"
 }
 
 # --------------------------------------------------
