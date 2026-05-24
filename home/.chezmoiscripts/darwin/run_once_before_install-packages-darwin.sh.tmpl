@@ -85,7 +85,8 @@ mas "Super Agent", id: 1568262835
 mas "Todoist", id: 585829637
 mas "VisBug", id: 1538509686
 
-{{- if eq .machine_type "personal" -}}
+{{- if eq .machine_type "personal" }}
+
 # --- Personal macOS packages ---
 
 # Brew Formulae (CLI Apps)
@@ -115,9 +116,11 @@ cask "hp-easy-start" # Set up your HP printer.
 cask "qbittorrent" # Peer to peer Bitorrent client.
 cask "surfshark" # VPN client for secure internet access and private browsing.
 cask "whatsapp" # Native desktop client for WhatsApp.
-{{- end -}}
 
-{{- if eq .machine_type "work" -}}
+{{- end }}
+
+{{- if eq .machine_type "work" }}
+
 # --- Work macOS packages ---
 
 # Brew Formulae (CLI Apps)
@@ -125,6 +128,8 @@ cask "whatsapp" # Native desktop client for WhatsApp.
 
 # Brew Casks (GUI Apps + Fonts)
 
-{{- end -}}
+{{ end }}
+
 BUNDLED_PACKAGES_EOF
-{{ end -}}
+
+{{- end }}
