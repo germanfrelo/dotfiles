@@ -13,3 +13,6 @@
 
 # style(zsh): Reformat gbignore with tab indentation
 2d4083363063c0c811899a0018f22f2d40b1688d
+
+# style(chezmoi): Reformat install script
+19c49f35f41d73caeea6c88aa8373db0753258f3
