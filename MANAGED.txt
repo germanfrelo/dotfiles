@@ -1,0 +1,20 @@
+.
+├── .chezmoiscripts
+│   └── darwin
+│       └── install-packages-darwin.sh
+├── .config
+│   ├── gh
+│   │   └── config.yml
+│   ├── git
+│   │   ├── config
+│   │   └── ignore
+│   └── zsh
+│       ├── .p10k.zsh
+│       ├── .zprofile
+│       ├── .zshenv
+│       └── .zshrc
+├── .gemini
+│   └── GEMINI.md
+└── .zshenv
+
+8 directories, 10 files

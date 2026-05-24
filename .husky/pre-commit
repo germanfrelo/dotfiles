@@ -1,1 +1,5 @@
+if git ls-files --cached --error-unmatch scripts/managed.js 2>/dev/null; then
+	node scripts/managed.js > MANAGED.txt
+	git add MANAGED.txt
+fi
 npx lint-staged
