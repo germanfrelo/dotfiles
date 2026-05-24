@@ -1,4 +1,4 @@
-if git ls-files --cached --error-unmatch scripts/managed.js 2>/dev/null; then
+if git ls-files --cached --error-unmatch scripts/managed.js > /dev/null 2>&1; then
 	node scripts/managed.js > MANAGED.txt
 	git add MANAGED.txt
 fi
