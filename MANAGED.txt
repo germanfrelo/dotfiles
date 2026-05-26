@@ -28,8 +28,9 @@
                 │   ├── node-conventions.instructions.md
                 │   ├── profile.instructions.md
                 │   └── safe-deletion.instructions.md
+                ├── settings.json
                 └── snippets
                     ├── astro.json
                     └── css.json
 
-14 directories, 19 files
+14 directories, 20 files
