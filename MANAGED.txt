@@ -20,13 +20,16 @@
     └── Application Support
         └── Code
             └── User
-                └── prompts
-                    ├── commit-messages.instructions.md
-                    ├── general-conventions.instructions.md
-                    ├── instruction-writing.instructions.md
-                    ├── markdown.instructions.md
-                    ├── node-conventions.instructions.md
-                    ├── profile.instructions.md
-                    └── safe-deletion.instructions.md
+                ├── prompts
+                │   ├── commit-messages.instructions.md
+                │   ├── general-conventions.instructions.md
+                │   ├── instruction-writing.instructions.md
+                │   ├── markdown.instructions.md
+                │   ├── node-conventions.instructions.md
+                │   ├── profile.instructions.md
+                │   └── safe-deletion.instructions.md
+                └── snippets
+                    ├── astro.json
+                    └── css.json
 
-13 directories, 17 files
+14 directories, 19 files

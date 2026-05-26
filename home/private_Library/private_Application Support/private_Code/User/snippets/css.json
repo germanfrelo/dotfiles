@@ -1,0 +1,55 @@
+// Documentation: https://code.visualstudio.com/docs/editor/userdefinedsnippets
+{
+	"Section comment block": {
+		"prefix": "comment-1-section",
+		"body": [
+			"",
+			"/* ===================================================================",
+			"${1:Section}",
+			"=================================================================== */",
+			""
+		],
+		"description": "A multi-line comment to delimit a section."
+	},
+	"Section comment-b block": {
+		"prefix": "comment-1b-section",
+		"body": [
+			"",
+			"/* ${1:Section}",
+			"========================================================= */",
+			""
+		],
+		"description": "A multi-line comment to delimit a section."
+	},
+	"Subsection comment block": {
+		"prefix": "comment-2-subsection",
+		"body": [
+			"",
+			"/* -----------------------------------------------",
+			"${1:Subsection}",
+			"----------------------------------------------- */",
+			""
+		],
+		"description": "A multi-line comment to delimit a subsection."
+	},
+	"Subsection comment-b block": {
+		"prefix": "comment-2b-subsection",
+		"body": [
+			"",
+			"/* ${1:Subsection}",
+			"------------------------------------- */",
+			""
+		],
+		"description": "A multi-line comment to delimit a subsection."
+	},
+	"Related rules comment block": {
+		"prefix": "comment-3-rules",
+		"body": ["", "/*", "${1:Comment}", "*/", ""],
+		"description": "A multi-line comment to group related CSS rules."
+	},
+	"Single rule comment inline": {
+		"prefix": "comment-4-rule",
+		"body": ["", "/* ${1:Comment} */"],
+		"description": "A single-line comment for a single CSS rule."
+	}
+}
