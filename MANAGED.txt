@@ -15,6 +15,18 @@
 │       └── .zshrc
 ├── .gemini
 │   └── GEMINI.md
-└── .zshenv
+├── .zshenv
+└── Library
+    └── Application Support
+        └── Code
+            └── User
+                └── prompts
+                    ├── commit-messages.instructions.md
+                    ├── general-conventions.instructions.md
+                    ├── instruction-writing.instructions.md
+                    ├── markdown.instructions.md
+                    ├── node-conventions.instructions.md
+                    ├── profile.instructions.md
+                    └── safe-deletion.instructions.md
 
-8 directories, 10 files
+13 directories, 17 files
