@@ -21,7 +21,7 @@
 	"type": "module",
 	"main": "",
 	"scripts": {
-		"managed": "node scripts/managed.js",
+		"managed": "node scripts/managed.js > MANAGED.txt",
 		"format": "prettier --write .",
 		"format:check": "prettier --check .",
 		"prepare": "husky"
