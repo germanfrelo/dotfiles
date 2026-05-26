@@ -8,5 +8,20 @@
 
 	// Spell checking
 	"cSpell.ignoreWords": [],
-	"cSpell.words": []
+	"cSpell.words": [],
+
+	// File associations
+	"files.associations": {
+		".chezmoi.toml.tmpl": "toml",
+		".nvmrc": "properties",
+		"*.sh.tmpl": "shellscript",
+		"*dot_zshenv": "shellscript",
+		"*ignore": "ignore",
+		"dot_zprofile": "shellscript",
+		"dot_zshrc": "shellscript",
+		"LICENSE": "plaintext",
+		"npmrc": "properties",
+		"pre-commit": "shellscript",
+		"private_config.tmpl": "properties"
+	}
 }
