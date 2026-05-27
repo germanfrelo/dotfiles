@@ -4,7 +4,7 @@ My dotfiles, managed with [chezmoi](https://www.chezmoi.io/).
 
 ## Managed files
 
-See [./MANAGED.txt](./MANAGED.txt) for the full file list.
+See [MANAGED.txt](./MANAGED.txt) for the full file list.
 
 ## Repository layout
 
