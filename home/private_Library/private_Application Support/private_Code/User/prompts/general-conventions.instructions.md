@@ -20,6 +20,14 @@ applyTo: "**"
 
 The following rules apply only to the formatting of your own chat responses; they do NOT apply to Markdown files you create or edit on my behalf:
 
+- When showing file content that contains triple-backtick fenced code blocks, use a four-backtick (or more) outer fence. This prevents the inner triple-backticks from breaking the formatting of the chat response. For example:
+
+  ````md
+  ```js
+  console.log("This is a code block inside a chat response.");
+  ```
+  ````
+
 - Use headings (`##` or deeper) for named sections within a chat response. Do not use bold text (`**title**`) as a substitute for a section heading.
 
 ## Writing
