@@ -8,7 +8,17 @@
 
 	// Spell checking
 	"cSpell.ignoreWords": [],
-	"cSpell.words": [],
+	"cSpell.words": [
+		"chezmoi",
+		"chezmoiroot",
+		"chezmoiscripts",
+		"create-pull-request",
+		"darwin",
+		"github",
+		"linux",
+		"peter-evans",
+		"tmpl"
+	],
 
 	// File associations
 	"files.associations": {
