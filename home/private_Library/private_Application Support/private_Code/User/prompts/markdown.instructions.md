@@ -12,6 +12,7 @@ Follow these while writing — the linter handles everything else automatically.
 
 - Do not end headings with `,` `.` `;` or `:` — trailing `!` is allowed.
 - Do not repeat a heading title among sibling headings (same level, same parent section); identical titles at different nesting depths are allowed.
+- Prefix all relative links with `./` (e.g. `[file](./file.md)`) because editors use `./` to trigger file-path autocomplete.
 
 ## Automated Verification
 
