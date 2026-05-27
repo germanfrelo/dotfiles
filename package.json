@@ -21,9 +21,10 @@
 	"type": "module",
 	"main": "",
 	"scripts": {
-		"managed": "node scripts/managed.js > MANAGED.txt",
+		"chezmoi:sync": "node scripts/sync-chezmoi-config.js",
 		"format": "prettier --write .",
 		"format:check": "prettier --check .",
+		"managed": "node scripts/managed.js > MANAGED.txt",
 		"prepare": "husky"
 	},
 	"lint-staged": {
@@ -34,6 +35,7 @@
 	"devDependencies": {
 		"husky": "9.1.7",
 		"lint-staged": "17.0.5",
+		"markdownlint-cli2": "0.22.1",
 		"prettier": "3.8.3"
 	}
 }
