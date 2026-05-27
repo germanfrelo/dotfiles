@@ -29,7 +29,7 @@ applyTo: "**"
 
 - Commit messages must be factual, not persuasive.
 - The commit body must explain _why_ the change was made, not restate what changed. The diff shows the what.
-- The commit body may use bullet points (`- `) to list multiple reasons or sub-points. Do not add a trailing summary sentence.
+- The commit body may use bullet points (`-`) to list multiple reasons or sub-points. Do not add a trailing summary sentence.
 - For breaking changes, append a `BREAKING CHANGE: <description>` footer explaining the migration path. Do not use the `!` shorthand.
 - For reverts, use `revert: <original subject>` and include `This reverts commit <hash>.` in the body.
 - Use footers for issue references (`Closes #123`, `Refs #456`) and co-authors (`Co-authored-by: Name <email>`). Place footers after a blank line at the end of the body.
