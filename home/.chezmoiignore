@@ -1,1 +1,99 @@
+# =============================================================================
+# BROAD PATTERNS WITH NEGATIONS
+#
+# Negation patterns always take priority over includes (chezmoi semantics).
+# MAINTENANCE: When adding a new managed file under a broadly-ignored directory
+# (.config/, .gemini/, .ssh/, Library/), add a matching negation here.
+# Stale negations surface as a non-empty `chezmoi unmanaged` — that output
+# must always be empty.
+# =============================================================================
+
+# .config: ignore all; exceptions for managed files
+# NOTE: `/**` patterns match the directory itself too (doublestar semantics),
+# so you need a negation for the TOP-LEVEL directory AND every intermediate
+# directory in the path — otherwise chezmoi stops traversal at the first
+# ignored entry and the file is never reached.
+.config/**
+!.config
+!.config/gh
+!.config/gh/config.yml
+!.config/git
+!.config/git/config
+!.config/git/ignore
+!.config/zsh
+!.config/zsh/.p10k.zsh
+!.config/zsh/.zprofile
+!.config/zsh/.zshenv
+!.config/zsh/.zshrc
+
+# .gemini: ignore runtime/auth data; keep only GEMINI.md
+.gemini/**
+!.gemini
+!.gemini/GEMINI.md
+
+# .ssh: ignore keys and session data; keep only the config file
+# config.local is intentionally excluded — machine-specific hosts go there
+.ssh/**
+!.ssh
+!.ssh/config
+
+# Library: ignore all app and system data; keep only managed VS Code User files
+Library/**
+!Library
+!Library/Application Support
+!Library/Application Support/Code
+!Library/Application Support/Code/User
+!Library/Application Support/Code/User/settings.json
+!Library/Application Support/Code/User/prompts
+!Library/Application Support/Code/User/prompts/*.instructions.md
+!Library/Application Support/Code/User/snippets
+!Library/Application Support/Code/User/snippets/*.json
+
+# repos: ignore all individual repos and workspace files (no exceptions needed)
+repos/**
+
+# =============================================================================
+# SPECIFIC IGNORES
+# =============================================================================
+
+# macOS system files
 **/.DS_Store
+.CFUserTextEncoding
+.Trash
+.terminfo
+**/*.zwc
+
+# App data directories (not configuration)
+.afirma
+.idlerc
+.pyload
+
+# Cache and local runtime state
+.cache
+.local
+.npm
+
+# Shell history and session state (machine-specific, never track)
+.zsh_history
+.zsh_sessions
+
+# Auth tokens and machine-specific tool state
+.copilot
+.vscode
+.vscode-shared
+
+# Standard macOS user directories (personal data, not configuration)
+Applications
+Desktop
+Documents
+Downloads
+Movies
+Music
+Pictures
+Public
+
+# ~/bin — scripts live as shell functions in .zshrc instead
+bin
+
+# z4h migration backup — not configuration
+zsh-backup

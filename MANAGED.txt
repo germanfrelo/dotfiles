@@ -15,6 +15,9 @@
 │       └── .zshrc
 ├── .gemini
 │   └── GEMINI.md
+├── .markdownlint.jsonc
+├── .ssh
+│   └── config
 ├── .zshenv
 ├── Library
 │   └── Application Support
@@ -32,7 +35,6 @@
 │               └── snippets
 │                   ├── astro.json
 │                   └── css.json
-└── repos
-    └── germanfrelo
+└── svgo.config.js
 
-15 directories, 21 files
+15 directories, 23 files

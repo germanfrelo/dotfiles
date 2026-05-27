@@ -10,12 +10,15 @@
 	"cSpell.ignoreWords": [],
 	"cSpell.words": [
 		"chezmoi",
+		"chezmoiignore",
 		"chezmoiroot",
 		"chezmoiscripts",
 		"create-pull-request",
 		"darwin",
 		"github",
 		"linux",
+		"onepassword",
+		"onepasswordRead",
 		"peter-evans",
 		"tmpl"
 	],
