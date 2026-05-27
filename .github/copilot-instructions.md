@@ -41,6 +41,23 @@ Never edit live files — always edit source under `home/`, then run `chezmoi di
 
 When creating a new `private_` file, always author it as a template using `onepasswordRead` — never paste secret values directly. If the live file was edited directly and must be preserved, use `chezmoi re-add` instead — but if the source template calls any `onepassword*` function, abort and ask the user to re-template manually, to avoid rendering secrets into the source.
 
+## Command flags
+
+Always include `--verbose` in every suggested chezmoi command. For commands that modify state, always suggest the command with `--dry-run --verbose` first as a preview, then the same command with `--verbose` only to actually execute.
+
+**State-modifying commands** (preview-first pattern): `apply`, `add`, `re-add`, `update`, `forget`, `merge`, `merge-all`
+
+Example:
+
+```sh
+chezmoi apply --dry-run --verbose  # preview — no changes made
+chezmoi apply --verbose            # execute
+```
+
+**Read-only commands** (`--verbose` only): `diff`, `status`, `cat`, `managed`, `unmanaged`, `data`, `doctor`, `execute-template`, `edit`
+
+**Exceptions:** Do not add flags to `chezmoi git` or `chezmoi cd` — these are passthroughs to git and a shell respectively.
+
 ## Templates
 
 Data variable `machine_type` is `"personal"` or `"work"` — if unset or has an unexpected value, stop and ask the user to fix `~/.config/chezmoi/chezmoi.toml` before continuing.

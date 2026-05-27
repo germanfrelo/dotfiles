@@ -77,6 +77,8 @@ Chezmoi encodes file attributes in [source state attribute](https://chezmoi.io/r
 
 ## Quick reference
 
+> **Flag conventions:** Always use `--verbose` with every command. For state-modifying commands (`apply`, `add`, `re-add`, `update`, `forget`, `merge`, `merge-all`), run `--dry-run --verbose` first to preview, then the same command with `--verbose` only to execute.
+
 | Situation                                  | Command                                            |
 | ------------------------------------------ | -------------------------------------------------- |
 | Add a file to management                   | `chezmoi add ~/.file`                              |
@@ -121,9 +123,10 @@ Add a file from your home directory to the source state. If already managed, rep
 | `--autotemplate`    | Auto-generate template by replacing data values with template expressions — review output carefully |
 
 ```sh
-chezmoi add "$ZDOTDIR/.zshrc"
-chezmoi add "$XDG_CONFIG_HOME/git/config" --template
-chezmoi add ~/.ssh/id_ed25519 --encrypt
+chezmoi add --dry-run --verbose "$ZDOTDIR/.zshrc"                        # preview
+chezmoi add --verbose "$ZDOTDIR/.zshrc"                                  # plain file
+chezmoi add --verbose "$XDG_CONFIG_HOME/git/config" --template           # as template
+chezmoi add --verbose ~/.ssh/id_ed25519 --encrypt                        # encrypted
 ```
 
 ---
@@ -138,10 +141,10 @@ Open your editor on the source state file for a target. With no argument, opens 
 | `--watch`        | Auto-apply on every file save                                         |
 
 ```sh
-chezmoi edit "$ZDOTDIR/.zshrc"
-chezmoi edit --apply "$ZDOTDIR/.zshrc"
-chezmoi edit --watch "$ZDOTDIR/.zshrc"
-chezmoi edit                    # open the entire source directory
+chezmoi edit --verbose "$ZDOTDIR/.zshrc"
+chezmoi edit --apply --verbose "$ZDOTDIR/.zshrc"
+chezmoi edit --watch --verbose "$ZDOTDIR/.zshrc"
+chezmoi edit --verbose                               # open the entire source directory
 ```
 
 ---
@@ -157,9 +160,10 @@ Ensure targets match the target state, updating them if necessary. Prompts if a 
 | `--force`          | Make changes without prompting                                   |
 
 ```sh
-chezmoi apply
-chezmoi apply -nv                    # dry run — preview only
-chezmoi apply "$ZDOTDIR/.zshrc"      # apply one file
+chezmoi apply --dry-run --verbose                    # preview
+chezmoi apply --verbose                              # apply all
+chezmoi apply --dry-run --verbose "$ZDOTDIR/.zshrc"  # preview one file
+chezmoi apply --verbose "$ZDOTDIR/.zshrc"            # apply one file
 ```
 
 ---
@@ -173,8 +177,8 @@ Print the difference between the target state and the destination state — i.e.
 | `--reverse` | Reverse direction: show changes needed to make the destination match the target |
 
 ```sh
-chezmoi diff
-chezmoi diff "$ZDOTDIR/.zshrc"
+chezmoi diff --verbose
+chezmoi diff --verbose "$ZDOTDIR/.zshrc"
 ```
 
 ---
@@ -193,7 +197,7 @@ Column 1 = difference between the last-written state and the current destination
 | `R`       | Script will run |
 
 ```sh
-chezmoi status
+chezmoi status --verbose
 ```
 
 ---
@@ -225,7 +229,8 @@ chezmoi git -- push
 Pull from the remote repository and apply. Runs `git pull --autostash --rebase` then `chezmoi apply`.
 
 ```sh
-chezmoi update
+chezmoi update --dry-run --verbose  # preview
+chezmoi update --verbose            # pull and apply
 ```
 
 ---
@@ -237,7 +242,7 @@ chezmoi update
 Print the target state contents of a file to stdout without writing anything to disk. Useful for previewing template output.
 
 ```sh
-chezmoi cat "$XDG_CONFIG_HOME/git/config"
+chezmoi cat --verbose "$XDG_CONFIG_HOME/git/config"
 ```
 
 ---
@@ -247,8 +252,10 @@ chezmoi cat "$XDG_CONFIG_HOME/git/config"
 Pull the current destination state back into the source state for non-template files. Does **not** overwrite existing templates — use `chezmoi add --force` to replace a template.
 
 ```sh
-chezmoi re-add "$ZDOTDIR/.zshrc"
-chezmoi re-add               # re-add all modified files
+chezmoi re-add --dry-run --verbose "$ZDOTDIR/.zshrc"  # preview
+chezmoi re-add --verbose "$ZDOTDIR/.zshrc"            # execute
+chezmoi re-add --dry-run --verbose                    # preview all modified
+chezmoi re-add --verbose                              # re-add all modified files
 ```
 
 ---
@@ -258,7 +265,7 @@ chezmoi re-add               # re-add all modified files
 Three-way merge between the destination state, target state, and source state. Default tool: `vimdiff`.
 
 ```sh
-chezmoi merge "$ZDOTDIR/.zshrc"
+chezmoi merge --verbose "$ZDOTDIR/.zshrc"
 ```
 
 ---
@@ -268,7 +275,7 @@ chezmoi merge "$ZDOTDIR/.zshrc"
 Run `chezmoi merge` for every file whose actual state does not match the target state.
 
 ```sh
-chezmoi merge-all
+chezmoi merge-all --verbose
 ```
 
 ---
@@ -278,9 +285,9 @@ chezmoi merge-all
 List all entries managed by chezmoi.
 
 ```sh
-chezmoi managed
-chezmoi managed --include=files
-chezmoi managed -i files ~/.config
+chezmoi managed --verbose
+chezmoi managed --verbose --include=files
+chezmoi managed --verbose -i files ~/.config
 ```
 
 ---
@@ -290,8 +297,8 @@ chezmoi managed -i files ~/.config
 List all files in the home directory not managed by chezmoi.
 
 ```sh
-chezmoi unmanaged
-chezmoi unmanaged ~/.config
+chezmoi unmanaged --verbose
+chezmoi unmanaged --verbose ~/.config
 ```
 
 ---
@@ -301,8 +308,8 @@ chezmoi unmanaged ~/.config
 Write the computed [template data](https://chezmoi.io/reference/templates/variables/) to stdout. Useful for inspecting what variables are available in templates.
 
 ```sh
-chezmoi data
-chezmoi data --format=yaml
+chezmoi data --verbose
+chezmoi data --verbose --format=yaml
 ```
 
 ---
@@ -312,7 +319,7 @@ chezmoi data --format=yaml
 Check for common problems. Run this first when something unexpected happens.
 
 ```sh
-chezmoi doctor
+chezmoi doctor --verbose
 ```
 
 ---
@@ -322,9 +329,9 @@ chezmoi doctor
 Execute a template for testing without writing to disk. Pass a literal expression as an argument, or pipe a file.
 
 ```sh
-chezmoi execute-template '{{ .chezmoi.os }}'
-chezmoi execute-template '{{ .chezmoi.hostname }}'
-chezmoi execute-template < "$(chezmoi source-path)/dot_zshrc.tmpl"
+chezmoi execute-template --verbose '{{ .chezmoi.os }}'
+chezmoi execute-template --verbose '{{ .chezmoi.hostname }}'
+chezmoi execute-template --verbose < "$(chezmoi source-path)/dot_zshrc.tmpl"
 ```
 
 ---
@@ -334,7 +341,8 @@ chezmoi execute-template < "$(chezmoi source-path)/dot_zshrc.tmpl"
 Stop managing a file — removes it from the source state only. The file remains in your home directory unchanged. Alias: `unmanage`.
 
 ```sh
-chezmoi forget ~/.file
+chezmoi forget --dry-run --verbose ~/.file  # preview
+chezmoi forget --verbose ~/.file            # execute
 ```
 
 ---
@@ -344,9 +352,10 @@ chezmoi forget ~/.file
 ### Add a new file
 
 ```sh
-chezmoi add "$ZDOTDIR/.zshrc"                         # plain file
-chezmoi add "$XDG_CONFIG_HOME/git/config" --template  # mark as template
-chezmoi add ~/.ssh/id_ed25519 --encrypt               # encrypt in source
+chezmoi add --dry-run --verbose "$ZDOTDIR/.zshrc"                        # preview
+chezmoi add --verbose "$ZDOTDIR/.zshrc"                                  # plain file
+chezmoi add --verbose "$XDG_CONFIG_HOME/git/config" --template           # as template
+chezmoi add --verbose ~/.ssh/id_ed25519 --encrypt                        # encrypted
 ```
 
 Then commit from inside the source directory:
@@ -367,10 +376,10 @@ Three approaches, in recommended order.
 Opens the source file in your editor with the correct filename for syntax highlighting. Handles encrypted files transparently.
 
 ```sh
-chezmoi edit "$ZDOTDIR/.zshrc"           # edit only
-chezmoi edit --apply "$ZDOTDIR/.zshrc"   # edit and apply on quit
-chezmoi edit --watch "$ZDOTDIR/.zshrc"   # edit and auto-apply on every save
-chezmoi edit                             # open entire source directory
+chezmoi edit --verbose "$ZDOTDIR/.zshrc"                         # edit only
+chezmoi edit --apply --verbose "$ZDOTDIR/.zshrc"                 # edit and apply on quit
+chezmoi edit --watch --verbose "$ZDOTDIR/.zshrc"                 # edit and auto-apply on every save
+chezmoi edit --verbose                                           # open entire source directory
 ```
 
 #### Option 2 — `chezmoi cd`
@@ -380,7 +389,9 @@ Opens a shell in the source directory. Edit files directly, then diff and apply 
 ```sh
 chezmoi cd
 # edit files...
-chezmoi diff && chezmoi apply
+chezmoi diff --verbose
+chezmoi apply --dry-run --verbose  # preview
+chezmoi apply --verbose            # execute
 exit
 ```
 
@@ -389,8 +400,9 @@ exit
 If you edited `"$ZDOTDIR/.zshrc"` outside chezmoi, the change survives until the next `chezmoi apply`, which will prompt you to resolve the conflict. Pull the edit back into the source state with:
 
 ```sh
-chezmoi re-add "$ZDOTDIR/.zshrc"    # for plain files only
-chezmoi merge "$ZDOTDIR/.zshrc"     # when both source and live have changes to keep
+chezmoi re-add --dry-run --verbose "$ZDOTDIR/.zshrc"  # preview (plain files only)
+chezmoi re-add --verbose "$ZDOTDIR/.zshrc"            # execute (plain files only)
+chezmoi merge --verbose "$ZDOTDIR/.zshrc"             # when both source and live have changes to keep
 ```
 
 `re-add` does **not** overwrite templates. If the source file is a template, use `chezmoi add --force ~/.file` to replace it, then restore the template logic manually.
@@ -402,11 +414,12 @@ chezmoi merge "$ZDOTDIR/.zshrc"     # when both source and live have changes to 
 Always preview before applying:
 
 ```sh
-chezmoi diff                       # see all pending changes
-chezmoi diff "$ZDOTDIR/.zshrc"     # see changes for one file
-chezmoi apply                      # apply all
-chezmoi apply -nv                  # dry run — preview only, no changes made
-chezmoi apply -v                   # apply with verbose output
+chezmoi diff --verbose                               # all pending changes
+chezmoi diff --verbose "$ZDOTDIR/.zshrc"             # changes for one file
+chezmoi apply --dry-run --verbose                    # preview — no changes made
+chezmoi apply --verbose                              # apply all
+chezmoi apply --dry-run --verbose "$ZDOTDIR/.zshrc"  # preview one file
+chezmoi apply --verbose "$ZDOTDIR/.zshrc"            # apply one file
 ```
 
 ---
@@ -438,21 +451,23 @@ On a new machine, install chezmoi then initialise from your repo:
 ```sh
 brew install chezmoi
 chezmoi init git@github.com:username/dotfiles.git
-chezmoi diff                   # preview
-chezmoi apply                  # apply
+chezmoi diff --verbose                  # preview changes
+chezmoi apply --dry-run --verbose       # dry-run apply
+chezmoi apply --verbose                 # apply
 ```
 
 Short form for public repos (chezmoi guesses the GitHub URL):
 
 ```sh
 chezmoi init username
-chezmoi init username --apply  # init and apply in one step
+chezmoi init username --apply --verbose  # init and apply in one step
 ```
 
 Pull and apply the latest changes on any machine:
 
 ```sh
-chezmoi update
+chezmoi update --dry-run --verbose  # preview
+chezmoi update --verbose            # pull and apply
 ```
 
 ---
@@ -498,11 +513,11 @@ Whitespace trimming: `{{-` trims all whitespace (spaces, tabs, newlines) to the 
 ### Testing templates
 
 ```sh
-chezmoi execute-template '{{ .chezmoi.os }}'
-chezmoi execute-template '{{ . | toJson }}'
-chezmoi execute-template < "$(chezmoi source-path)/dot_zshrc.tmpl"
-chezmoi cat "$ZDOTDIR/.zshrc"   # render and show full target output
-chezmoi data                    # inspect all available variables
+chezmoi execute-template --verbose '{{ .chezmoi.os }}'
+chezmoi execute-template --verbose '{{ . | toJson }}'
+chezmoi execute-template --verbose < "$(chezmoi source-path)/dot_zshrc.tmpl"
+chezmoi cat --verbose "$ZDOTDIR/.zshrc"    # render and show full target output
+chezmoi data --verbose                     # inspect all available variables
 ```
 
 ---
@@ -587,7 +602,7 @@ Inside `<<'EOF'` heredocs in shell scripts, never use `-}}` (right whitespace tr
 
 ```sh
 # Re-render the template
-chezmoi execute-template < home/.chezmoiscripts/darwin/run_once_before_install-packages-darwin.sh.tmpl > /tmp/rendered.sh
+chezmoi execute-template --verbose < home/.chezmoiscripts/darwin/run_once_before_install-packages-darwin.sh.tmpl > /tmp/rendered.sh
 
 # Extract and sort the tracked list
 awk '/<<.*BUNDLED_PACKAGES_EOF/{f=1;next} /^BUNDLED_PACKAGES_EOF/{f=0} f && /^(brew|cask|mas)/{gsub(/ #.*/, ""); print}' /tmp/rendered.sh | sort > /tmp/brewfile-template.txt
