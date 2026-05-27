@@ -156,7 +156,7 @@
 	"explorer.fileNesting.enabled": true,
 	"explorer.fileNesting.expand": true,
 	"explorer.fileNesting.patterns": {
-		"//": "Last update at 5/25/2026, 11:31:04 PM",
+		"//": "Last update at 5/27/2026, 12:47:29 PM",
 		".agent": ".agent, .claude, .cline, .codebuddy, .codex, .commandcode, .continue, .crush, .cursor, .factory, .gemini, .goose, .junie, .kilocode, .kiro, .kode, .mcpjam, .mux, .neovate, .opencode, .openhands, .pi, .pochi, .qoder, .qwen, .roo, .trae, .windsurf, .zencoder",
 		".clang-tidy": ".clang-format, .clangd, compile_commands.json",
 		".env": "*.env, .env.*, .envrc, env.d.ts",
@@ -443,7 +443,7 @@
 	"window.autoDetectColorScheme": true,
 	"window.dialogStyle": "custom",
 	"window.zoomLevel": 0.75,
-	"workbench.activityBar.location": "top",
+	"workbench.activityBar.compact": true,
 	"workbench.browser.enableChatTools": true,
 	"workbench.diffEditorAssociations": {
 		// "*.md": "vscode.markdown.preview.editor"
