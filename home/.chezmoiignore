@@ -22,7 +22,7 @@
 !.config/git/ignore
 !.config/zsh
 !.config/zsh/.p10k.zsh
-!.config/zsh/.zprofile
+!.config/zsh/.zprofile  # managed as remove_ (chezmoi deletes it); negation required for remove_ to run under .config/**
 !.config/zsh/.zshenv
 !.config/zsh/.zshrc
 
