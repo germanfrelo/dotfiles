@@ -18,6 +18,7 @@
 ├── .ssh
 │   └── config
 ├── .zshenv
+├── .zshrc
 ├── Library
 │   └── Application Support
 │       └── Code
@@ -36,7 +37,7 @@
 │                   └── css.json
 └── svgo.config.js
 
-15 directories, 22 files
+15 directories, 23 files
 
 ## Enforced absent
 
