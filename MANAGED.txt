@@ -18,6 +18,7 @@
 ├── .markdownlint.jsonc
 ├── .ssh
 │   └── config
+├── .zprofile
 ├── .zshenv
 ├── Library
 │   └── Application Support
@@ -37,4 +38,4 @@
 │                   └── css.json
 └── svgo.config.js
 
-15 directories, 23 files
+15 directories, 24 files
