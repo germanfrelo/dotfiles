@@ -10,7 +10,6 @@
 │   │   └── ignore
 │   └── zsh
 │       ├── .p10k.zsh
-│       ├── .zprofile
 │       ├── .zshenv
 │       └── .zshrc
 ├── .gemini
@@ -18,7 +17,6 @@
 ├── .markdownlint.jsonc
 ├── .ssh
 │   └── config
-├── .zprofile
 ├── .zshenv
 ├── Library
 │   └── Application Support
@@ -38,4 +36,9 @@
 │                   └── css.json
 └── svgo.config.js
 
-15 directories, 24 files
+15 directories, 22 files
+
+## Enforced absent
+
+- `~/.config/zsh/.zprofile` — [ADR](docs/adr/0001-remove-zprofile.md)
+- `~/.zprofile` — [ADR](docs/adr/0001-remove-zprofile.md)

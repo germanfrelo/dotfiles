@@ -98,6 +98,33 @@ Example — to manage `Library/Application Support/Code/User/settings.json`, you
 
 `home/.chezmoiscripts/darwin/run_once_before_install-packages-darwin.sh.tmpl` is the single source of truth for all Homebrew packages. `brew bundle` is never destructive — removing a package from the template does **not** uninstall it; instruct the user to run `brew uninstall <pkg>` manually first. Do not run `brew uninstall` yourself — decline even if explicitly asked.
 
+## remove\_ targets
+
+Files that must never exist are enforced absent by chezmoi `remove_` source files. The current list of enforced-absent targets and their decision records is in the "Enforced absent" section of [`MANAGED.txt`](../MANAGED.txt).
+
+**Convention:** Every `remove_` source file must contain `adr: <relative-path-to-adr>` as its sole content. chezmoi ignores this content — only the filename triggers the remove. The `adr:` value links the enforcement to the decision record that justifies it.
+
+### Adding a new remove\_ target
+
+1. Write an ADR in `docs/adr/NNNN-<slug>.md` explaining why the file must be absent.
+2. Create the chezmoi source file at `home/[path/]remove_dot_<name>`.
+3. Write `adr: docs/adr/NNNN-<slug>.md` as the file's sole content.
+4. If the target is under a broadly-ignored directory, update [`home/.chezmoiignore`](../home/.chezmoiignore) — see `.chezmoiignore maintenance` above.
+5. `chezmoi apply --dry-run --verbose` — confirm the target appears as deleted.
+6. `chezmoi apply --verbose`.
+7. Commit (`MANAGED.txt` regenerates automatically via pre-commit hook).
+
+### Reverting a remove\_ target (re-enabling a file)
+
+1. Mark the ADR superseded: set `status: superseded` and add `superseded-by: NNNN-<slug>.md` if a replacement decision exists.
+2. `trash home/[path/]remove_dot_<name>` — delete the source file(s).
+3. If re-managing the file: `chezmoi add <live-path>` or create a source file manually.
+4. Update [`home/.chezmoiignore`](../home/.chezmoiignore): the negation for the target may now need adjusting.
+5. Update any section in this file that described the specific file's absence.
+6. `chezmoi apply --dry-run --verbose` — confirm.
+7. `chezmoi apply --verbose`.
+8. Commit.
+
 ## .zprofile is intentionally absent
 
-`.zprofile` must not exist at `~/.zprofile` or `$ZDOTDIR/.zprofile`. zsh4humans v5 automatically sets the full Homebrew environment (`HOMEBREW_PREFIX`, `PATH`, `MANPATH`, `INFOPATH`, `fpath`) — everything `eval "$(brew shellenv)"` would set. The absence is enforced by chezmoi `remove_` marker files (`home/remove_dot_zprofile` and `home/private_dot_config/zsh/remove_dot_zprofile`) which delete the target files on every `chezmoi apply`. Do not add or suggest adding `eval "$(brew shellenv)"` or any content to `.zprofile`. See `docs/adr/0001-remove-zprofile.md` for the full rationale and evidence.
+`.zprofile` must not exist at `~/.zprofile` or `$ZDOTDIR/.zprofile`. Do not add or suggest adding `eval "$(brew shellenv)"` or any content to `.zprofile`. See [`docs/adr/0001-remove-zprofile.md`](../docs/adr/0001-remove-zprofile.md) for the rationale and [`MANAGED.txt`](../MANAGED.txt) for the current list of enforced-absent targets.
