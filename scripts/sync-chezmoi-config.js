@@ -155,6 +155,10 @@ function injectSection(filePath, content) {
 		content +
 		"\n\n" +
 		source.slice(end);
+	if (updated === source) {
+		console.log(`  unchanged: ${filePath}`);
+		return;
+	}
 	writeFileSync(filePath, updated, "utf8");
 	console.log(`  updated: ${filePath}`);
 }
