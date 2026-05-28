@@ -125,6 +125,15 @@ Files that must never exist are enforced absent by chezmoi `remove_` source file
 7. `chezmoi apply --verbose`.
 8. Commit.
 
+## Commit conventions
+
+The managed files under `home/` are the product of this repository. This overrides the global commit type guidelines for this repo:
+
+- `feat` — adding or changing content under `home/` (the chezmoi source root)
+- `docs` — meta-documentation only: `README.md`, `docs/`, `.github/`
+- `chore` — tooling and automation: `scripts/`, `.husky/`, `package.json`, GitHub Actions
+- `style`, `fix`, `refactor`, etc. apply as normal within their respective paths
+
 ## .zprofile is intentionally absent
 
 `.zprofile` must not exist at `~/.zprofile` or `$ZDOTDIR/.zprofile`. Do not add or suggest adding `eval "$(brew shellenv)"` or any content to `.zprofile`. See [`docs/adr/0001-remove-zprofile.md`](../docs/adr/0001-remove-zprofile.md) for the rationale and [`MANAGED.txt`](../MANAGED.txt) for the current list of enforced-absent targets.
