@@ -98,13 +98,13 @@ Example — to manage `Library/Application Support/Code/User/settings.json`, you
 
 The Homebrew packages script (see the `homebrew` key in the configuration block above) is the single source of truth for all Homebrew packages. `brew bundle` is never destructive — removing a package from the template does **not** uninstall it; instruct the user to run `brew uninstall <pkg>` manually first. Do not run `brew uninstall` yourself — decline even if explicitly asked.
 
-## remove\_ targets
+## `remove_` targets
 
 Files that must never exist are enforced absent by chezmoi `remove_` source files. The current list of enforced-absent targets and their decision records is in the "Enforced absent" section of [`MANAGED.txt`](../MANAGED.txt).
 
 **Convention:** Every `remove_` source file must contain `adr: <relative-path-to-adr>` as its sole content. chezmoi ignores this content — only the filename triggers the remove. The `adr:` value links the enforcement to the decision record that justifies it.
 
-### Adding a new remove\_ target
+### Adding a new `remove_` target
 
 1. Write an ADR in `docs/adr/NNNN-<slug>.md` explaining why the file must be absent.
 2. Create the chezmoi source file at `home/[path/]remove_dot_<name>`.
@@ -114,7 +114,7 @@ Files that must never exist are enforced absent by chezmoi `remove_` source file
 6. `chezmoi apply --verbose`.
 7. Commit (`MANAGED.txt` regenerates automatically via pre-commit hook).
 
-### Reverting a remove\_ target (re-enabling a file)
+### Reverting a `remove_` target (re-enabling a file)
 
 1. Mark the ADR superseded: set `status: superseded` and add `superseded-by: NNNN-<slug>.md` if a replacement decision exists.
 2. `trash home/[path/]remove_dot_<name>` — delete the source file(s).
