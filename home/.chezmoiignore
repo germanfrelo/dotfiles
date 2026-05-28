@@ -48,6 +48,8 @@ Library/**
 !Library/Application Support/Code/User/prompts/*.instructions.md
 !Library/Application Support/Code/User/snippets
 !Library/Application Support/Code/User/snippets/*.json
+!Library/LaunchAgents
+!Library/LaunchAgents/com.germanfrelo.chezmoi-drift.plist
 
 # repos: ignore all individual repos and workspace files (no exceptions needed)
 repos/**

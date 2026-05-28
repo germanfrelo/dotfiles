@@ -20,24 +20,26 @@
 ├── .zshenv
 ├── .zshrc
 ├── Library
-│   └── Application Support
-│       └── Code
-│           └── User
-│               ├── prompts
-│               │   ├── commit-messages.instructions.md
-│               │   ├── general-conventions.instructions.md
-│               │   ├── instruction-writing.instructions.md
-│               │   ├── markdown.instructions.md
-│               │   ├── node-conventions.instructions.md
-│               │   ├── profile.instructions.md
-│               │   └── safe-deletion.instructions.md
-│               ├── settings.json
-│               └── snippets
-│                   ├── astro.json
-│                   └── css.json
+│   ├── Application Support
+│   │   └── Code
+│   │       └── User
+│   │           ├── prompts
+│   │           │   ├── commit-messages.instructions.md
+│   │           │   ├── general-conventions.instructions.md
+│   │           │   ├── instruction-writing.instructions.md
+│   │           │   ├── markdown.instructions.md
+│   │           │   ├── node-conventions.instructions.md
+│   │           │   ├── profile.instructions.md
+│   │           │   └── safe-deletion.instructions.md
+│   │           ├── settings.json
+│   │           └── snippets
+│   │               ├── astro.json
+│   │               └── css.json
+│   └── LaunchAgents
+│       └── com.germanfrelo.chezmoi-drift.plist
 └── svgo.config.js
 
-15 directories, 23 files
+16 directories, 24 files
 
 ## Enforced absent
 
