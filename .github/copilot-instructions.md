@@ -35,6 +35,10 @@ Chezmoi-managed dotfiles. For general chezmoi commands, concepts, and workflows,
   3. For any `key = value` line where the key matches `token`, `secret`, `password`, `key`, or `apikey` (case-insensitive), replace the value with `[REDACTED]`.
   4. If the value is longer than 20 characters or appears to be base64, hex, or JWT format, redact the entire right-hand side of `key = value` lines.
 
+## Pre-operation workflow
+
+Before suggesting any state-modifying chezmoi operation (`apply`, `add`, `re-add`, `forget`, `merge`, `merge-all`), always run `chezmoi status --verbose` to verify the actual state of managed files. Never assume what has or hasn't been applied. If `chezmoi status` shows no output, there is nothing pending — do not fabricate changes.
+
 ## Applying changes
 
 Never edit live files — always edit source under `home/`, then run `chezmoi diff` and show the output to the user. Only run `chezmoi apply` after the user confirms the diff looks correct.
@@ -55,6 +59,8 @@ chezmoi apply --verbose            # execute
 ```
 
 **Read-only commands** (`--verbose` only): `diff`, `status`, `cat`, `managed`, `unmanaged`, `data`, `doctor`, `execute-template`, `edit`
+
+**Diff in terminal:** The configured `diff_tool` is VS Code, so `chezmoi diff` opens a VS Code window and produces no terminal output. When running in an agent/terminal context, always pass `--use-builtin-diff` to see the unified diff inline: `chezmoi diff --use-builtin-diff`.
 
 **Exceptions:** Do not add flags to `chezmoi git` or `chezmoi cd` — these are passthroughs to git and a shell respectively.
 
@@ -91,3 +97,7 @@ Example — to manage `Library/Application Support/Code/User/settings.json`, you
 ## Homebrew packages
 
 `home/.chezmoiscripts/darwin/run_once_before_install-packages-darwin.sh.tmpl` is the single source of truth for all Homebrew packages. `brew bundle` is never destructive — removing a package from the template does **not** uninstall it; instruct the user to run `brew uninstall <pkg>` manually first. Do not run `brew uninstall` yourself — decline even if explicitly asked.
+
+## .zprofile is intentionally absent
+
+`.zprofile` must not exist at `~/.zprofile` or `$ZDOTDIR/.zprofile`. zsh4humans v5 automatically sets the full Homebrew environment (`HOMEBREW_PREFIX`, `PATH`, `MANPATH`, `INFOPATH`, `fpath`) — everything `eval "$(brew shellenv)"` would set. The absence is enforced by chezmoi `remove_` marker files (`home/remove_dot_zprofile` and `home/private_dot_config/zsh/remove_dot_zprofile`) which delete the target files on every `chezmoi apply`. Do not add or suggest adding `eval "$(brew shellenv)"` or any content to `.zprofile`. See `docs/adr/0001-remove-zprofile.md` for the full rationale and evidence.
