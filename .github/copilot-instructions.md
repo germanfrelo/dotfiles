@@ -37,7 +37,10 @@ Chezmoi-managed dotfiles. For general chezmoi commands, concepts, and workflows,
 
 ## Pre-operation workflow
 
-Before suggesting any state-modifying chezmoi operation (`apply`, `add`, `re-add`, `forget`, `merge`, `merge-all`), always run `chezmoi status --verbose` to verify the actual state of managed files. Never assume what has or hasn't been applied. If `chezmoi status` shows no output, there is nothing pending — do not fabricate changes.
+- **At session start:** run `chezmoi status` before any other work to establish the baseline state.
+- **Before any state-modifying operation** (`apply`, `add`, `re-add`, `forget`, `merge`, `merge-all`): run `chezmoi status` to verify actual state. Never assume what has or hasn't been applied. If output is empty, there is nothing pending — do not fabricate changes.
+- **After every state-modifying operation:** run `chezmoi status` again to confirm the change landed correctly.
+- **Before committing any file under `home/`:** run `chezmoi status` to check whether the source changes are already reflected in the live files. If pending changes exist, surface them before proceeding.
 
 ## Applying changes
 
@@ -134,6 +137,10 @@ The managed files under `home/` are the product of this repository. This overrid
 - `chore` — tooling and automation: `scripts/`, `.husky/`, `package.json`, GitHub Actions
 - `style`, `fix`, `refactor`, etc. apply as normal within their respective paths
 
-## .zprofile is intentionally absent
+## Zsh startup files
+
+Zsh config lives exclusively in `$ZDOTDIR` (`~/.config/zsh/`). Never write to or suggest writing to `~/.zshrc`, `~/.zlogin`, `~/.zlogout`, or any other `~/.*` zsh startup file — the sole exception is `~/.zshenv`, which exists only to export `ZDOTDIR`. When a tool's setup instructions say to add something to `~/.zshrc`, add it to `$ZDOTDIR/.zshrc` instead.
+
+`~/.zshrc` is chezmoi-managed as a monitoring stub — its sole purpose is to make chezmoi detect when a tool writes to it. If chezmoi reports it as `MM`, a tool has modified it; move those changes to `$ZDOTDIR/.zshrc` and run `chezmoi re-add ~/.zshrc`.
 
 `.zprofile` must not exist at `~/.zprofile` or `$ZDOTDIR/.zprofile`. Do not add or suggest adding `eval "$(brew shellenv)"` or any content to `.zprofile`. See [`docs/adr/0001-remove-zprofile.md`](../docs/adr/0001-remove-zprofile.md) for the rationale and [`MANAGED.txt`](../MANAGED.txt) for the current list of enforced-absent targets.

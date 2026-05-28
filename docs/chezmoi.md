@@ -197,7 +197,7 @@ Column 1 = difference between the last-written state and the current destination
 | `R`       | Script will run |
 
 ```sh
-chezmoi status --verbose
+chezmoi status
 ```
 
 ---
