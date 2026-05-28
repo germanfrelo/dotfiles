@@ -1,5 +1,14 @@
+# Regenerate MANAGED.txt only when staged changes affect the managed file list.
+# This avoids bundling an auto-generated MANAGED.txt update into commits that only touch unrelated files (e.g. documentation, config outside home/).
+#
+# Triggers:
+#   - Any file under home/ is staged (chezmoi source root — the managed list may have changed)
+#   - scripts/managed.js is staged (the generator changed — its output should be updated)
 if git ls-files --cached --error-unmatch scripts/managed.js > /dev/null 2>&1; then
-	node scripts/managed.js > MANAGED.txt
-	git add MANAGED.txt
+	if git diff --cached --name-only | grep -qE '^home/|^scripts/managed\.js$'; then
+		node scripts/managed.js > MANAGED.txt
+		git add MANAGED.txt
+	fi
 fi
+
 npx lint-staged

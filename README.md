@@ -18,7 +18,7 @@ See [MANAGED.txt](./MANAGED.txt) for the full file list.
 
 ## Features
 
-- **Always-current managed file list** — the pre-commit hook regenerates and auto-stages `MANAGED.txt` from the live chezmoi source state on every commit, with no manual step required.
+- **Always-current managed file list** — the pre-commit hook regenerates and auto-stages `MANAGED.txt` whenever files in the chezmoi source root (`home/`) or the generator script (`scripts/managed.js`) are staged, with no manual step required.
 - **Auto-generated documentation** — `npm run chezmoi:sync` reads `home/.chezmoi.toml.tmpl` and injects a "My configuration" table into `docs/chezmoi.md` and a machine-readable TOML block into `.github/copilot-instructions.md`, so both always reflect the actual chezmoi setup without manual editing.
 - **Continuous documentation sync** — a GitHub Action opens a pull request whenever chezmoi config source files change, keeping generated documentation in sync with configuration at all times.
 - **Unified chezmoi reference** — [`docs/chezmoi.md`](./docs/chezmoi.md) documents every command, workflow, and template pattern with examples tailored to this setup (`$ZDOTDIR`, `$XDG_CONFIG_HOME`, `$(chezmoi source-path)`).
