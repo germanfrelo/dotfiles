@@ -15,7 +15,7 @@ applyTo: "**"
 
 - Follow the Conventional Commits specification. Use the form `type: Message title` without a scope.
 - Do not include a scope unless the repository convention requires it. If used, format as `type(scope): Message title`.
-- Allowed types: `feat`, `fix`, `chore`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`. Use `feat` for new user-facing features, `fix` for bug fixes, `chore` for maintenance tasks.
+- Allowed types: `feat`, `fix`, `chore`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`. Use `feat` for new user-facing features, `fix` for user-facing bug fixes, `style` for formatting-only changes with no semantic impact (whitespace, punctuation, Markdown rendering), `chore` for maintenance tasks. TODO: Finish defining types and their usage guidelines.
 - Subject line must be written in the imperative mood ("Add feature", not "Added" or "Adds").
 - The commit subject must be 50 characters or fewer.
 - Commit message subject format: `type: Message title`
@@ -27,6 +27,7 @@ applyTo: "**"
 
 ## Body content and formatting
 
+- Include a body whenever the motivation is not fully captured by the type and subject line. When in doubt, include one.
 - Commit messages must be factual, not persuasive.
 - The commit body must explain _why_ the change was made, not restate what changed. The diff shows the what.
 - The commit body may use bullet points (`-`) to list multiple reasons or sub-points. Do not add a trailing summary sentence.
@@ -43,3 +44,7 @@ applyTo: "**"
 - If `git diff --staged` already contains multiple unrelated logical changes, recommend unstaging with `git reset HEAD` and restaging in groups via `git add -p` before proceeding.
 - Use `git add -p` for partial staging when changes to the same file belong to different commits.
 - If hunks cannot be cleanly split with `git add -p`, prefer making the commit anyway with both logical changes documented as separate bullet points in the body, and note in the body why they could not be separated.
+
+## Publishing commits
+
+- Never combine `git commit` and `git push` in a single compound command (e.g., `git commit ... && git push`). Always run them as separate steps — commit first, verify with `git log --oneline`, then push.
