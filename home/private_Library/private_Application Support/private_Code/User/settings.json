@@ -84,7 +84,13 @@
 			"languageId": "markdown"
 		}
 	],
-	"cSpell.userWords": ["Freixinós", "germanfrelo", "nvmrc", "ZDOTDIR"],
+	"cSpell.userWords": [
+		"Freixinós",
+		"germanfrelo",
+		"nvmrc",
+		"svgo.config.js",
+		"ZDOTDIR"
+	],
 	"css.format.spaceAroundSelectorSeparator": true,
 	"css.lint.ieHack": "warning",
 	"CSSNavigation.enableDefinitionCodeLens": true,
@@ -156,7 +162,7 @@
 	"explorer.fileNesting.enabled": true,
 	"explorer.fileNesting.expand": true,
 	"explorer.fileNesting.patterns": {
-		"//": "Last update at 5/27/2026, 4:39:51 PM",
+		"//": "Last update at 5/28/2026, 1:53:36 PM",
 		".agent": ".agent, .claude, .cline, .codebuddy, .codex, .commandcode, .continue, .crush, .cursor, .factory, .gemini, .goose, .junie, .kilocode, .kiro, .kode, .mcpjam, .mux, .neovate, .opencode, .openhands, .pi, .pochi, .qoder, .qwen, .roo, .trae, .windsurf, .zencoder",
 		".clang-tidy": ".clang-format, .clangd, compile_commands.json",
 		".env": "*.env, .env.*, .envrc, env.d.ts",
