@@ -317,3 +317,16 @@ alias ls="${aliases[ls]:-ls} -A"
 
 setopt glob_dots     # no special treatment for file names with a leading dot
 setopt no_auto_menu  # require an extra TAB press to open the completion menu
+
+# --------------------------------------------------
+
+# Warn if any chezmoi-managed file has drifted from its source.
+# Runs once per top-level shell (SHLVL=1) — skipped in subshells and nested zsh invocations.
+if (( SHLVL == 1 )); then
+    _chezmoi_status=$(chezmoi status 2>/dev/null)
+    if [[ -n "$_chezmoi_status" ]]; then
+        print -P "%F{yellow}⚠ chezmoi: managed files have drifted — run \`chezmoi diff --use-builtin-diff\` to review:%f"
+        print "$_chezmoi_status"
+    fi
+    unset _chezmoi_status
+fi
