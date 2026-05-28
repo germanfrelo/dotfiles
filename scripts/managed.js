@@ -1,40 +1,55 @@
 import { execFileSync, spawnSync } from "node:child_process";
-import { readdirSync, readFileSync } from "node:fs";
-import { join, relative } from "node:path";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 
-const sourceRoot = new URL("../home", import.meta.url).pathname;
+const repoRoot = new URL("../", import.meta.url).pathname;
 
-const managed = execFileSync("chezmoi", ["managed", "--exclude=remove"], {
+// Read managed files from the git index (staged + committed), not from disk.
+// This ensures MANAGED.txt reflects exactly what is (or will be) committed,
+// immune to uncommitted source files that would otherwise pollute the output.
+const gitOutput = execFileSync("git", ["ls-files", "--cached", "home/"], {
 	encoding: "utf8",
 });
+
+const allPaths = gitOutput.trim().split("\n").filter(Boolean);
+
+const targetPaths = allPaths
+	.filter((p) => !isChezmoiMetaFile(p) && !isRemoveFile(p))
+	.map(sourcePathToTarget)
+	.join("\n");
+
 const result = spawnSync("tree", ["-a", "--fromfile", "."], {
-	input: managed,
+	input: targetPaths,
 	encoding: "utf8",
 });
 process.stdout.write(result.stdout);
 
-const removeFiles = findRemoveFiles(sourceRoot).sort();
-if (removeFiles.length > 0) {
+const removePaths = allPaths.filter(isRemoveFile).sort();
+if (removePaths.length > 0) {
 	process.stdout.write("\n## Enforced absent\n\n");
-	for (const filePath of removeFiles) {
-		const targetPath = chezmoiSourceToTargetPath(filePath, sourceRoot);
-		const content = readFileSync(filePath, "utf8").trim();
+	for (const sourcePath of removePaths) {
+		const targetPath = sourcePathToTarget(sourcePath);
+		const content = readFileSync(join(repoRoot, sourcePath), "utf8").trim();
 		const adrRef = content.startsWith("adr:") ? content.slice(4).trim() : null;
 		const adrSuffix = adrRef ? ` — [ADR](${adrRef})` : "";
-		process.stdout.write(`- \`${targetPath}\`${adrSuffix}\n`);
+		process.stdout.write(`- \`~/${targetPath}\`${adrSuffix}\n`);
 	}
 }
 
-function findRemoveFiles(dir, results = []) {
-	for (const entry of readdirSync(dir, { withFileTypes: true })) {
-		const fullPath = join(dir, entry.name);
-		if (entry.isDirectory()) {
-			findRemoveFiles(fullPath, results);
-		} else if (entry.name.startsWith("remove_")) {
-			results.push(fullPath);
-		}
-	}
-	return results;
+function isChezmoiMetaFile(path) {
+	const first = path.slice("home/".length).split("/")[0];
+	// Top-level chezmoi config files (.chezmoiscripts/ is NOT excluded — it appears in the tree)
+	return first === ".chezmoi.toml.tmpl" || first === ".chezmoiignore";
+}
+
+function isRemoveFile(path) {
+	const parts = path.slice("home/".length).split("/");
+	return parts[parts.length - 1].startsWith("remove_");
+}
+
+function sourcePathToTarget(path) {
+	const parts = path.slice("home/".length).split("/");
+	return parts.map(chezmoiNameToTarget).join("/");
 }
 
 function chezmoiNameToTarget(name) {
@@ -48,6 +63,10 @@ function chezmoiNameToTarget(name) {
 		"modify_",
 		"symlink_",
 		"run_",
+		"once_",
+		"onchange_",
+		"before_",
+		"after_",
 		"remove_",
 		"literal_",
 		"empty_",
@@ -70,10 +89,4 @@ function chezmoiNameToTarget(name) {
 		name = name.slice(0, -5);
 	}
 	return name;
-}
-
-function chezmoiSourceToTargetPath(sourcePath, root) {
-	const rel = relative(root, sourcePath);
-	const components = rel.split("/").map(chezmoiNameToTarget);
-	return "~/" + components.join("/");
 }
