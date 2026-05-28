@@ -19,6 +19,7 @@ When creating or editing an instruction file, follow this workflow in order:
 - Include code examples when the rule concerns syntax, API usage, or naming patterns. Omit examples for purely procedural rules.
 - When adding a new bullet, insert it adjacent to topically related bullets within the same section. Inserting between existing bullets is not reordering; reordering means changing the position of an already-existing bullet, which is not allowed.
 - Only document rules that a model must decide at generation time. Skip conventions already enforced automatically by tools — for example: indentation, quote style, trailing commas (formatters), unused variables, import order (linters).
+- When writing a rule that would inline a hardcoded value (file path, setting name, command output) that already appears in a canonical or auto-generated source in the workspace, reference that source by name instead of duplicating the value, because the value will drift when the source changes.
 
 ## File structure
 

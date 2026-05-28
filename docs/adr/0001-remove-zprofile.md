@@ -7,13 +7,9 @@ date: 2026-05-28
 
 ## Context and Problem Statement
 
-macOS (Apple Silicon) installs Homebrew at `/opt/homebrew`. The standard Homebrew post-install
-instruction is to add `eval "$(/opt/homebrew/bin/brew shellenv)"` to `~/.zprofile`. This sets
-`HOMEBREW_PREFIX`, `HOMEBREW_CELLAR`, `HOMEBREW_REPOSITORY`, and adds Homebrew's directories to
-`PATH`, `MANPATH`, `INFOPATH`, and `fpath` (for zsh completions).
+macOS (Apple Silicon) installs Homebrew at `/opt/homebrew`. The standard Homebrew post-install instruction is to add `eval "$(/opt/homebrew/bin/brew shellenv)"` to `~/.zprofile`. This sets `HOMEBREW_PREFIX`, `HOMEBREW_CELLAR`, `HOMEBREW_REPOSITORY`, and adds Homebrew's directories to `PATH`, `MANPATH`, `INFOPATH`, and `fpath` (for zsh completions).
 
-zsh4humans (z4h) v5 is the shell framework in use. Its README explicitly warns:
-["Do not create \[`.zprofile`\] unless you are absolutely certain you need it."](https://github.com/romkatv/zsh4humans/blob/v5/README.md#additional-zsh-startup-files)
+zsh4humans (z4h) v5 is the shell framework in use. Its README explicitly warns: ["Do not create \[`.zprofile`\] unless you are absolutely certain you need it."](https://github.com/romkatv/zsh4humans/blob/v5/README.md#additional-zsh-startup-files)
 
 The question is whether `eval "$(brew shellenv)"` is still necessary when using z4h.
 
@@ -24,8 +20,7 @@ The question is whether `eval "$(brew shellenv)"` is still necessary when using 
 
 ## Decision Outcome
 
-Chosen option: **Remove `.zprofile` entirely**, because z4h v5 `main.zsh` replicates everything
-`brew shellenv` sets, making the explicit call redundant.
+Chosen option: **Remove `.zprofile` entirely**, because z4h v5 `main.zsh` replicates everything `brew shellenv` sets, making the explicit call redundant.
 
 ## Evidence
 
@@ -88,8 +83,7 @@ fpath=(
 )
 ```
 
-This also matches what the [zsh4humans tips.md](https://github.com/romkatv/zsh4humans/blob/v5/tips.md#homebrew)
-documents: "`HOMEBREW_PREFIX` being automatically set" by z4h.
+This also matches what the [zsh4humans tips.md](https://github.com/romkatv/zsh4humans/blob/v5/tips.md#homebrew) documents: "`HOMEBREW_PREFIX` being automatically set" by z4h.
 
 ### Full parity table
 
@@ -105,18 +99,12 @@ documents: "`HOMEBREW_PREFIX` being automatically set" by z4h.
 
 ### Confirmation from the z4h author
 
-The z4h author (romkatv) confirmed this directly in
-[zsh4humans issue #351](https://github.com/romkatv/zsh4humans/issues/351) (opened by the dotfiles
-owner):
+The z4h author (romkatv) confirmed this directly in [zsh4humans issue #351](https://github.com/romkatv/zsh4humans/issues/351) (opened by the dotfiles owner):
 
 > "Yes, the brew line is no longer needed."
 
 ## Consequences
 
 - `.zprofile` is entirely absent from the dotfiles.
-- chezmoi [`remove_` source files](https://www.chezmoi.io/reference/source-state-attributes/) are
-  used to enforce this: `home/private_dot_config/zsh/remove_dot_zprofile` (guards `$ZDOTDIR/.zprofile`)
-  and `home/remove_dot_zprofile` (guards `~/.zprofile`). chezmoi deletes the target files on every
-  `chezmoi apply`, preventing accidental re-creation by any tool or agent.
-- If z4h is ever replaced or removed, the Homebrew environment setup must be restored manually
-  (e.g. by re-adding `eval "$(brew shellenv)"` to `~/.zshrc` or `~/.zprofile`).
+- chezmoi [`remove_` source files](https://www.chezmoi.io/reference/source-state-attributes/) are used to enforce this: `home/private_dot_config/zsh/remove_dot_zprofile` (guards `$ZDOTDIR/.zprofile`) and `home/remove_dot_zprofile` (guards `~/.zprofile`). chezmoi deletes the target files on every `chezmoi apply`, preventing accidental re-creation by any tool or agent.
+- If z4h is ever replaced or removed, the Homebrew environment setup must be restored manually (e.g. by re-adding `eval "$(brew shellenv)"` to `~/.zshrc` or `~/.zprofile`).

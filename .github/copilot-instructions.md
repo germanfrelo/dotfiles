@@ -72,19 +72,19 @@ Data variable `machine_type` is `"personal"` or `"work"` — if unset or has an 
 
 ## Git config template
 
-`home/private_dot_config/private_git/private_config.tmpl` renders to `~/.config/git/config`. It fetches the SSH signing key from 1Password at render time via `onepasswordRead`.
+The source template for `~/.config/git/config` (see the `git_config` key in the configuration block above) fetches the SSH signing key from 1Password at render time via `onepasswordRead`.
 
 ## .chezmoiignore maintenance
 
 `home/.chezmoiignore` uses broad directory patterns (`Library/**`, `.config/**`, etc.) with `!`-negations for every managed file inside them. Negation patterns always take priority over includes in chezmoi.
 
-**Critical gotcha — `/**`matches the directory itself:** In chezmoi's doublestar matching,`Library/**`also matches`Library` (not just its contents). This means you need a negation for the top-level directory **and\*\* every intermediate directory in the path, not only the final file. Without `!Library`, chezmoi never traverses into `Library/` at all, so no nested negations ever fire.
+**Critical gotcha — `/**` matches the directory itself:** In chezmoi's doublestar matching,`Library/**`also matches`Library` (not just its contents). This means you need a negation for the top-level directory **and\*\* every intermediate directory in the path, not only the final file. Without `!Library`, chezmoi never traverses into `Library/` at all, so no nested negations ever fire.
 
-**Rule:** When adding a new managed file under a broadly-ignored directory (`.config/`, `.gemini/`, `.ssh/`, `Library/`), add negations for the file **and every directory component in its path** (including the root like `!.config`, `!Library`).
+**Rule:** When adding a new managed file under a broadly-ignored directory (any directory covered by a broad pattern in `home/.chezmoiignore`), add negations for the file **and every directory component in its path** (including the root like `!.config`, `!Library`).
 
 Example — to manage `Library/Application Support/Code/User/settings.json`, you need:
 
-```
+```gitignore
 !Library
 !Library/Application Support
 !Library/Application Support/Code
@@ -96,7 +96,7 @@ Example — to manage `Library/Application Support/Code/User/settings.json`, you
 
 ## Homebrew packages
 
-`home/.chezmoiscripts/darwin/run_once_before_install-packages-darwin.sh.tmpl` is the single source of truth for all Homebrew packages. `brew bundle` is never destructive — removing a package from the template does **not** uninstall it; instruct the user to run `brew uninstall <pkg>` manually first. Do not run `brew uninstall` yourself — decline even if explicitly asked.
+The Homebrew packages script (see the `homebrew` key in the configuration block above) is the single source of truth for all Homebrew packages. `brew bundle` is never destructive — removing a package from the template does **not** uninstall it; instruct the user to run `brew uninstall <pkg>` manually first. Do not run `brew uninstall` yourself — decline even if explicitly asked.
 
 ## remove\_ targets
 

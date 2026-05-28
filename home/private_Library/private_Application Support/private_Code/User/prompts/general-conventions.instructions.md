@@ -33,7 +33,7 @@ The following rules apply only to the formatting of your own chat responses; the
 ## Writing
 
 - End list items with a full stop. Items consisting of a single word or a bare code span are exempt.
-- Do not duplicate in any secondary document (READMEs, docs, instruction files) data that already exists in a canonical source (config files, `package.json`, source code); reference the source instead. When inline data in a secondary element is unavoidable because the reader cannot access the canonical source directly, flag the duplication risk and note where the canonical source lives.
+- Do not duplicate in any secondary document (READMEs, docs, instruction files) data that already exists in a canonical source (config files, `package.json`, source code, auto-generated outputs); reference the source instead. When inline data in a secondary element is unavoidable because the reader cannot access the canonical source directly, flag the duplication risk and note where the canonical source lives.
 
 ## Session tracking
 
