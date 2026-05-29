@@ -35,6 +35,14 @@ The following rules apply only to the formatting of your own chat responses; the
 - End list items with a full stop. Items consisting of a single word or a bare code span are exempt.
 - Do not duplicate in any secondary document (READMEs, docs, instruction files) data that already exists in a canonical source (config files, `package.json`, source code, auto-generated outputs); reference the source instead. When inline data in a secondary element is unavoidable because the reader cannot access the canonical source directly, flag the duplication risk and note where the canonical source lives.
 
+## Documentation writing
+
+- In any README, feature list, or "what you get" section, use **capability-first structure**: lead each section or entry with a single sentence stating what the reader _gains_ (the outcome), then list the tools or files that deliver it.
+- Do not lead with file names or tool names. The reader's first question is "what does this do for me?", not "what is this file called?".
+- Keep the capability sentence factual and specific — describe the actual outcome, not a vague quality ("consistent, automatically enforced code style on every commit" not "better code quality").
+- Cross-reference when a tool or file has a dual role that affects more than one section (e.g. `.editorconfig` is listed in Editor configuration but also feeds Prettier's formatting config — note both).
+- This rule applies to READMEs, template docs, and feature descriptions. It does not apply to API docs, changelogs, or migration guides, where the file/function _is_ the topic.
+
 ## Session tracking
 
 - When an action from a session is expected to remain actionable beyond the current working day, or affects a deliverable, decision record, or shared artefact, proactively suggest adding it to the user project management app (as a new task or appended to an existing one).
