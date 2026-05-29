@@ -20,7 +20,7 @@ applyTo: "**"
 
 The following rules apply only to the formatting of your own chat responses; they do NOT apply to Markdown files you create or edit on my behalf:
 
-- When showing file content that contains triple-backtick fenced code blocks, use a four-backtick (or more) outer fence. This prevents the inner triple-backticks from breaking the formatting of the chat response. For example:
+- When showing file content that contains fenced code blocks, use an outer fence with one more backtick than the longest backtick run inside the content — minimum four backticks. This prevents any inner fence from being misread as the closing delimiter. For example:
 
   ````md
   ```js
