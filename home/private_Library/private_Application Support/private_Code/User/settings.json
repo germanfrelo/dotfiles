@@ -151,7 +151,7 @@
 	"explorer.fileNesting.enabled": true,
 	"explorer.fileNesting.expand": true,
 	"explorer.fileNesting.patterns": {
-		"//": "Last update at 6/1/2026, 11:58:42 PM",
+		"//": "Last update at 6/2/2026, 5:38:16 PM",
 		".agent": ".agent, .claude, .cline, .codebuddy, .codex, .commandcode, .continue, .crush, .cursor, .factory, .gemini, .goose, .junie, .kilocode, .kiro, .kode, .mcpjam, .mux, .neovate, .opencode, .openhands, .pi, .pochi, .qoder, .qwen, .roo, .trae, .windsurf, .zencoder",
 		".clang-tidy": ".clang-format, .clangd, compile_commands.json",
 		".env": "*.env, .env.*, .envrc, env.d.ts",
@@ -376,6 +376,9 @@
 	"window.zoomLevel": 0.75,
 	"workbench.activityBar.compact": true,
 	"workbench.browser.enableChatTools": true,
+	"workbench.diffEditorAssociations": {
+		"*.md": "default"
+	},
 	"workbench.editor.highlightModifiedTabs": true,
 	"workbench.editor.pinnedTabsOnSeparateRow": true,
 	"workbench.editor.tabSizing": "shrink",
