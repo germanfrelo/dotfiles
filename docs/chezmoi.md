@@ -472,6 +472,51 @@ chezmoi update --verbose            # pull and apply
 
 ---
 
+### VS Code managed files
+
+`settings.json`, `prompts/*.instructions.md`, and `snippets/*.json` are tracked by chezmoi as a git-tracked backup. VS Code Settings Sync is the primary source of truth and syncs these files automatically across machines — all categories remain enabled. chezmoi captures snapshots in the reverse direction (live → source) via `re-add`, never the other way in normal use. See [ADR 0002](./adr/0002-vscode-settings-sync-coexistence.md) for the rationale.
+
+#### Day-to-day (Settings Sync updates a file)
+
+Settings Sync pulls a change from the cloud → the chezmoi-drift LaunchAgent detects drift, or `chezmoi status` shows the file as `MM`:
+
+```sh
+chezmoi diff --use-builtin-diff ~/Library/Application\ Support/Code/User/settings.json  # review
+chezmoi re-add --dry-run --verbose ~/Library/Application\ Support/Code/User/settings.json  # preview
+chezmoi re-add --verbose ~/Library/Application\ Support/Code/User/settings.json  # update backup
+chezmoi git add . && chezmoi git -- commit -m "chore: ..."
+```
+
+Substitute the relevant path for prompts (`User/prompts/<file>.instructions.md`) and snippets (`User/snippets/<file>.json`).
+
+#### `chezmoi apply` conflict rule
+
+If `chezmoi apply` prompts about a VS Code file (the live file was modified since chezmoi last wrote it), always choose **keep destination** — Settings Sync's version wins. Then immediately:
+
+```sh
+chezmoi re-add --verbose ~/Library/Application\ Support/Code/User/<file>
+chezmoi git add . && chezmoi git -- commit -m "chore: ..."
+```
+
+#### New machine setup (with Settings Sync)
+
+```sh
+# 1. Install tooling and initialise chezmoi
+chezmoi init git@github.com:germanfrelo/dotfiles.git
+chezmoi apply --verbose  # writes VS Code files from backup as a baseline
+
+# 2. Open VS Code and sign in — Settings Sync runs with all categories enabled
+#    If VS Code shows a "Local vs Cloud" conflict dialog: choose Accept Cloud
+
+# 3. After Settings Sync completes, check for drift
+chezmoi diff --use-builtin-diff ~/Library/Application\ Support/Code/User/
+# If drift: re-add each changed VS Code file and commit
+chezmoi re-add --verbose ~/Library/Application\ Support/Code/User/<file>
+chezmoi git add . && chezmoi git -- commit -m "chore: ..."
+```
+
+---
+
 ## Template basics
 
 Chezmoi uses Go's [`text/template`](https://pkg.go.dev/text/template) syntax, extended with [sprig](https://masterminds.github.io/sprig/) functions. A file is treated as a template if it has a `.tmpl` suffix.
