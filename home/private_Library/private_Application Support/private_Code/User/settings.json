@@ -6,25 +6,22 @@
 		"prettier.singleAttributePerLine": true
 	},
 	"[jsonc]": {
-		"prettier.trailingComma": "none" // Fix: VS Code config files (settings.json) are treated as JSONC, which allows trailing commas — although VS Code discourages their use. Prettier adds them to JSONC files by default, which causes the "JSON: Sort Document" command in VS Code to crash (addChildProperty error). Issue: https://github.com/microsoft/vscode/issues/307805
+		"prettier.trailingComma": "none" // Fix: VS Code config files (settings.json) are treated as JSONC, which allows trailing commas — although VS Code discourages their use. Prettier adds them to JSONC files by default (see https://github.com/prettier/prettier/issues/15956), which causes the "JSON: Sort Document" command in VS Code to crash (addChildProperty error). Issue: https://github.com/microsoft/vscode/issues/307805
 	},
 	"[markdown]": {
-		// 1. It's better than Prettier and VS Code's built-in. Note: the rest of the formatting options are ignored by markdownlint, but I keep them in case the markdownlint extension is not installed or enabled.
+		// 1. It's customizable and more complete than Prettier and VS Code's built-in. Note: the rest of the formatting options are ignored by markdownlint, but I keep them in case the markdownlint extension is not installed or enabled.
 		// 2. Whitespace characters have a special meaning in Markdown, so it's useful to see them.
-		// 3. Ref: https://code.visualstudio.com/docs/languages/markdown#_keep-trailing-whitespace-in-order-to-create-line-breaks
-		// 4. Ref: https://github.com/DavidAnson/markdownlint/blob/main/doc/md010.md
-		// 5. Ref: https://github.com/DavidAnson/markdownlint/blob/main/doc/md007.md
-		"diffEditor.ignoreTrimWhitespace": false, // 4
+		// 3. Ref: https://github.com/DavidAnson/markdownlint/blob/main/doc/md010.md
+		// 4. Ref: https://github.com/DavidAnson/markdownlint/blob/main/doc/md007.md
+		"diffEditor.ignoreTrimWhitespace": false, // 2
 		"editor.defaultFormatter": "DavidAnson.vscode-markdownlint", // 1
 		"editor.insertSpaces": true, // 3
 		"editor.renderWhitespace": "boundary", // 2
-		"editor.tabSize": 2, // 5
-		"files.trimTrailingWhitespace": false, // 4
-		"prettier.tabWidth": 2, // 5
-		"prettier.useTabs": false
+		"editor.tabSize": 2, // 4
+		"prettier.tabWidth": 2, // 4
+		"prettier.useTabs": false // 3
 	},
 	"[yaml]": {
-		// Ref: https://code.visualstudio.com/docs/getstarted/settings#_default-settings
 		"prettier.tabWidth": 2,
 		"prettier.useTabs": false
 	},
@@ -91,8 +88,6 @@
 		"svgo.config.js",
 		"ZDOTDIR"
 	],
-	"css.format.spaceAroundSelectorSeparator": true,
-	"css.lint.ieHack": "warning",
 	"CSSNavigation.enableDefinitionCodeLens": true,
 	"CSSNavigation.enableReferenceCodeLens": true,
 	"debug.allowBreakpointsEverywhere": true,
@@ -109,6 +104,7 @@
 	"diffEditor.hideUnchangedRegions.contextLineCount": 4,
 	"diffEditor.hideUnchangedRegions.enabled": true,
 	"diffEditor.ignoreTrimWhitespace": false,
+	"editor.bracketPairColorization.enabled": false,
 	"editor.codeActionsOnSave": {
 		"source.addMissingImports": "explicit",
 		"source.fixAll.eslint": "explicit",
@@ -152,17 +148,10 @@
 	"editor.wordBasedSuggestions": "off",
 	"editor.wordWrap": "on",
 	"emmet.excludeLanguages": ["css", "markdown"],
-	"eslint.validate": [
-		"astro", // .astro
-		"javascript", // .js
-		"javascriptreact", // .jsx
-		"typescript", // .ts
-		"typescriptreact" // .tsx
-	],
 	"explorer.fileNesting.enabled": true,
 	"explorer.fileNesting.expand": true,
 	"explorer.fileNesting.patterns": {
-		"//": "Last update at 5/28/2026, 1:53:36 PM",
+		"//": "Last update at 6/1/2026, 11:58:42 PM",
 		".agent": ".agent, .claude, .cline, .codebuddy, .codex, .commandcode, .continue, .crush, .cursor, .factory, .gemini, .goose, .junie, .kilocode, .kiro, .kode, .mcpjam, .mux, .neovate, .opencode, .openhands, .pi, .pochi, .qoder, .qwen, .roo, .trae, .windsurf, .zencoder",
 		".clang-tidy": ".clang-format, .clangd, compile_commands.json",
 		".env": "*.env, .env.*, .envrc, env.d.ts",
@@ -276,7 +265,6 @@
 		"dot_zprofile": "shellscript",
 		"dot_zshrc": "shellscript",
 		"LICENSE": "plaintext",
-		"npmrc": "properties",
 		"pre-commit": "shellscript",
 		"private_config.tmpl": "properties"
 	},
@@ -285,7 +273,6 @@
 	"files.trimTrailingWhitespace": true, // Trailing whitespace has no purpose; consistent formatting throughout the source code makes it easier to read.
 	"git.addAICoAuthor": "off",
 	"git.autofetch": true,
-	"git.blame.editorDecoration.enabled": true,
 	"git.blame.editorDecoration.template": "${authorDateAgo} • ${subject} (${hashShort})",
 	"git.blame.statusBarItem.template": "${hashShort} • ${subject}",
 	"git.enableCommitSigning": true,
@@ -295,58 +282,11 @@
 	"github.copilot.chat.agent.autoFix": true,
 	"github.copilot.chat.cli.remote.enabled": true,
 	"github.copilot.chat.codesearch.enabled": true,
-	"github.copilot.chat.commitMessageGeneration.instructions": [
-		{
-			"text": "Format: 'type: Message title'. Type lowercase. First letter after ': ' must be uppercase; e.g. 'feat: Add rate limiting', not 'feat: add rate limiting'."
-		},
-		{
-			"text": "Subject must be 50 characters or fewer, imperative mood (e.g. 'Add', not 'Added' or 'Adds')."
-		},
-		{
-			"text": "Avoid vague words like 'improve', 'enhance', 'better', 'optimise' — describe what actually changed."
-		},
-		{
-			"text": "Body explains WHY the change was made, not what changed. Hard-wrap at 72 characters, filling each line close to the limit."
-		},
-		{
-			"text": "Factual only. No persuasive summary sentences that restate the bullet points."
-		},
-		{
-			"text": "Each commit must represent one logically distinct change with a single clear purpose."
-		}
-	],
 	"github.copilot.chat.localIndex.enabled": true,
-	"github.copilot.chat.pullRequestDescriptionGeneration.instructions": [
-		{
-			"text": "Structure: what changed and why, followed by testing notes. Do not restate commit messages verbatim."
-		},
-		{
-			"text": "Explicitly call out breaking changes in a dedicated section."
-		},
-		{
-			"text": "Keep the description factual. Do not use persuasive language ('this improves', 'now much better')."
-		}
-	],
-	"github.copilot.chat.reviewSelection.instructions": [
-		{
-			"text": "Flag semantic issues (logic errors, edge cases) first, then style issues. Distinguish between blocking issues and suggestions."
-		},
-		{
-			"text": "For frontend code: flag accessibility violations (missing alt text, keyboard traps, ARIA misuse), not just code quality."
-		},
-		{
-			"text": "Reference the specific line or function when raising an issue. Do not speak in generalities."
-		},
-		{
-			"text": "Flag potential security issues explicitly (XSS, insecure data handling, exposed secrets)."
-		},
-		{
-			"text": "Note breaking changes that affect public APIs or expected behaviour."
-		}
-	],
 	"github.copilot.enable": {
 		"*": true,
 		"css": false,
+		"jsonc": true,
 		"markdown": false,
 		"plaintext": false,
 		"scminput": true
@@ -370,64 +310,50 @@
 	"js/ts.suggest.completeFunctionCalls": true,
 	"js/ts.suggest.names": false,
 	"js/ts.updateImportsOnFileMove.enabled": "always",
-	"less.lint.ieHack": "warning",
-	"less.lint.unknownVendorSpecificProperties": "error",
-	"less.lint.vendorPrefix": "ignore",
 	"markdown.updateLinksOnFileMove.enabled": "always",
 	"markdown.validate.enabled": true,
+	"markdown.validate.referenceLinks.enabled": "ignore", // Workaround to avoid false positives for footnote-style; see bug: https://github.com/microsoft/vscode-markdown-languageservice/issues/100
 	"markdownlint.config": {
 		"code-block-style": {
-			"style": "fenced"
+			"style": "fenced" // Matches Google's Markdown Style Guide
 		},
 		"code-fence-style": {
-			"style": "backtick"
+			"style": "backtick" // Most used style; matches GitHub's default style and Google's Markdown Style Guide
 		},
-		"default": true,
+		"emphasis-style": {
+			"style": "asterisk" // (*emphasis*) Most used style
+		},
 		"heading-style": {
-			"style": "atx"
+			"style": "atx" // (# h1) Most used style; matches GitHub's default style and Google's Markdown Style Guide
 		},
 		"hr-style": {
-			"style": "---"
+			"style": "---" // Most used style; matches Ciro Santilli's Markdown Style Guide
 		},
-		"line-length": false,
-		"no-bare-urls": false,
-		"no-blanks-blockquote": false, // Allow consecutive blockquotes/alerts/callouts
+		"line-length": false, // Line length should be authored, wrapped at viewport width, and controlled by CSS; hard breaks produce commit diff noise
+		"no-blanks-blockquote": false, // Allows consecutive blockquotes/alerts/callouts
 		"no-duplicate-heading": {
-			"siblings_only": true
+			"siblings_only": true // Allows duplicate headings with different parents (as is common in changelogs)
 		},
-		"no-inline-html": false,
+		"no-inline-html": {
+			"allowed_elements": ["details", "summary"], // Allows HTML for features unavailable in Markdown
+			"table_allowed_elements": ["br"] // Allows line breaks in table cells
+		},
 		"no-trailing-punctuation": {
-			"punctuation": ".,;:。，；：！" // Allow '!' (default is ".,;:!。，；：！")
+			"punctuation": ".,;:。，；：！" // Allows '!' (default is ".,;:!。，；：！")
 		},
 		"no-trailing-spaces": {
-			"strict": true
-		},
-		"ol-prefix": {
-			"style": "ordered"
+			"strict": true // Disallows unnecessary trailing spaces
 		},
 		"strong-style": {
-			"style": "asterisk"
+			"style": "asterisk" // (**strong**) Most used style
 		},
 		"table-pipe-style": {
-			"style": "leading_and_trailing"
-		},
-		"ul-style": {
-			"style": "dash"
+			"style": "leading_and_trailing" // Helps some parsers, provides visual clarity, and matches GitHub's default style
 		}
 	},
 	"prettier.tabWidth": 4,
 	"prettier.useTabs": true,
 	"scm.defaultViewMode": "tree",
-	"scss.format.spaceAroundSelectorSeparator": true,
-	"scss.lint.ieHack": "warning",
-	"search.exclude": {
-		"**/build/**": true,
-		"**/dist/**": true,
-		"**/package-lock.json": true,
-		"**/pnpm-lock.yaml": true,
-		"**/vendor/**": true,
-		"**/yarn.lock": true
-	},
 	"search.searchEditor.doubleClickBehaviour": "selectWord",
 	"search.searchEditor.reusePriorSearchConfiguration": true,
 	"stylelint.validate": [
@@ -446,14 +372,10 @@
 	"terminal.integrated.fontFamily": "'MesloLGS NF'",
 	"terminal.integrated.lineHeight": 1.2,
 	"terminal.integrated.stickyScroll.enabled": true,
-	"window.autoDetectColorScheme": true,
 	"window.dialogStyle": "custom",
 	"window.zoomLevel": 0.75,
 	"workbench.activityBar.compact": true,
 	"workbench.browser.enableChatTools": true,
-	"workbench.diffEditorAssociations": {
-		// "*.md": "vscode.markdown.preview.editor"
-	},
 	"workbench.editor.highlightModifiedTabs": true,
 	"workbench.editor.pinnedTabsOnSeparateRow": true,
 	"workbench.editor.tabSizing": "shrink",
@@ -462,6 +384,7 @@
 	"workbench.editor.wrapTabs": true,
 	"workbench.editorAssociations": {
 		"*.copilotmd": "vscode.markdown.preview.editor", // default
+		"*.md": "vscode.markdown.preview.editor",
 		"*.svg": "default"
 	},
 	"workbench.iconTheme": "material-icon-theme",
