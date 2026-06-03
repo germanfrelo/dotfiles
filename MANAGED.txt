@@ -13,7 +13,8 @@
 │       ├── .zshenv
 │       └── .zshrc
 ├── .gemini
-│   └── GEMINI.md
+│   ├── GEMINI.md
+│   └── settings.json
 ├── .markdownlint.jsonc
 ├── .ssh
 │   └── config
@@ -39,7 +40,7 @@
 │       └── com.germanfrelo.chezmoi-drift.plist
 └── svgo.config.js
 
-16 directories, 24 files
+16 directories, 25 files
 
 ## Enforced absent
 

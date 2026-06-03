@@ -26,10 +26,11 @@
 !.config/zsh/.zshenv
 !.config/zsh/.zshrc
 
-# .gemini: ignore runtime/auth data; keep only GEMINI.md
+# .gemini
 .gemini/**
 !.gemini
 !.gemini/GEMINI.md
+!.gemini/settings.json
 
 # .ssh: ignore keys and session data; keep only the config file
 # config.local is intentionally excluded — machine-specific hosts go there
