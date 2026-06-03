@@ -151,7 +151,7 @@
 	"explorer.fileNesting.enabled": true,
 	"explorer.fileNesting.expand": true,
 	"explorer.fileNesting.patterns": {
-		"//": "Last update at 6/2/2026, 5:38:16 PM",
+		"//": "Last update at 6/3/2026, 10:51:38 AM",
 		".agent": ".agent, .claude, .cline, .codebuddy, .codex, .commandcode, .continue, .crush, .cursor, .factory, .gemini, .goose, .junie, .kilocode, .kiro, .kode, .mcpjam, .mux, .neovate, .opencode, .openhands, .pi, .pochi, .qoder, .qwen, .roo, .trae, .windsurf, .zencoder",
 		".clang-tidy": ".clang-format, .clangd, compile_commands.json",
 		".env": "*.env, .env.*, .envrc, env.d.ts",
@@ -354,6 +354,11 @@
 	"prettier.tabWidth": 4,
 	"prettier.useTabs": true,
 	"scm.defaultViewMode": "tree",
+	"scm.diffDecorationsGutterPattern": {
+		"added": true
+	},
+	"scm.repositories.explorer": true,
+	"scm.repositories.visible": 0,
 	"search.searchEditor.doubleClickBehaviour": "selectWord",
 	"search.searchEditor.reusePriorSearchConfiguration": true,
 	"stylelint.validate": [
