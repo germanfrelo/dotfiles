@@ -138,45 +138,6 @@ autoload -Uz zmv
 function md() { [[ $# == 1 ]] && mkdir -p -- "$1" && cd -- "$1" }
 compdef _directories md
 
-# Scan all subdirectories for Git status and unpushed commits
-function check-repos() {
-	# Check if there are even any directories to look at
-	if [[ -z "$(print */.git/(N))" ]]; then
-		echo "No Git repositories found in the current directory."
-		return 1
-	fi
-
-	for d in */.git/(N); do
-		local dir="${d%/.git/}"
-		printf "Checking \033[1;34m%s\033[0m... " "$dir"
-
-		# Move into the repo using a subshell context or local cd to keep it clean
-		(
-			cd "$dir" || return
-
-			# 1. Check for unstaged, staged, or untracked changes
-			local git_status=$(git status --porcelain 2>/dev/null)
-
-			# 2. Check for unpushed commits
-			local unpushed=""
-			if git rev-parse --verify @{u} >/dev/null 2>&1; then
-				unpushed=$(git log @{u}..HEAD --oneline 2>/dev/null)
-			fi
-
-			# Report results
-			if [[ -n "$git_status" && -n "$unpushed" ]]; then
-				echo -e '\033[0;31mDirty working directory AND unpushed commits!\033[0m'
-			elif [[ -n "$git_status" ]]; then
-				echo -e '\033[0;33mDirty working directory (uncommitted changes).\033[0m'
-			elif [[ -n "$unpushed" ]]; then
-				echo -e '\033[0;35mUnpushed commits exist.\033[0m'
-			else
-				echo -e '\033[0;32mClean & up-to-date.\033[0m'
-			fi
-		)
-	done
-}
-
 # Append the HEAD commit hash to .git-blame-ignore-revs.
 # Only runs if the commit title matches style*:*format* (case-insensitive).
 # Skips automatically if the commit is itself a .git-blame-ignore-revs update.
