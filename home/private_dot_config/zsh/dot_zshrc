@@ -182,6 +182,43 @@ function gbignore() {
 	print -P "%F{green}Done: added %s to .git-blame-ignore-revs.%f" "$commit_hash"
 }
 
+# Copies a file to all subdirectories in the current path, excluding the source directory.
+# Usage: syncfile path/to/source/.gitattributes
+syncfile() {
+	local src_file="$1"
+
+	# 1. Validation: Ensure source file exists
+	if [[ ! -f "$src_file" ]]; then
+		echo "🚫 Error: Source file '$src_file' not found."
+		return 1
+	fi
+
+	# 2. Extraction: Get the filename and the absolute path of its parent directory
+	local filename=$(basename "$src_file")
+	local src_dir_abs=$(cd "$(dirname "$src_file")" && pwd)
+
+	echo "🚀 Syncing '$filename' to all repositories (excluding origin)..."
+
+	# 3. Execution: Loop through all directories
+	for dir in */; do
+		# Remove trailing slash for path comparison
+		local target_dir="${dir%/}"
+		local target_dir_abs=$(cd "$target_dir" && pwd)
+
+		# Skip the directory that contains the source file
+		if [[ "$target_dir_abs" == "$src_dir_abs" ]]; then
+			echo "🏠 Skipping source: $target_dir"
+			continue
+		fi
+
+		# Only sync to directories that are actually Git repositories (optional, but safer for you)
+		if [[ -d "$target_dir/.git" ]]; then
+			cp "$src_file" "$target_dir/$filename"
+			echo "✅ Synced to: $target_dir"
+		fi
+	done
+}
+
 # --------------------------------------------------
 
 # Define named directories: ~w <=> Windows home directory on WSL.
