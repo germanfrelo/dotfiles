@@ -33,7 +33,7 @@
 	"chat.editing.explainChanges.enabled": true,
 	"chat.editor.wordWrap": "on",
 	"chat.fontFamily": "IBM Plex Sans",
-	"chat.fontSize": 14,
+	"chat.fontSize": 15,
 	"chat.includeReferencedInstructions": true, // If an instructions file links to another via Markdown, the linked file is also loaded. Enables modular instruction composition.
 	"chat.restoreLastPanelSession": true,
 	"chat.sessionSync.enabled": true,
@@ -56,7 +56,6 @@
 		}
 	},
 	"chat.viewProgressBadge.enabled": true,
-	"chat.viewSessions.orientation": "stacked",
 	"colorize.colorized_colors": ["HEXA", "RGB", "HSL", "OKLAB", "OKLCH"],
 	"colorize.include": ["**/*.json"],
 	"colorize.languages": ["json"],
@@ -381,9 +380,6 @@
 	"window.zoomLevel": 0.75,
 	"workbench.activityBar.compact": true,
 	"workbench.browser.enableChatTools": true,
-	"workbench.diffEditorAssociations": {
-		"*.md": "default"
-	},
 	"workbench.editor.highlightModifiedTabs": true,
 	"workbench.editor.pinnedTabsOnSeparateRow": true,
 	"workbench.editor.tabSizing": "shrink",
@@ -392,7 +388,6 @@
 	"workbench.editor.wrapTabs": true,
 	"workbench.editorAssociations": {
 		"*.copilotmd": "vscode.markdown.preview.editor", // default
-		"*.md": "vscode.markdown.preview.editor",
 		"*.svg": "default"
 	},
 	"workbench.iconTheme": "material-icon-theme",
