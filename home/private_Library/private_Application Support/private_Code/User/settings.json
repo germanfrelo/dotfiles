@@ -6,22 +6,20 @@
 		"prettier.singleAttributePerLine": true
 	},
 	"[jsonc]": {
-		"prettier.trailingComma": "none" // Fix: VS Code config files (settings.json) are treated as JSONC, which allows trailing commas — although VS Code discourages their use. Prettier adds them to JSONC files by default (see https://github.com/prettier/prettier/issues/15956), which causes the "JSON: Sort Document" command in VS Code to crash (addChildProperty error). Issue: https://github.com/microsoft/vscode/issues/307805
+		// Fix: VS Code config files (settings.json) are treated as JSONC, which allows trailing commas — although VS Code discourages their use. Prettier adds them to JSONC files by default (see https://github.com/prettier/prettier/issues/15956), which causes the "JSON: Sort Document" command in VS Code to crash (addChildProperty error). Issue: https://github.com/microsoft/vscode/issues/307805
+		"prettier.trailingComma": "none"
 	},
 	"[markdown]": {
-		// 1. It's customizable and more complete than Prettier and VS Code's built-in. Note: the rest of the formatting options are ignored by markdownlint, but I keep them in case the markdownlint extension is not installed or enabled.
-		// 2. Whitespace characters have a special meaning in Markdown, so it's useful to see them.
-		// 3. Ref: https://github.com/DavidAnson/markdownlint/blob/main/doc/md010.md
-		// 4. Ref: https://github.com/DavidAnson/markdownlint/blob/main/doc/md007.md
-		"diffEditor.ignoreTrimWhitespace": false, // 2
-		"editor.defaultFormatter": "DavidAnson.vscode-markdownlint", // 1
-		"editor.insertSpaces": true, // 3
-		"editor.renderWhitespace": "boundary", // 2
-		"editor.tabSize": 2, // 4
-		"prettier.tabWidth": 2, // 4
-		"prettier.useTabs": false // 3
+		// Whitespace characters have a special meaning in Markdown, so it's useful to see them.
+		"diffEditor.ignoreTrimWhitespace": false,
+		"editor.renderWhitespace": "boundary"
+	},
+	"[python]": {
+		"editor.defaultFormatter": "charliermarsh.ruff"
 	},
 	"[yaml]": {
+		"editor.indentSize": 2,
+		"editor.insertSpaces": true,
 		"prettier.tabWidth": 2,
 		"prettier.useTabs": false
 	},
@@ -33,19 +31,29 @@
 	"chat.editing.explainChanges.enabled": true,
 	"chat.editor.wordWrap": "on",
 	"chat.fontFamily": "IBM Plex Sans",
-	"chat.fontSize": 15,
-	"chat.includeReferencedInstructions": true, // If an instructions file links to another via Markdown, the linked file is also loaded. Enables modular instruction composition.
+	"chat.fontSize": 14,
+	"chat.includeReferencedInstructions": true,
 	"chat.restoreLastPanelSession": true,
 	"chat.sessionSync.enabled": true,
 	"chat.tools.compressOutput.enabled": true,
 	"chat.tools.urls.autoApprove": {
 		"https://code.visualstudio.com": true,
+		"https://developers.notion.com": true,
+		"https://docs.astro.build": true,
 		"https://docs.github.com": {
 			"approveRequest": false,
 			"approveResponse": true
 		},
 		"https://github.blog": true,
 		"https://github.com/microsoft/vscode/wiki/*": true,
+		"https://help.obsidian.md": {
+			"approveRequest": true,
+			"approveResponse": false
+		},
+		"https://obsidian.md": {
+			"approveRequest": false,
+			"approveResponse": true
+		},
 		"https://www.chezmoi.io": {
 			"approveRequest": false,
 			"approveResponse": true
@@ -56,6 +64,7 @@
 		}
 	},
 	"chat.viewProgressBadge.enabled": true,
+	"chat.viewSessions.orientation": "stacked",
 	"colorize.colorized_colors": ["HEXA", "RGB", "HSL", "OKLAB", "OKLCH"],
 	"colorize.include": ["**/*.json"],
 	"colorize.languages": ["json"],
@@ -108,8 +117,10 @@
 		"source.addMissingImports": "explicit",
 		"source.fixAll.eslint": "explicit",
 		"source.fixAll.markdownlint": "explicit",
+		"source.fixAll.ruff": "explicit",
 		"source.fixAll.stylelint": "explicit",
 		"source.organizeImports": "explicit",
+		"source.organizeLinkDefinitions": "explicit",
 		"source.sortImports": "explicit"
 	},
 	"editor.cursorBlinking": "phase",
@@ -143,14 +154,14 @@
 	"editor.stickyTabStops": true,
 	"editor.suggest.preview": true,
 	"editor.suggest.showStatusBar": true,
-	"editor.tabSize": 4,
+	"editor.tabSize": 3,
 	"editor.wordBasedSuggestions": "off",
 	"editor.wordWrap": "on",
 	"emmet.excludeLanguages": ["css", "markdown"],
 	"explorer.fileNesting.enabled": true,
 	"explorer.fileNesting.expand": true,
 	"explorer.fileNesting.patterns": {
-		"//": "Last update at 6/3/2026, 10:51:38 AM",
+		"//": "Last update at 22/06/2026, 17:52:49",
 		".agent": ".agent, .claude, .cline, .codebuddy, .codex, .commandcode, .continue, .crush, .cursor, .factory, .gemini, .goose, .junie, .kilocode, .kiro, .kode, .mcpjam, .mux, .neovate, .opencode, .openhands, .pi, .pochi, .qoder, .qwen, .roo, .trae, .windsurf, .zencoder",
 		".clang-tidy": ".clang-format, .clangd, compile_commands.json",
 		".env": "*.env, .env.*, .envrc, env.d.ts",
@@ -254,7 +265,7 @@
 		"*.wat": "$(capture).wasm",
 		"*.xaml": "$(capture).xaml.cs"
 	},
-	"extensions.autoUpdate": false,
+	"extensions.autoUpdate": "off",
 	"files.associations": {
 		".chezmoi.toml.tmpl": "toml",
 		".nvmrc": "properties",
@@ -267,13 +278,14 @@
 		"pre-commit": "shellscript",
 		"private_config.tmpl": "properties"
 	},
-	"files.insertFinalNewline": true, // See https://stackoverflow.com/questions/729692
+	"files.insertFinalNewline": true,
 	"files.trimFinalNewlines": true,
-	"files.trimTrailingWhitespace": true, // Trailing whitespace has no purpose; consistent formatting throughout the source code makes it easier to read.
+	"files.trimTrailingWhitespace": true,
 	"git.addAICoAuthor": "off",
 	"git.autofetch": true,
-	"git.blame.editorDecoration.template": "${authorDateAgo} • ${subject} (${hashShort})",
-	"git.blame.statusBarItem.template": "${hashShort} • ${subject}",
+	"git.blame.editorDecoration.enabled": true,
+	"git.blame.editorDecoration.template": "${authorDateAgo} | ${authorName} | ${subject}",
+	"git.blame.statusBarItem.template": "${authorDateAgo} | ${subject}",
 	"git.enableCommitSigning": true,
 	"git.inputValidation": true,
 	"git.verboseCommit": true,
@@ -314,50 +326,37 @@
 	"markdown.validate.referenceLinks.enabled": "ignore", // Workaround to avoid false positives for footnote-style; see bug: https://github.com/microsoft/vscode-markdown-languageservice/issues/100
 	"markdownlint.config": {
 		"code-block-style": {
-			"style": "fenced" // Matches Google's Markdown Style Guide
+			// Rationale: https://google.github.io/styleguide/docguide/style.html#codeblocks
+			"style": "fenced"
 		},
-		"code-fence-style": {
-			"style": "backtick" // Most used style; matches GitHub's default style and Google's Markdown Style Guide
-		},
-		"emphasis-style": {
-			"style": "asterisk" // (*emphasis*) Most used style
-		},
+		"extends": "markdownlint/style/prettier", // Disables all markdownlint rules that overlap with Prettier (see https://github.com/DavidAnson/markdownlint/blob/main/doc/Prettier.md)
+		// Note: All rules are enabled by default.
 		"heading-style": {
-			"style": "atx" // (# h1) Most used style; matches GitHub's default style and Google's Markdown Style Guide
+			// Rationale: https://google.github.io/styleguide/docguide/style.html#atx-style-headings and https://cirosantilli.com/markdown-style-guide/#option-header-atx
+			"style": "atx"
 		},
-		"hr-style": {
-			"style": "---" // Most used style; matches Ciro Santilli's Markdown Style Guide
-		},
-		"line-length": false, // Line length should be authored, wrapped at viewport width, and controlled by CSS; hard breaks produce commit diff noise
-		"no-blanks-blockquote": false, // Allows consecutive blockquotes/alerts/callouts
 		"no-duplicate-heading": {
-			"siblings_only": true // Allows duplicate headings with different parents (as is common in changelogs)
+			// Rationale: See example in https://github.com/DavidAnson/markdownlint/blob/main/doc/md024.md
+			"siblings_only": true
 		},
-		"no-inline-html": {
-			"allowed_elements": ["details", "summary"], // Allows HTML for features unavailable in Markdown
-			"table_allowed_elements": ["br"] // Allows line breaks in table cells
-		},
+		"no-inline-html": false, // Rationale: Personal preference.
+		"no-missing-space-atx": true, // Rationale: Re-enables rule (disabled by Prettier preset) to fix '#Heading' -> '# Heading'.
+		"no-missing-space-closed-atx": true, // Rationale: Re-enables rule (disabled by Prettier preset) to fix '#Heading#' -> '# Heading #'.
+		// Rationale: Space inside code spans can be intentional when documenting literal space characters as part of syntax notation (e.g. ` :`).
+		"no-space-in-code": false,
 		"no-trailing-punctuation": {
-			"punctuation": ".,;:。，；：！" // Allows '!' (default is ".,;:!。，；：！")
-		},
-		"no-trailing-spaces": {
-			"strict": true // Disallows unnecessary trailing spaces
-		},
-		"strong-style": {
-			"style": "asterisk" // (**strong**) Most used style
-		},
-		"table-pipe-style": {
-			"style": "leading_and_trailing" // Helps some parsers, provides visual clarity, and matches GitHub's default style
+			// Rationale: Allows '!' (default is ".,;:!。，；：！").
+			"punctuation": ".,;:。，；：！"
 		}
 	},
-	"prettier.tabWidth": 4,
+	"prettier.tabWidth": 3,
 	"prettier.useTabs": true,
 	"scm.defaultViewMode": "tree",
 	"scm.diffDecorationsGutterPattern": {
 		"added": true
 	},
 	"scm.repositories.explorer": true,
-	"scm.repositories.visible": 0,
+	// "scm.repositories.visible": 0,
 	"search.searchEditor.doubleClickBehaviour": "selectWord",
 	"search.searchEditor.reusePriorSearchConfiguration": true,
 	"stylelint.validate": [
@@ -376,14 +375,15 @@
 	"terminal.integrated.fontFamily": "'MesloLGS NF'",
 	"terminal.integrated.lineHeight": 1.2,
 	"terminal.integrated.stickyScroll.enabled": true,
-	"window.dialogStyle": "custom",
+	"window.autoDetectColorScheme": true,
+	"window.confirmBeforeClose": "always",
 	"window.zoomLevel": 0.75,
 	"workbench.activityBar.compact": true,
 	"workbench.browser.enableChatTools": true,
 	"workbench.editor.highlightModifiedTabs": true,
 	"workbench.editor.pinnedTabsOnSeparateRow": true,
-	"workbench.editor.tabSizing": "shrink",
-	"workbench.editor.tabSizingFixedMinWidth": 80,
+	"workbench.editor.tabSizingFixedMaxWidth": 320,
+	"workbench.editor.tabSizingFixedMinWidth": 160,
 	"workbench.editor.useModal": "off",
 	"workbench.editor.wrapTabs": true,
 	"workbench.editorAssociations": {
