@@ -29,8 +29,11 @@
 # .gemini
 .gemini/**
 !.gemini
-!.gemini/GEMINI.md
+!.gemini/AGENTS.md
 !.gemini/settings.json
+.gemini/antigravity-cli/**
+!.gemini/antigravity-cli
+!.gemini/antigravity-cli/settings.json
 
 # .ssh: ignore keys and session data; keep only the config file
 # config.local is intentionally excluded — machine-specific hosts go there

@@ -13,7 +13,9 @@
 │       ├── .zshenv
 │       └── .zshrc
 ├── .gemini
-│   ├── GEMINI.md
+│   ├── AGENTS.md
+│   ├── antigravity-cli
+│   │   └── settings.json
 │   └── settings.json
 ├── .markdownlint.jsonc
 ├── .ssh
@@ -40,7 +42,7 @@
 │       └── com.germanfrelo.chezmoi-drift.plist
 └── svgo.config.js
 
-16 directories, 25 files
+17 directories, 26 files
 
 ## Enforced absent
 
