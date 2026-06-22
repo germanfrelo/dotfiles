@@ -9,9 +9,9 @@
 	autocorrect = prompt
 
 # Automatically use .git-blame-ignore-revs in any repo that has one.
-# Ref. https://docs.github.com/en/repositories/working-with-files/using-files/viewing-and-understanding-files
+# Ref. https://stackoverflow.com/a/79824780
 [blame]
-	ignoreRevsFile = .git-blame-ignore-revs
+	ignoreRevsFile = :(optional).git-blame-ignore-revs
 
 # Handle line endings properly.
 # Ref. https://docs.github.com/en/get-started/git-basics/configuring-git-to-handle-line-endings
@@ -48,4 +48,4 @@
 {{ if eq .chezmoi.os "darwin" }}
 [gpg "ssh"]
 	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
-{{ end }}
+{{- end }}
