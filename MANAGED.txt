@@ -17,7 +17,6 @@
 │   ├── antigravity-cli
 │   │   └── settings.json
 │   └── settings.json
-├── .markdownlint.jsonc
 ├── .ssh
 │   └── config
 ├── .zshenv
@@ -42,7 +41,7 @@
 │       └── com.germanfrelo.chezmoi-drift.plist
 └── svgo.config.js
 
-17 directories, 26 files
+17 directories, 25 files
 
 ## Enforced absent
 
