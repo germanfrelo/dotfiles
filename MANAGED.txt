@@ -46,4 +46,5 @@
 ## Enforced absent
 
 - `~/.config/zsh/.zprofile` — [ADR](docs/adr/0001-remove-zprofile.md)
+- `~/.editorconfig`
 - `~/.zprofile`
