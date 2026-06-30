@@ -48,7 +48,7 @@ zstyle ':z4h:ssh:*'                   enable 'no'
 # enabled hosts.
 zstyle ':z4h:ssh:*' send-extra-files '~/.nanorc' '~/.env.zsh'
 
-# --------------------------------------------------
+# ==================================================
 
 # Clone additional Git repositories from GitHub.
 #
@@ -57,7 +57,7 @@ zstyle ':z4h:ssh:*' send-extra-files '~/.nanorc' '~/.env.zsh'
 # example. If you don't plan to use Oh My Zsh, delete this line.
 # z4h install ohmyzsh/ohmyzsh || return
 
-# --------------------------------------------------
+# ==================================================
 
 # Install or update core components (fzf, zsh-autosuggestions, etc.) and
 # initialize Zsh. After this point console I/O is unavailable until Zsh
@@ -65,16 +65,20 @@ zstyle ':z4h:ssh:*' send-extra-files '~/.nanorc' '~/.env.zsh'
 # perform network I/O must be done above. Everything else is best done below.
 z4h init || return
 
-# --------------------------------------------------
+# ==================================================
 
 # Extend PATH.
 path=(~/bin $path)
 
-# --------------------------------------------------
+# ==================================================
 
 # Export environment variables.
 
-# GPG TTY for passphrase prompts
+# Preferred editor for CLI tools
+export EDITOR="code --wait"
+export VISUAL="code --wait"
+
+# Tells GPG tools to draw password pop-ups here (prevents terminal freezes)
 export GPG_TTY=$TTY
 
 # User directories (XDG Base Directory Specification)
@@ -95,7 +99,7 @@ export NVM_DIR="$HOME/.nvm"
 # man / less
 export LESSHISTFILE=- # avoid showing .lesshst file in $HOME when using `man' command
 
-# --------------------------------------------------
+# ==================================================
 
 # Source additional local files if they exist.
 
@@ -104,7 +108,7 @@ z4h source ~/.env.zsh
 # Ref: https://github.com/romkatv/zsh4humans/issues/351
 z4h source $NVM_DIR/nvm.sh $NVM_DIR/bash_completion
 
-# --------------------------------------------------
+# ==================================================
 
 # Use additional Git repositories pulled in with `z4h install`.
 #
@@ -112,7 +116,7 @@ z4h source $NVM_DIR/nvm.sh $NVM_DIR/bash_completion
 # z4h source ohmyzsh/ohmyzsh/lib/diagnostics.zsh  # source an individual file
 # z4h load   ohmyzsh/ohmyzsh/plugins/emoji-clock  # load a plugin
 
-# --------------------------------------------------
+# ==================================================
 
 # Define key bindings.
 
@@ -124,13 +128,13 @@ z4h bindkey z4h-cd-forward Shift+Right  # cd into the next directory
 z4h bindkey z4h-cd-up      Shift+Up     # cd into the parent directory
 z4h bindkey z4h-cd-down    Shift+Down   # cd into a child directory
 
-# --------------------------------------------------
+# ==================================================
 
 # Autoload functions.
 
 autoload -Uz zmv
 
-# --------------------------------------------------
+# ==================================================
 
 # Define functions and completions.
 
@@ -219,59 +223,220 @@ syncfile() {
 	done
 }
 
-# --------------------------------------------------
+# List all repositories in a directory (defaulting to 'repos') that have uncommitted changes
+function list-dirty() {
+	local target_dir="${1:-$HOME/repos/germanfrelo}"
+
+	if [[ ! -d "$target_dir" ]]; then
+		echo "🚫 Error: Directory '$target_dir' not found."
+		return 1
+	fi
+
+	echo "🔍 Scanning '$target_dir' for dirty repositories..."
+	local found=0
+
+	for dir in "$target_dir"/*/; do
+		# Check if it's a git repo and if status is not empty
+		if [[ -d "$dir/.git" ]] && [[ -n $(git -C "$dir" status --porcelain 2>/dev/null) ]]; then
+			# Use eza to print the name in a clean, distinct color
+			printf "🚩 %s\n" "$(basename "$dir")"
+			((found++))
+		fi
+	done
+
+	if [[ $found -eq 0 ]]; then
+		echo "✨ All repositories are clean in $(basename "$target_dir")!"
+	else
+		echo "\nFound $found dirty repository/repositories."
+	fi
+}
+
+# Open all dirty repositories in a specified directory using VS Code
+function code-dirty() {
+	# 1. Enforce explicit intent: require an argument
+	if [[ $# -eq 0 ]]; then
+		echo "🚫 Usage: code-dirty <directory> (e.g., '.' or 'repos')"
+		return 1
+	fi
+
+	local target_dir="$1"
+
+	# 2. Map the "repos" keyword to the absolute path
+	if [[ "$target_dir" == "repos" ]]; then
+		target_dir="$HOME/repos/germanfrelo"
+	fi
+
+	# 3. Validate the directory exists
+	if [[ ! -d "$target_dir" ]]; then
+		echo "🚫 Error: Directory '$target_dir' not found."
+		return 1
+	fi
+
+	echo "🔍 Scanning '$target_dir' for repositories with uncommitted changes..."
+	local found=0
+
+	# Loop through all subdirectories in the target path
+	for dir in "$target_dir"/*/; do
+		# Check if it's a git repo and if the status is not empty
+		if [[ -d "$dir/.git" ]] && [[ -n $(git -C "$dir" status --porcelain 2>/dev/null) ]]; then
+			echo "📂 Opening dirty repo: $(basename "$dir")"
+			code "$dir"
+			((found++))
+		fi
+	done
+
+	if [[ $found -eq 0 ]]; then
+		echo "✨ All repositories are clean in $(basename "$target_dir")!"
+	fi
+}
+
+# List dirty repositories or open them in VS Code
+# Usage: list-dirty <dir> [-o | --open]
+function list-dirty() {
+	# 1. Check for directory argument
+	if [[ $# -lt 1 ]]; then
+		echo "🚫 Usage: list-dirty <directory> [--open]"
+		return 1
+	fi
+
+	local target_dir="$1"
+	local open_mode=false
+
+	# 2. Handle optional flag
+	if [[ "$2" == "-o" || "$2" == "--open" ]]; then
+		open_mode=true
+	fi
+
+	# 3. Map keyword
+	if [[ "$target_dir" == "repos" ]]; then
+		target_dir="$HOME/repos/germanfrelo"
+	fi
+
+	if [[ ! -d "$target_dir" ]]; then
+		echo "🚫 Error: Directory '$target_dir' not found."
+		return 1
+	fi
+
+	echo "🔍 Scanning '$target_dir' for dirty repositories..."
+	local found=0
+
+	for dir in "$target_dir"/*/; do
+		if [[ -d "$dir/.git" ]] && [[ -n $(git -C "$dir" status --porcelain 2>/dev/null) ]]; then
+			printf "🚩 %s\n" "$(basename "$dir")"
+
+			# 4. Conditional action
+			if [[ "$open_mode" == true ]]; then
+				code "$dir"
+			fi
+
+			((found++))
+		fi
+	done
+
+	if [[ $found -eq 0 ]]; then
+		echo "✨ All repositories are clean in $(basename "$target_dir")!"
+	else
+		echo "\nFound $found dirty repository/repositories."
+	fi
+}
+
+# ==================================================
 
 # Define named directories: ~w <=> Windows home directory on WSL.
 
 [[ -z $z4h_win_home ]] || hash -d w=$z4h_win_home
 
-# --------------------------------------------------
+# ==================================================
 
-# Define aliases.
+# ALIASES
 
-# Files and directories
+# --- 1. Extending Pre-existing Aliases (Dynamic Syntax) ---
+
+# The zsh4humans framework automatically creates hidden aliases for the commands 'diff, 'grep' and 'ls' to ensure they use the correct colour flags for the OS.
+# The dynamic syntax ${aliases[cmd]:-cmd} syntax must be used here. This safely appends my custom flags to the end of the framework's aliases without destroying the colour settings.
+
+alias ls="${aliases[ls]:-ls} -A"
+
+# Examples of how to safely extend other pre-existing aliases.
+# If these need to be overridden in the future, uncomment and replace "..." with the desired flags.
+# alias diff="${aliases[diff]:-diff} ..."
+# alias grep="${aliases[grep]:-grep} ..."
+
+# ------------------------------
+
+# --- 2. Defining Standard Aliases (Explicit Syntax) ---
+
+# These commands are not modified by zsh4humans in the background.
+# They are defined explicitly from scratch to ensure their behaviour remains entirely predictable and isolated from any upstream changes.
+
+# --- Navigation & Shortcuts ---
 
 # Recently visited directories
-# List
 alias dirs="dirs -v"
-# Quick access by index
-for index ({1..9}) alias "$index"="cd +${index}"; unset index
 
-# Quick-access directories
+# Directories Shortcuts
 alias repos="$HOME/repos/germanfrelo"
 
-# List all files and directories in columns
+# --- Files & Directories Listing ---
+
+# List Files & Directories
+
+# Modern replacement for ls with type-aware colour styling
 alias eza="eza -F --all --group-directories-first"
-# Same as above, but displaying extended metadata as a table
+# Display files as a detailed metadata table
 alias ezal="eza --long --header --smart-group --flags --time-style=iso --no-user --git-repos"
-# Same as above, but including recursive directory size and size of allocated file system blocks
+# Display detailed metadata table including physical block sizes
 alias ezals="ezal --total-size --blocksize"
-# Show the contents of the current directory as a tree, including hidden files and directories
-alias tree="tree -a"
+
+# List Directory Contents in a Tree-like Format
+
+# Visualise directory structures recursively
+alias tree="tree -aFC --dirsfirst -I .git"
+# Visualise directory structures up to a specific depth
 alias tree1="tree -L 1"
 alias tree2="tree -L 2"
 alias tree3="tree -L 3"
-# List the size of files and directories of the current directory in ascending order (including a cumulative total)
+
+# Disk Usage
+
+# Calculate and sort disk usage cumulatively
 alias du="du -shc * | sort -h"
 
-# File contents
+# --- File Contents ---
+
+# View file contents with syntax highlighting (bypassing the pager)
 alias bat="bat --paging=never"
 
-# Find patterns in files using regular expressions
-alias grep="grep -i"
+# --- Actions on Files and Directories ---
 
-# Actions on files and directories
+# Prompt for confirmation before overwriting existing files
 alias cp="cp -iv"
 alias mv="mv -iv"
-alias rm="rm -iv"
 
-# Git
+# Safely move files to the trash/bin instead of permanent deletion
+alias trash="trash --verbose --stopOnError"
+alias rm="trash"
+
+# --- Network & External Tools ---
+
+# Download files preserving HSTS states in the XDG cache
+alias wget='wget --hsts-file="${XDG_CACHE_HOME}/wget-hsts"'
+
+# --- Git ---
+
+# View a condensed visual graph of commit history
 alias gl="git log --oneline --graph"
+# View a condensed visual graph of all branches
 alias gla="gl --all"
+# View commit history alongside file modification statistics
 alias gls="gl --stat"
+# View a highly detailed, colour-coded visual commit graph
 alias glt="git log --graph --pretty=format:'%C(yellow)%h%Creset%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)%an%Creset'"
-alias gunstage="git restore --staged ." # restore the index
+# Safely remove changes from the staging area while keeping working files intact
+alias gunstage="git restore --staged ."
+# Stash all current changes including newly created untracked files
 alias gstashu="git stash --include-untracked"
+# View a brief, colour-coded repository status summary
 alias gstat="git status -sb"
 # https://github.com/Phantas0s/.dotfiles/blob/master/aliases/aliases
 # alias gs='git status'
@@ -300,23 +465,14 @@ alias gstat="git status -sb"
 # alias gsub="git submodule update --remote" # pull submodules
 # alias gj="git-jump" # Open in vim quickfix list files of interest (git diff, merged...)
 
-# wget (XDG location)
-alias wget="wget --hsts-file="${XDG_CACHE_HOME}/wget-hsts""
-
-# --------------------------------------------------
-
-# Add flags to existing aliases.
-
-alias ls="${aliases[ls]:-ls} -A"
-
-# --------------------------------------------------
+# ==================================================
 
 # Set shell options: https://zsh.sourceforge.io/Doc/Release/Options.html
 
 setopt glob_dots     # no special treatment for file names with a leading dot
 setopt no_auto_menu  # require an extra TAB press to open the completion menu
 
-# --------------------------------------------------
+# ==================================================
 
 # Warn if any chezmoi-managed file has drifted from its source.
 # Runs once per top-level shell (SHLVL=1) — skipped in subshells and nested zsh invocations.

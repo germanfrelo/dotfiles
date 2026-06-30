@@ -1,17 +1,18 @@
 {
-	"colorScheme": "dark",
-	"enableTelemetry": false,
-	"model": "Gemini 3.1 Pro (High)",
-	"permissions": {
-		"allow": [
-			"command(git log)",
-			"command(git show)",
-			"command(cat)",
-			"command(git diff)",
-			"command(grep)",
-			"command(head)",
-			"command(git status)",
-			"command(ls)"
-		]
-	}
+  "colorScheme": "dark",
+  "editor": "code --wait",
+  "enableTelemetry": false,
+  "model": "Gemini 3.1 Pro (High)",
+  "permissions": {
+    "allow": [
+      "command(git log)",
+      "command(git show)",
+      "command(cat)",
+      "command(git diff)",
+      "command(grep)",
+      "command(head)",
+      "command(git status)",
+      "command(ls)"
+    ]
+  }
 }

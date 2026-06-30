@@ -13,6 +13,11 @@ insert_final_newline = true       # 3
 trim_trailing_whitespace = true   # 4
 indent_style = tab                # 5
 
+# JSON
+[*.json]
+indent_style = space
+indent_size = 2
+
 # Markdown
 [*.md]
 indent_style = space              # 6
