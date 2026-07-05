@@ -9,6 +9,9 @@
 		// Fix: VS Code config files (settings.json) are treated as JSONC, which allows trailing commas — although VS Code discourages their use. Prettier adds them to JSONC files by default (see https://github.com/prettier/prettier/issues/15956), which causes the "JSON: Sort Document" command in VS Code to crash (addChildProperty error). Issue: https://github.com/microsoft/vscode/issues/307805
 		"prettier.trailingComma": "none"
 	},
+	"[markdown]": {
+		"editor.unicodeHighlight.invisibleCharacters": true // Overrides default value of "false".
+	},
 	"accessibility.underlineLinks": true,
 	"better-todo-tree.general.showActivityBarBadge": true,
 	"betterStackingContexts.backgroundColor": "transparent",
