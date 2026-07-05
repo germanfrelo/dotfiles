@@ -57,6 +57,7 @@ The following rules apply only to the formatting of your own chat responses; the
 
 - When showing inline code in running text that itself contains backtick characters, use a `<code>` HTML tag rather than a backtick-delimited code span — e.g., write the following in the source: `<code>````md</code>` (without the enclosing backticks).
 - Use headings (`##` or deeper) for named sections within a chat response. Do not use bold text (`**title**`) as a substitute for a section heading.
+- Always output the full absolute path to each implementation plan that you create.
 
 ### Writing & Documentation
 
