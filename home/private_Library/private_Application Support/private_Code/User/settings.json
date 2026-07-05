@@ -335,7 +335,6 @@
 		"added": true
 	},
 	"scm.repositories.explorer": true,
-	// "scm.repositories.visible": 0,
 	"search.searchEditor.doubleClickBehaviour": "selectWord",
 	"search.searchEditor.reusePriorSearchConfiguration": true,
 	"stylelint.validate": [
