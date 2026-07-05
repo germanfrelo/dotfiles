@@ -332,7 +332,8 @@
 	"prettier.useTabs": true,
 	"scm.defaultViewMode": "tree",
 	"scm.diffDecorationsGutterPattern": {
-		"added": true
+		"added": true,
+		"modified": true // Default
 	},
 	"scm.repositories.explorer": true,
 	"search.searchEditor.doubleClickBehaviour": "selectWord",
