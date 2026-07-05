@@ -327,31 +327,47 @@
 	"markdown.validate.enabled": true,
 	"markdown.validate.referenceLinks.enabled": "ignore", // Workaround to avoid false positives for footnote-style; see bug: https://github.com/microsoft/vscode-markdown-languageservice/issues/100
 	"markdownlint.config": {
+		// Note: All rules are enabled by default.
+		// Note: For the disabled rules that conflict with Prettier, see https://github.com/DavidAnson/markdownlint/blob/main/doc/Prettier.md
+		"blanks-around-fences": false, // Conflicts with Prettier.
+		"blanks-around-headings": false, // Conflicts with Prettier.
+		"blanks-around-lists": false, // Conflicts with Prettier.
 		"code-block-style": {
-			// Rationale: https://google.github.io/styleguide/docguide/style.html#codeblocks
+			// See https://google.github.io/styleguide/docguide/style.html#codeblocks
 			"style": "fenced"
 		},
-		"extends": "markdownlint/style/prettier", // Disables all markdownlint rules that overlap with Prettier (see https://github.com/DavidAnson/markdownlint/blob/main/doc/Prettier.md)
-		// Note: All rules are enabled by default.
+		"code-fence-style": false, // Conflicts with Prettier.
+		"emphasis-style": false, // Conflicts with Prettier.
+		"heading-start-left": false, // Conflicts with Prettier.
 		"heading-style": {
-			// Rationale: https://google.github.io/styleguide/docguide/style.html#atx-style-headings and https://cirosantilli.com/markdown-style-guide/#option-header-atx
+			// See https://google.github.io/styleguide/docguide/style.html#atx-style-headings and https://cirosantilli.com/markdown-style-guide/#option-header-atx
 			"style": "atx"
 		},
+		"hr-style": false, // Conflicts with Prettier.
+		"line-length": false, // Conflicts with Prettier.
+		"list-indent": false, // Conflicts with Prettier.
+		"list-marker-space": false, // Conflicts with Prettier.
+		"no-blanks-blockquote": false, // Conflicts with Prettier.
 		"no-duplicate-heading": {
-			// Rationale: See example in https://github.com/DavidAnson/markdownlint/blob/main/doc/md024.md
+			// See example in https://github.com/DavidAnson/markdownlint/blob/main/doc/md024.md
 			"siblings_only": true
 		},
-		"no-inline-html": false, // Rationale: Personal preference.
-		"no-missing-space-atx": true, // Rationale: Re-enables rule (disabled by Prettier preset) to fix '#Heading' -> '# Heading'.
-		"no-missing-space-closed-atx": true, // Rationale: Re-enables rule (disabled by Prettier preset) to fix '#Heading#' -> '# Heading #'.
-		// Rationale: Space inside code spans can be intentional when documenting literal space characters as part of syntax notation (e.g. ` :`).
-		"no-space-in-code": false,
+		"no-hard-tabs": false, // Conflicts with Prettier.
+		"no-inline-html": false, // Personal preference.
+		"no-multiple-blanks": false, // Conflicts with Prettier.
+		"no-multiple-space-atx": false, // Conflicts with Prettier.
+		"no-multiple-space-blockquote": false, // Conflicts with Prettier.
+		"no-multiple-space-closed-atx": false, // Conflicts with Prettier.
+		"no-space-in-code": false, // Space inside code spans can be intentional when documenting literal space characters as part of syntax notation (e.g. ` :`).
 		"no-trailing-punctuation": {
-			// Rationale: Allows '!' (default is ".,;:!。，；：！").
+			// Allows '!' (default is ".,;:!。，；：！").
 			"punctuation": ".,;:。，；：！"
-		}
+		},
+		"no-trailing-spaces": false, // Conflicts with Prettier.
+		"ol-prefix": false, // Conflicts with Prettier.
+		"strong-style": false, // Conflicts with Prettier.
+		"ul-indent": false // Conflicts with Prettier.
 	},
-	"prettier.tabWidth": 3,
 	"prettier.useTabs": true,
 	"scm.defaultViewMode": "tree",
 	"scm.diffDecorationsGutterPattern": {
