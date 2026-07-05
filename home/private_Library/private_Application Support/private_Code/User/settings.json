@@ -116,7 +116,6 @@
 	"editor.stickyTabStops": true,
 	"editor.suggest.preview": true,
 	"editor.suggest.showStatusBar": true,
-	"editor.tabSize": 3,
 	"editor.wordBasedSuggestions": "off",
 	"editor.wordWrap": "on",
 	"emmet.excludeLanguages": ["css", "markdown"],
