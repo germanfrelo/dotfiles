@@ -34,33 +34,6 @@
 	"chat.restoreLastPanelSession": true,
 	"chat.sessionSync.enabled": true,
 	"chat.tools.compressOutput.enabled": true,
-	"chat.tools.urls.autoApprove": {
-		"https://code.visualstudio.com": true,
-		"https://developers.notion.com": true,
-		"https://docs.astro.build": true,
-		"https://docs.github.com": {
-			"approveRequest": false,
-			"approveResponse": true
-		},
-		"https://github.blog": true,
-		"https://github.com/microsoft/vscode/wiki/*": true,
-		"https://help.obsidian.md": {
-			"approveRequest": true,
-			"approveResponse": false
-		},
-		"https://obsidian.md": {
-			"approveRequest": false,
-			"approveResponse": true
-		},
-		"https://www.chezmoi.io": {
-			"approveRequest": false,
-			"approveResponse": true
-		},
-		"https://www.npmjs.com": {
-			"approveRequest": true,
-			"approveResponse": false
-		}
-	},
 	"chat.viewProgressBadge.enabled": true,
 	"chat.viewSessions.orientation": "stacked",
 	"colorize.colorized_colors": ["HEXA", "RGB", "HSL", "OKLAB", "OKLCH"],
