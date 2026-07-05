@@ -21,6 +21,7 @@
 		"prettier.useTabs": false
 	},
 	"accessibility.underlineLinks": true,
+	"better-todo-tree.general.showActivityBarBadge": true,
 	"betterStackingContexts.backgroundColor": "transparent",
 	"betterStackingContexts.messageText": " ℹ️ This property creates a new stacking context.",
 	"chat.agent.maxRequests": 200,
