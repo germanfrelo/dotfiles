@@ -339,8 +339,8 @@
 	"search.searchEditor.doubleClickBehaviour": "selectWord",
 	"search.searchEditor.reusePriorSearchConfiguration": true,
 	"stylelint.validate": [
-		"css", // default
-		"postcss", // default
+		"css", // Default
+		"postcss", // Default
 		"astro",
 		"svelte",
 		"vue",
@@ -366,7 +366,7 @@
 	"workbench.editor.useModal": "off",
 	"workbench.editor.wrapTabs": true,
 	"workbench.editorAssociations": {
-		"*.copilotmd": "vscode.markdown.preview.editor", // default
+		"*.copilotmd": "vscode.markdown.preview.editor", // Default
 		"*.svg": "default"
 	},
 	"workbench.iconTheme": "material-icon-theme",
