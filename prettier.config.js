@@ -19,6 +19,12 @@ const config = {
 				trailingComma: "none",
 			},
 		},
+		{
+			files: ["home/dot_gemini/**/*.json"],
+			options: {
+				useTabs: false,
+			},
+		},
 	],
 };
 
