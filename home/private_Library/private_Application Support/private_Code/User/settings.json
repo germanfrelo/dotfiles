@@ -14,9 +14,6 @@
 		"diffEditor.ignoreTrimWhitespace": false,
 		"editor.renderWhitespace": "boundary"
 	},
-	"[python]": {
-		"editor.defaultFormatter": "charliermarsh.ruff"
-	},
 	"[yaml]": {
 		"editor.indentSize": 2,
 		"editor.insertSpaces": true,
@@ -117,7 +114,6 @@
 		"source.addMissingImports": "explicit",
 		"source.fixAll.eslint": "explicit",
 		"source.fixAll.markdownlint": "explicit",
-		"source.fixAll.ruff": "explicit",
 		"source.fixAll.stylelint": "explicit",
 		"source.organizeImports": "explicit",
 		"source.organizeLinkDefinitions": "explicit",
