@@ -2,7 +2,7 @@
 	"[astro][css][html]": {
 		"prettier.printWidth": 9999
 	},
-	"[javascript][javascriptreact][vue]": {
+	"[javascript][javascriptreact][typescript][typescriptreact][vue]": {
 		"prettier.singleAttributePerLine": true
 	},
 	"[jsonc]": {
