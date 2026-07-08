@@ -1,1 +1,2 @@
-Rationale: /docs/decisions/0003-remove-editorconfig.md
+# This file instructs chezmoi to delete `~/.editorconfig` if it exists.
+# Decision: /docs/decisions/0003-remove-editorconfig.md

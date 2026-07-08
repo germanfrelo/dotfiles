@@ -1,1 +1,2 @@
-adr: docs/decisions/0001-remove-zprofile.md
+# This file instructs chezmoi to delete `~/.config/zsh/.zprofile` if it exists.
+# Decision: /docs/decisions/0001-remove-zprofile.md

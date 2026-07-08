@@ -105,13 +105,17 @@ The Homebrew packages script (see the `homebrew` key in the configuration block 
 
 Files that must never exist are enforced absent by chezmoi `remove_` source files. The current list of enforced-absent targets is in the "Enforced absent" section of [`MANAGED.txt`](../MANAGED.txt).
 
-**Convention:** Every `remove_` source file must contain a link to the relevant decision record in [`docs/decisions/`](../docs/decisions/). chezmoi ignores this content — only the filename triggers the remove. The link connects the enforcement to the decision record that justifies it.
+**Convention:** Every `remove_` source file must contain a valid comment (e.g. `#`) that briefly explains the exact outcome and links to the relevant decision record in [`docs/decisions/`](../docs/decisions/). chezmoi ignores this content — only the filename triggers the remove. The comment links the enforcement to the decision record that justifies it.
 
 ### Adding a new `remove_` target
 
 1. Write a decision record in `docs/decisions/NNNN-<slug>.md` explaining why the file must be absent.
 2. Create the chezmoi source file at `home/[path/]remove_dot_<name>`.
-3. Write a link to the decision record (e.g. `Rationale: /docs/decisions/NNNN-<slug>.md`).
+3. Write a comment inside the file explaining the exact outcome and linking to the decision:
+   ```txt
+   # This file instructs chezmoi to delete `~/<target>` if it exists.
+   # Decision: /docs/decisions/NNNN-<slug>.md
+   ```
 4. If the target is under a broadly-ignored directory, update [`home/.chezmoiignore`](../home/.chezmoiignore) — see `.chezmoiignore maintenance` above.
 5. `chezmoi apply --dry-run --verbose` — confirm the target appears as deleted.
 6. `chezmoi apply --verbose`.
@@ -119,7 +123,7 @@ Files that must never exist are enforced absent by chezmoi `remove_` source file
 
 ### Reverting a `remove_` target (re-enabling a file)
 
-1. Mark the ADR superseded: set `status: superseded` and add `superseded-by: NNNN-<slug>.md` if a replacement decision exists.
+1. Mark the decision record as superseded: set `status: superseded` and add `superseded-by: NNNN-<slug>.md` if a replacement decision exists.
 2. `trash home/[path/]remove_dot_<name>` — delete the source file(s).
 3. If re-managing the file: `chezmoi add <live-path>` or create a source file manually.
 4. Update [`home/.chezmoiignore`](../home/.chezmoiignore): the negation for the target may now need adjusting.
