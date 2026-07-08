@@ -25,17 +25,32 @@
 
 	// File associations
 	"files.associations": {
-		".chezmoi.toml.tmpl": "toml",
-		".nvmrc": "properties",
-		"*.sh.tmpl": "shellscript",
-		"*dot_zshenv": "shellscript",
+		// editorconfig
+		"*dot_editorconfig": "editorconfig",
+
+		// ignore
 		"*ignore": "ignore",
-		"dot_zprofile": "shellscript",
-		"dot_zshrc": "shellscript",
+
+		// ini
+		"**/.ssh/config": "ini",
+		"**/*dot_ssh/*config*": "ini",
+		"**/*git/*config*": "ini",
+
+		// plaintext
 		"LICENSE": "plaintext",
-		"npmrc": "properties",
+
+		// properties
+		"private_config.tmpl": "properties",
+
+		// shellscript
+		"*.sh.tmpl": "shellscript",
+		"*dot_zprofile": "shellscript",
+		"*dot_zshenv": "shellscript",
+		"*dot_zshrc": "shellscript",
 		"pre-commit": "shellscript",
-		"private_config.tmpl": "properties"
+
+		// toml
+		"*.toml.tmpl": "toml"
 	},
 
 	// Workspace color customizations
