@@ -45,7 +45,7 @@ jobs:
             - `home/private_dot_config/**`
 
             Re-ran `npm run chezmoi:sync` to update the generated sections in
-            `docs/chezmoi.md` and `.github/copilot-instructions.md`.
+            `docs/chezmoi.md` and `AGENTS.md`.
           branch: chore/sync-chezmoi-config
           delete-branch: true
           labels: "chore,documentation"

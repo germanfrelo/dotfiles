@@ -1,7 +1,7 @@
 /**
  * Reads chezmoi source config files and injects two auto-generated sections:
  *   - A "My configuration" Markdown table into docs/chezmoi.md
- *   - A machine-readable TOML block into .github/copilot-instructions.md
+ *   - A machine-readable TOML block into AGENTS.md
  *
  * Injection targets are HTML comment markers:
  *   <!-- BEGIN CHEZMOI-SETUP --> ... <!-- END CHEZMOI-SETUP -->
@@ -125,7 +125,7 @@ homebrew   = "${homebrewPath}"
 
 injectSection(join(repoRoot, "docs", "chezmoi.md"), markdownTable);
 
-injectSection(join(repoRoot, ".github", "copilot-instructions.md"), tomlBlock);
+injectSection(join(repoRoot, "AGENTS.md"), tomlBlock);
 
 console.log("chezmoi:sync — done.");
 
