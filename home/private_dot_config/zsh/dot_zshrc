@@ -139,7 +139,7 @@ function md() { [[ $# == 1 ]] && mkdir -p -- "$1" && cd -- "$1" }
 compdef _directories md
 
 # Append the HEAD commit hash to .git-blame-ignore-revs.
-# Only runs if the commit title matches style*:*format* (case-insensitive).
+# Only runs if the commit title matches style*:* (case-insensitive).
 # Skips automatically if the commit is itself a .git-blame-ignore-revs update.
 function gbignore() {
 	local commit_hash commit_title title_lower
@@ -159,9 +159,9 @@ function gbignore() {
 	esac
 
 	case "$title_lower" in
-		style*:*format*) ;;
+		style*:*) ;;
 		*)
-			print -P "%F{red}Aborted: \"%s\" does not match style*:*format*.%f" "$commit_title" >&2
+			print -P "%F{red}Aborted: \"%s\" does not match style*:*.%f" "$commit_title" >&2
 			return 1
 			;;
 	esac
