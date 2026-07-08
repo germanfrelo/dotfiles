@@ -1,3 +1,3 @@
 # This file exists only to make chezmoi watch ~/.zshrc for writes by tools that ignore $ZDOTDIR.
 # Real zsh config lives in $ZDOTDIR (~/.config/zsh/.zshrc).
-# If a program has modified this file, move its changes to $ZDOTDIR/.zshrc and run: chezmoi re-add ~/.zshrc
+# If a program has modified this file, move its changes to $ZDOTDIR/.zshrc and restore this stub by running: chezmoi apply -v ~/.zshrc
