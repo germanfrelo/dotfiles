@@ -40,13 +40,13 @@ Chezmoi-managed dotfiles. For general chezmoi commands, concepts, and workflows,
 - **At session start:** run `chezmoi status` before any other work to establish the baseline state.
 - **Before any state-modifying operation** (`apply`, `add`, `re-add`, `forget`, `merge`, `merge-all`): run `chezmoi status` to verify actual state. Never assume what has or hasn't been applied. If output is empty, there is nothing pending — do not fabricate changes.
 - **After every state-modifying operation:** run `chezmoi status` again to confirm the change landed correctly.
-- **Before committing any file under `home/`:** run `chezmoi status` to check whether the source changes are already reflected in the live files. If pending changes exist, surface them before proceeding.
+- **Before committing any file under `home/`:** run `chezmoi status` to check whether the source changes are already reflected in the target files. If pending changes exist, surface them before proceeding.
 
 ## Applying changes
 
-Never edit live files — always edit source under `home/`, then run `chezmoi diff` and show the output to the user. Only run `chezmoi apply` after the user confirms the diff looks correct.
+Never edit target files — always edit source under `home/`, then run `chezmoi diff` and show the output to the user. Only run `chezmoi apply` after the user confirms the diff looks correct.
 
-When creating a new `private_` file, always author it as a template using `onepasswordRead` — never paste secret values directly. If the live file was edited directly and must be preserved, use `chezmoi re-add` instead — but if the source template calls any `onepassword*` function, abort and ask the user to re-template manually, to avoid rendering secrets into the source.
+When creating a new `private_` file, always author it as a template using `onepasswordRead` — never paste secret values directly. If the target file was edited directly and must be preserved, use `chezmoi re-add` instead — but if the source template calls any `onepassword*` function, abort and ask the user to re-template manually, to avoid rendering secrets into the source.
 
 ## Command flags
 
@@ -72,10 +72,6 @@ chezmoi apply --verbose            # execute
 Data variable `machine_type` is `"personal"` or `"work"` — if unset or has an unexpected value, stop and ask the user to fix `~/.config/chezmoi/chezmoi.toml` before continuing.
 
 **Heredoc pitfall:** Inside `<<'EOF'` heredocs, never use `-}}` (right whitespace trim) — it strips the trailing newline and merges the next line. Use `{{- if … }}` (left trim only) or `{{ if … }}` (no trim).
-
-## Git config template
-
-The source template for `~/.config/git/config` (see the `git_config` key in the configuration block above) fetches the SSH signing key from 1Password at render time via `onepasswordRead`.
 
 ## .chezmoiignore maintenance
 
@@ -125,7 +121,7 @@ Files that must never exist are enforced absent by chezmoi `remove_` source file
 
 1. Mark the decision record as superseded: set `status: superseded` and add `superseded-by: NNNN-<slug>.md` if a replacement decision exists.
 2. `trash home/[path/]remove_dot_<name>` — delete the source file(s).
-3. If re-managing the file: `chezmoi add <live-path>` or create a source file manually.
+3. If re-managing the file: `chezmoi add <target-path>` or create a source file manually.
 4. Update [`home/.chezmoiignore`](/home/.chezmoiignore): the negation for the target may now need adjusting.
 5. Update any section in this file that described the specific file's absence.
 6. `chezmoi apply --dry-run --verbose` — confirm.
@@ -134,17 +130,5 @@ Files that must never exist are enforced absent by chezmoi `remove_` source file
 
 ## Commit conventions
 
-The managed files under `home/` are the product of this repository. This overrides the global commit type guidelines for this repo:
-
-- `feat` — adding or changing content under `home/` (the chezmoi source root)
-- `docs` — meta-documentation only: `README.md`, `docs/`, `.github/`
-- `chore` — tooling and automation: `scripts/`, `.husky/`, `package.json`, GitHub Actions
-- `style`, `fix`, `refactor`, etc. apply as normal within their respective paths
-
-## Zsh startup files
-
-Zsh config lives exclusively in `$ZDOTDIR` (`~/.config/zsh/`). Never write to or suggest writing to `~/.zshrc`, `~/.zlogin`, `~/.zlogout`, or any other `~/.*` zsh startup file — the sole exception is `~/.zshenv`, which exists only to export `ZDOTDIR`. When a tool's setup instructions say to add something to `~/.zshrc`, add it to `$ZDOTDIR/.zshrc` instead.
-
-`~/.zshrc` is chezmoi-managed as a monitoring stub — its sole purpose is to make chezmoi detect when a tool writes to it. If chezmoi reports it as `MM`, a tool has modified it; move those changes to `$ZDOTDIR/.zshrc` and run `chezmoi re-add ~/.zshrc`.
-
-`.zprofile` must not exist at `~/.zprofile` or `$ZDOTDIR/.zprofile`. Do not add or suggest adding `eval "$(brew shellenv)"` or any content to `.zprofile`. See [`docs/decisions/0001-remove-zprofile.md`](/docs/decisions/0001-remove-zprofile.md) for the rationale and [`MANAGED.txt`](/MANAGED.txt) for the current list of enforced-absent targets.
+- The files in the `home/` directory are the product of this repository, so adding or changing content there should probably be a `feat` type of commit. However, this is just a suggestion and should be evaluated on a case-by-case basis.
+- The commit scope is required in this repo, so follow the format `type(scope): Message title`.
