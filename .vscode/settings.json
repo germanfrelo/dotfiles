@@ -1,12 +1,7 @@
 {
-	// Formatting
-	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	"[markdown]": {
 		"editor.renderWhitespace": "boundary"
 	},
-	"editor.formatOnSave": true,
-
-	// Spell checking
 	"cSpell.ignoreWords": [],
 	"cSpell.words": [
 		"chezmoi",
@@ -22,8 +17,8 @@
 		"peter-evans",
 		"tmpl"
 	],
-
-	// File associations
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.formatOnSave": true,
 	"files.associations": {
 		// editorconfig
 		"*dot_editorconfig": "editorconfig",
@@ -50,8 +45,6 @@
 		// toml
 		"*.toml.tmpl": "toml"
 	},
-
-	// Workspace color customizations
 	"workbench.colorCustomizations": {
 		"statusBar.background": "#4051b5",
 		"statusBar.foreground": "#d9ddf2",
