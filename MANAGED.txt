@@ -1,6 +1,7 @@
 .
 ├── .chezmoiscripts
 │   └── darwin
+│       ├── clone-github-repos.sh
 │       └── install-packages-darwin.sh
 ├── .config
 │   ├── gh
@@ -41,7 +42,7 @@
 │       └── com.germanfrelo.chezmoi-drift.plist
 └── svgo.config.js
 
-17 directories, 25 files
+17 directories, 26 files
 
 ## Enforced absent
 
