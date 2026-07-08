@@ -103,15 +103,15 @@ The Homebrew packages script (see the `homebrew` key in the configuration block 
 
 ## `remove_` targets
 
-Files that must never exist are enforced absent by chezmoi `remove_` source files. The current list of enforced-absent targets and their decision records is in the "Enforced absent" section of [`MANAGED.txt`](../MANAGED.txt).
+Files that must never exist are enforced absent by chezmoi `remove_` source files. The current list of enforced-absent targets is in the "Enforced absent" section of [`MANAGED.txt`](../MANAGED.txt).
 
-**Convention:** Every `remove_` source file must contain `adr: <relative-path-to-adr>` as its sole content. chezmoi ignores this content — only the filename triggers the remove. The `adr:` value links the enforcement to the decision record that justifies it.
+**Convention:** Every `remove_` source file must contain a link to the relevant decision record in [`docs/adr/`](../docs/adr/). chezmoi ignores this content — only the filename triggers the remove. The link connects the enforcement to the decision record that justifies it.
 
 ### Adding a new `remove_` target
 
-1. Write an ADR in `docs/adr/NNNN-<slug>.md` explaining why the file must be absent.
+1. Write a decision record in `docs/adr/NNNN-<slug>.md` explaining why the file must be absent.
 2. Create the chezmoi source file at `home/[path/]remove_dot_<name>`.
-3. Write `adr: docs/adr/NNNN-<slug>.md` as the file's sole content.
+3. Write a link to the decision record (e.g. `Rationale: /docs/adr/NNNN-<slug>.md`).
 4. If the target is under a broadly-ignored directory, update [`home/.chezmoiignore`](../home/.chezmoiignore) — see `.chezmoiignore maintenance` above.
 5. `chezmoi apply --dry-run --verbose` — confirm the target appears as deleted.
 6. `chezmoi apply --verbose`.

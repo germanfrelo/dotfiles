@@ -30,9 +30,7 @@ if (removePaths.length > 0) {
 	for (const sourcePath of removePaths) {
 		const targetPath = sourcePathToTarget(sourcePath);
 		const content = readFileSync(join(repoRoot, sourcePath), "utf8").trim();
-		const adrRef = content.startsWith("adr:") ? content.slice(4).trim() : null;
-		const adrSuffix = adrRef ? ` — [ADR](${adrRef})` : "";
-		process.stdout.write(`- \`~/${targetPath}\`${adrSuffix}\n`);
+		process.stdout.write(`- ~/${targetPath}\n`);
 	}
 }
 
