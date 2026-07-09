@@ -305,7 +305,7 @@ alias gstat="git status -sb"
 # alias gj="git-jump" # Open in vim quickfix list files of interest (git diff, merged...)
 
 # wget (XDG location)
-alias wget="wget --hsts-file="${XDG_CACHE_HOME}/wget-hsts""
+alias wget='wget --hsts-file="${XDG_CACHE_HOME}/wget-hsts"'
 
 # ==================================================
 
