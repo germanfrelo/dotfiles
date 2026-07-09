@@ -313,12 +313,25 @@ alias wget='wget --hsts-file="${XDG_CACHE_HOME}/wget-hsts"'
 
 # --- Git ---
 
+# View a condensed visual graph of commit history
 alias gl="git log --oneline --graph"
+
+# View a condensed visual graph of all branches
 alias gla="gl --all"
+
+# View commit history alongside file modification statistics
 alias gls="gl --stat"
+
+# View a highly detailed, colour-coded visual commit graph
 alias glt="git log --graph --pretty=format:'%C(yellow)%h%Creset%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)%an%Creset'"
-alias gunstage="git restore --staged ." # restore the index
+
+# Safely remove changes from the staging area while keeping working files intact
+alias gunstage="git restore --staged ."
+
+# Stash all current changes including newly created untracked files
 alias gstashu="git stash --include-untracked"
+
+# View a brief repo status summary.
 alias gstat="git status --short --branch"
 # https://github.com/Phantas0s/.dotfiles/blob/master/aliases/aliases
 # alias gs='git status'
