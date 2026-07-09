@@ -78,7 +78,7 @@ path=(~/bin $path)
 export EDITOR="code --wait"
 export VISUAL="code --wait"
 
-# GPG TTY for passphrase prompts
+# Tells GPG tools to draw password pop-ups here (prevents terminal freezes)
 export GPG_TTY=$TTY
 
 # User directories (XDG Base Directory Specification)
@@ -97,7 +97,8 @@ export HOMEBREW_NO_ANALYTICS=1
 export NVM_DIR="${HOME}/.nvm"
 
 # man / less
-export LESSHISTFILE=- # avoid showing .lesshst file in $HOME when using `man' command
+# Avoid showing .lesshst file in $HOME when using `man' command
+export LESSHISTFILE=-
 
 # ==================================================
 
