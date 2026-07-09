@@ -86,7 +86,7 @@ if [[ "$TERM_PROGRAM" != "vscode" ]]; then
 	export VISUAL="code --wait --new-window"
 fi
 
-# GPG TTY for passphrase prompts
+# Tells GPG tools to draw password pop-ups here (prevents terminal freezes)
 export GPG_TTY=$TTY
 
 # User directories (XDG Base Directory Specification)
@@ -105,7 +105,8 @@ export HOMEBREW_NO_ANALYTICS=1
 export NVM_DIR="${HOME}/.nvm"
 
 # man / less
-export LESSHISTFILE=- # avoid showing .lesshst file in $HOME when using `man' command
+# Avoid showing .lesshst file in $HOME when using `man' command
+export LESSHISTFILE=-
 
 # Repositories
 # IMPORTANT: The path below defines where all my repositories live. If I ever change it to a new folder, I must search this entire dotfiles repository for the old path and update all occurrences to prevent breakage. (See ADR 0005 for details).
