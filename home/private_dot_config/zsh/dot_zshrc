@@ -294,7 +294,7 @@ alias bat="bat --paging=never"
 # --- Searching ---
 
 # Find patterns in files using regular expressions
-alias grep="grep -i"
+alias grep="grep --ignore-case"
 
 # --- Actions on Files and Directories ---
 
@@ -316,7 +316,7 @@ alias gls="gl --stat"
 alias glt="git log --graph --pretty=format:'%C(yellow)%h%Creset%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)%an%Creset'"
 alias gunstage="git restore --staged ." # restore the index
 alias gstashu="git stash --include-untracked"
-alias gstat="git status -sb"
+alias gstat="git status --short --branch"
 # https://github.com/Phantas0s/.dotfiles/blob/master/aliases/aliases
 # alias gs='git status'
 # alias gss='git status -s'
