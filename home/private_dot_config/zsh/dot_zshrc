@@ -74,6 +74,10 @@ path=(~/bin $path)
 
 # Export environment variables.
 
+# Preferred editor for CLI tools.
+export EDITOR="code --wait"
+export VISUAL="code --wait"
+
 # GPG TTY for passphrase prompts
 export GPG_TTY=$TTY
 
