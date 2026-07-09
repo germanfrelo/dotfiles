@@ -253,6 +253,9 @@ syncfile() {
 
 # Define aliases.
 
+# Reload the current shell cleanly to apply configuration changes.
+alias reload="exec zsh"
+
 # Editors
 
 # VS Code: if not inside its integrated terminal, open a new window.
