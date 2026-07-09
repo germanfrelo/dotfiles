@@ -319,6 +319,10 @@ setopt no_auto_menu  # require an extra TAB press to open the completion menu
 
 # ==================================================
 
+# TODO: Include chezmoi-unmanaged files in the drift check.
+# TODO: Consider using `chezmoi diff --use-builtin-diff` instead of `chezmoi status` for a more detailed drift report.
+# TODO: Include a check for the presence of chezmoi before running the drift check to avoid errors in environments where chezmoi is not installed.
+# TODO: Consider adding a timestamp to the drift warning to indicate when the last check was performed.
 # Warn if any chezmoi-managed file has drifted from its source.
 # Runs once per top-level shell (SHLVL=1) — skipped in subshells and nested zsh invocations.
 if (( SHLVL == 1 )); then
