@@ -139,7 +139,7 @@ autoload -Uz zmv
 # Define functions and completions.
 
 # Create a new directory and instantly navigate into it (with folder tab-completion)
-function md() { [[ $# == 1 ]] && mkdir -p -- "$1" && cd -- "$1" }
+function md() { [[ $# == 1 ]] && mkdir -p -- "$1" && cd -- "$1"; }
 compdef _directories md
 
 # Append the HEAD commit hash to .git-blame-ignore-revs.
@@ -239,7 +239,8 @@ syncfile() {
 # List
 alias dirs="dirs -v"
 # Quick access by index
-for index ({1..9}) alias "$index"="cd +${index}"; unset index
+for index in {1..9}; do alias "$index"="cd +${index}"; done
+unset index
 
 # Quick-access directories
 alias repos="$HOME/repos/germanfrelo"
