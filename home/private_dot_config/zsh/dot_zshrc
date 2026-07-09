@@ -233,6 +233,9 @@ syncfile() {
 
 # Define aliases.
 
+# Reload the current shell cleanly to apply configuration changes.
+alias reload="exec zsh"
+
 # Files and directories
 
 # Recently visited directories
