@@ -4,7 +4,7 @@ My dotfiles, managed with [chezmoi](https://www.chezmoi.io/).
 
 ## Managed files
 
-See [MANAGED.txt](./MANAGED.txt) for the full file list.
+See [MANAGED.txt](/MANAGED.txt) for the full file list.
 
 ## Repository layout
 
@@ -21,7 +21,7 @@ See [MANAGED.txt](./MANAGED.txt) for the full file list.
 - **Always-current managed file list** — the pre-commit hook regenerates and auto-stages `MANAGED.txt` whenever files in the chezmoi source root (`home/`) or the generator script (`scripts/managed.js`) are staged, with no manual step required.
 - **Auto-generated documentation** — `npm run chezmoi:sync` reads `home/.chezmoi.toml.tmpl` and injects a "My configuration" table into `docs/chezmoi.md` and a machine-readable TOML block into `.github/copilot-instructions.md`, so both always reflect the actual chezmoi setup without manual editing.
 - **Continuous documentation sync** — a GitHub Action opens a pull request whenever chezmoi config source files change, keeping generated documentation in sync with configuration at all times.
-- **Unified chezmoi reference** — [`docs/chezmoi.md`](./docs/chezmoi.md) documents every command, workflow, and template pattern with examples tailored to this setup (`$ZDOTDIR`, `$XDG_CONFIG_HOME`, `$(chezmoi source-path)`).
+- **Unified chezmoi reference** — [`docs/chezmoi.md`](/docs/chezmoi.md) documents every command, workflow, and template pattern with examples tailored to this setup (`$ZDOTDIR`, `$XDG_CONFIG_HOME`, `$(chezmoi source-path)`).
 - **AI-ready agent instructions** — `.github/copilot-instructions.md` gives Copilot and other AI agents full context on repo conventions, chezmoi source structure, and configuration deviations from chezmoi defaults.
 - **Guardrails on every commit** — Prettier formatting is enforced on staged files via Husky + lint-staged; post-checkout and post-merge hooks warn when `package-lock.json` changes and prompt to run `npm ci`.
 - **Automated dependency review** — a GitHub Action scans every pull request for dependency vulnerabilities and licence issues before merge.

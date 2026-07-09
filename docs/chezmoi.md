@@ -474,7 +474,7 @@ chezmoi update --verbose            # pull and apply
 
 ### VS Code managed files
 
-`settings.json`, `prompts/*.instructions.md`, and `snippets/*.json` are tracked by chezmoi as a git-tracked backup. VS Code Settings Sync is the primary source of truth and syncs these files automatically across machines — all categories remain enabled. chezmoi captures snapshots in the reverse direction (live → source) via `re-add`, never the other way in normal use. See [ADR 0002](./decisions/0002-vscode-settings-sync-coexistence.md) for the rationale.
+`settings.json`, `prompts/*.instructions.md`, and `snippets/*.json` are tracked by chezmoi as a git-tracked backup. VS Code Settings Sync is the primary source of truth and syncs these files automatically across machines — all categories remain enabled. chezmoi captures snapshots in the reverse direction (live → source) via `re-add`, never the other way in normal use. See [ADR 0002](/docs/decisions/0002-vscode-settings-sync-coexistence.md) for the rationale.
 
 #### Day-to-day (Settings Sync updates a file)
 

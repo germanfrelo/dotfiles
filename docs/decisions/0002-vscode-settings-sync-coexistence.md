@@ -33,7 +33,7 @@ If `chezmoi apply` prompts about a VS Code file, always choose **keep destinatio
 
 ### New machine procedure
 
-`chezmoi apply` runs first to write the backup as a baseline, then VS Code signs in and Settings Sync runs. If Settings Sync shows a "Local vs Cloud" conflict, choose **Accept Cloud**. See [chezmoi.md — VS Code managed files](../chezmoi.md#vs-code-managed-files) for the full step-by-step.
+`chezmoi apply` runs first to write the backup as a baseline, then VS Code signs in and Settings Sync runs. If Settings Sync shows a "Local vs Cloud" conflict, choose **Accept Cloud**. See [chezmoi.md — VS Code managed files](/docs/chezmoi.md#vs-code-managed-files) for the full step-by-step.
 
 ### What is not tracked in chezmoi
 

@@ -23,7 +23,7 @@ homebrew   = "home/.chezmoiscripts/darwin/run_once_before_install-packages-darwi
 
 <!-- END CHEZMOI-SETUP -->
 
-Chezmoi-managed dotfiles. For general chezmoi commands, concepts, and workflows, see [`docs/chezmoi.md`](../docs/chezmoi.md).
+Chezmoi-managed dotfiles. For general chezmoi commands, concepts, and workflows, see [`docs/chezmoi.md`](/docs/chezmoi.md).
 
 ## Source structure
 
@@ -103,9 +103,9 @@ The Homebrew packages script (see the `homebrew` key in the configuration block 
 
 ## `remove_` targets
 
-Files that must never exist are enforced absent by chezmoi `remove_` source files. The current list of enforced-absent targets is in the "Enforced absent" section of [`MANAGED.txt`](../MANAGED.txt).
+Files that must never exist are enforced absent by chezmoi `remove_` source files. The current list of enforced-absent targets is in the "Enforced absent" section of [`MANAGED.txt`](/MANAGED.txt).
 
-**Convention:** Every `remove_` source file must contain a valid comment (e.g. `#`) that briefly explains the exact outcome and links to the relevant decision record in [`docs/decisions/`](../docs/decisions/). chezmoi ignores this content — only the filename triggers the remove. The comment links the enforcement to the decision record that justifies it.
+**Convention:** Every `remove_` source file must contain a valid comment (e.g. `#`) that briefly explains the exact outcome and links to the relevant decision record in [`docs/decisions/`](/docs/decisions/). chezmoi ignores this content — only the filename triggers the remove. The comment links the enforcement to the decision record that justifies it.
 
 ### Adding a new `remove_` target
 
@@ -116,7 +116,7 @@ Files that must never exist are enforced absent by chezmoi `remove_` source file
    # This file instructs chezmoi to delete `~/<target>` if it exists.
    # Decision: /docs/decisions/NNNN-<slug>.md
    ```
-4. If the target is under a broadly-ignored directory, update [`home/.chezmoiignore`](../home/.chezmoiignore) — see `.chezmoiignore maintenance` above.
+4. If the target is under a broadly-ignored directory, update [`home/.chezmoiignore`](/home/.chezmoiignore) — see `.chezmoiignore maintenance` above.
 5. `chezmoi apply --dry-run --verbose` — confirm the target appears as deleted.
 6. `chezmoi apply --verbose`.
 7. Commit (`MANAGED.txt` regenerates automatically via pre-commit hook).
@@ -126,7 +126,7 @@ Files that must never exist are enforced absent by chezmoi `remove_` source file
 1. Mark the decision record as superseded: set `status: superseded` and add `superseded-by: NNNN-<slug>.md` if a replacement decision exists.
 2. `trash home/[path/]remove_dot_<name>` — delete the source file(s).
 3. If re-managing the file: `chezmoi add <live-path>` or create a source file manually.
-4. Update [`home/.chezmoiignore`](../home/.chezmoiignore): the negation for the target may now need adjusting.
+4. Update [`home/.chezmoiignore`](/home/.chezmoiignore): the negation for the target may now need adjusting.
 5. Update any section in this file that described the specific file's absence.
 6. `chezmoi apply --dry-run --verbose` — confirm.
 7. `chezmoi apply --verbose`.
@@ -147,4 +147,4 @@ Zsh config lives exclusively in `$ZDOTDIR` (`~/.config/zsh/`). Never write to or
 
 `~/.zshrc` is chezmoi-managed as a monitoring stub — its sole purpose is to make chezmoi detect when a tool writes to it. If chezmoi reports it as `MM`, a tool has modified it; move those changes to `$ZDOTDIR/.zshrc` and run `chezmoi re-add ~/.zshrc`.
 
-`.zprofile` must not exist at `~/.zprofile` or `$ZDOTDIR/.zprofile`. Do not add or suggest adding `eval "$(brew shellenv)"` or any content to `.zprofile`. See [`docs/decisions/0001-remove-zprofile.md`](../docs/decisions/0001-remove-zprofile.md) for the rationale and [`MANAGED.txt`](../MANAGED.txt) for the current list of enforced-absent targets.
+`.zprofile` must not exist at `~/.zprofile` or `$ZDOTDIR/.zprofile`. Do not add or suggest adding `eval "$(brew shellenv)"` or any content to `.zprofile`. See [`docs/decisions/0001-remove-zprofile.md`](/docs/decisions/0001-remove-zprofile.md) for the rationale and [`MANAGED.txt`](/MANAGED.txt) for the current list of enforced-absent targets.
