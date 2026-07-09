@@ -298,10 +298,13 @@ alias grep="grep --ignore-case"
 
 # --- Actions on Files and Directories ---
 
-# Actions on files and directories
+# Prompt for confirmation before overwriting existing files.
 alias cp="cp -iv"
 alias mv="mv -iv"
-alias rm="rm -iv"
+
+# Safely move files to the trash/bin instead of permanent deletion.
+alias trash="trash --verbose --stopOnError"
+alias rm="trash"
 
 # --- Network & External Tools ---
 
