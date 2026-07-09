@@ -232,45 +232,84 @@ syncfile() {
 
 # ==================================================
 
-# Define aliases.
+# ALIASES
+
+# --- Extending Pre-existing Aliases (Dynamic Syntax) ---
+
+# The zsh4humans framework automatically creates hidden aliases for the commands 'diff, 'grep' and 'ls' to ensure they use the correct colour flags for the OS. See https://github.com/romkatv/zsh4humans/blob/v5/fn/-z4h-init
+# The dynamic syntax ${aliases[cmd]:-cmd} syntax must be used here. This safely appends my custom flags to the end of the framework's aliases without destroying the colour settings.
+
+# If these need to be overridden in the future, uncomment and replace "..." with the desired flags.
+# alias diff="${aliases[diff]:-diff} ..."
+# alias grep="${aliases[grep]:-grep} ..."
+# alias ls="${aliases[ls]:-ls} ..."
+
+# ------------------------------
 
 # Reload the current shell cleanly to apply configuration changes.
 alias reload="exec zsh"
 
-# Files and directories
+# --- Navigation & Shortcuts ---
 
-# Recently visited directories
-# List
+# --- DIRS: Display the directory stack (recently visited directories) ---
+
+# Display a numbered list of entries in the directory stack with one entry per line.
 alias dirs="dirs -v"
-# Quick access by index
+
+# Quick access to the directory stack by index.
 for index in {1..9}; do alias "${index}"="cd +${index}"; done
 unset index
 
-# Quick-access directories
+# --- Directories Shortcuts ---
+
+# Shortcuts to frequently used directories.
 alias repos="${HOME}/repos/germanfrelo"
+
+# --- Files & Directories Listing ---
+
+# EZA: Lists the contents of the current directory
 
 # List all files and directories in columns
 alias eza="eza -F --all --group-directories-first"
+
 # Same as above, but displaying extended metadata as a table
 alias ezal="eza --long --header --smart-group --flags --time-style=iso --no-user --git-repos"
+
+
+# List Directory Contents in a Tree-like Format
+
 # Show the contents of the current directory as a tree, including hidden files and directories
 alias tree="tree -a"
+
+# Visualise directory structures up to a specific depth
 alias tree1="tree -L 1"
 alias tree2="tree -L 2"
 alias tree3="tree -L 3"
 
-# File contents
+# --- File Contents ---
+
+# View file contents with syntax highlighting (bypassing the pager)
 alias bat="bat --paging=never"
+
+# --- Searching ---
 
 # Find patterns in files using regular expressions
 alias grep="grep -i"
+
+# --- Actions on Files and Directories ---
 
 # Actions on files and directories
 alias cp="cp -iv"
 alias mv="mv -iv"
 alias rm="rm -iv"
 
-# Git
+# --- Network & External Tools ---
+
+# Download files preserving HSTS states in the XDG cache
+alias wget='wget --hsts-file="${XDG_CACHE_HOME}/wget-hsts"'
+
+# --- Git ---
+
 alias gl="git log --oneline --graph"
 alias gla="gl --all"
 alias gls="gl --stat"
@@ -304,15 +343,6 @@ alias gstat="git status -sb"
 # alias gblog="git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:red)%(refname:short)%(color:reset) - %(color:yellow)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:blue)%(committerdate:relative)%(color:reset))'" # git log for each branches
 # alias gsub="git submodule update --remote" # pull submodules
 # alias gj="git-jump" # Open in vim quickfix list files of interest (git diff, merged...)
-
-# wget (XDG location)
-alias wget='wget --hsts-file="${XDG_CACHE_HOME}/wget-hsts"'
-
-# ==================================================
-
-# Add flags to existing aliases.
-
-alias ls="${aliases[ls]:-ls} -A"
 
 # ==================================================
 
