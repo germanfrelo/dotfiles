@@ -269,17 +269,17 @@ alias repos="${HOME}/repos/germanfrelo"
 
 # EZA: Lists the contents of the current directory
 
-# List all files and directories in columns
-alias eza="eza -F --all --group-directories-first"
+# Override default behaviour with better options.
+alias eza="eza -F -A --oneline --group-directories-first"
 
-# Same as above, but displaying extended metadata as a table
-alias ezal="eza --long --header --smart-group --flags --time-style=iso --no-user --git-repos"
+# Display files/dirs as a detailed metadata table.
+alias ezal="eza --long --header --smart-group --blocksize --total-size --flags --time-style=relative --no-user --git --git-repos"
 
 
 # List Directory Contents in a Tree-like Format
 
-# Show the contents of the current directory as a tree, including hidden files and directories
-alias tree="tree -a"
+# Visualise directory structures recursively
+alias tree="tree -aFC --dirsfirst -I .git"
 
 # Visualise directory structures up to a specific depth
 alias tree1="tree -L 1"
