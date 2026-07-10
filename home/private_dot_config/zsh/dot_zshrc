@@ -1,3 +1,11 @@
+# TODO: **Implementation To-Do List:**
+
+# 1. **Create the custom directory:** Make a new folder at `~/.config/zsh/custom/`.
+# 2. **Create the split files:** Inside that folder, create `aliases.zsh`, `functions.zsh`, and `exports.zsh`.
+# 3. **Migrate the logic:** Cut your personal blocks (`gbignore`, `syncfile`, `md`, `eza` aliases, `chezmoi` drift checker, etc.) from `~/.zshrc` and paste them into their respective new files.
+# 4. **Source the files:** Add the `z4h source "${XDG_CONFIG_HOME}/zsh/custom/..."` lines to the very bottom of `~/.zshrc`.
+# 5. **Track with chezmoi:** Run `chezmoi add ~/.config/zsh/custom/` to bring the new modular structure into your dotfiles repository.
+
 # =======================================================================
 # Personal Zsh configuration file. It is strongly recommended to keep all
 # shell customization and configuration (including exported environment
