@@ -207,7 +207,7 @@ syncfile() {
 	for dir in */; do
 		# Remove trailing slash for path comparison
 		local target_dir="${dir%/}"
-		local target_dir_abs=$(cd "$target_dir" && pwd)
+		local target_dir_abs=$(cd "$target_dir" && pwd) || continue
 
 		# Skip the directory that contains the source file
 		if [[ "$target_dir_abs" == "$src_dir_abs" ]]; then
