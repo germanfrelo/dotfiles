@@ -106,7 +106,7 @@ export LESSHISTFILE=- # avoid showing .lesshst file in $HOME when using `man' co
 z4h source ~/.env.zsh
 
 # Ref: https://github.com/romkatv/zsh4humans/issues/351
-z4h source $NVM_DIR/nvm.sh $NVM_DIR/bash_completion
+z4h source "$NVM_DIR/nvm.sh" "$NVM_DIR/bash_completion"
 
 # ==================================================
 
