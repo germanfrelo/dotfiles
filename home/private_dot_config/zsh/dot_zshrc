@@ -94,7 +94,7 @@ export HOMEBREW_NO_ANALYTICS=1
 
 # NVM (Node Version Manager)
 # Ref: https://github.com/romkatv/zsh4humans/issues/351
-export NVM_DIR="$HOME/.nvm"
+export NVM_DIR="${HOME}/.nvm"
 
 # man / less
 export LESSHISTFILE=- # avoid showing .lesshst file in $HOME when using `man' command
@@ -106,7 +106,7 @@ export LESSHISTFILE=- # avoid showing .lesshst file in $HOME when using `man' co
 z4h source ~/.env.zsh
 
 # Ref: https://github.com/romkatv/zsh4humans/issues/351
-z4h source "$NVM_DIR/nvm.sh" "$NVM_DIR/bash_completion"
+z4h source "${NVM_DIR}/nvm.sh" "${NVM_DIR}/bash_completion"
 
 # ==================================================
 
@@ -148,24 +148,24 @@ compdef _directories md
 function gbignore() {
 	local commit_hash commit_title title_lower
 
-	commit_hash=$(git rev-parse HEAD 2>/dev/null) || {
+	commit_hash="$(git rev-parse HEAD 2>/dev/null)" || {
 		print -P "%F{red}Error: not a git repository or no commits.%f" >&2
 		return 1
 	}
-	commit_title=$(git log -1 --format=%s)
-	title_lower=${commit_title:l}
+	commit_title="$(git log -1 --format=%s)"
+	title_lower="${commit_title:l}"
 
-	case "$title_lower" in
+	case "${title_lower}" in
 		*git-blame-ignore-revs*)
 			print -P "%F{yellow}Skipped: commit appears to be a .git-blame-ignore-revs update.%f" >&2
 			return 1
 			;;
 	esac
 
-	case "$title_lower" in
+	case "${title_lower}" in
 		style*:*) ;;
 		*)
-			print -P "%F{red}Aborted: \"%s\" does not match style*:*.%f" "$commit_title" >&2
+			print -P "%F{red}Aborted: \"%s\" does not match style*:*.%f" "${commit_title}" >&2
 			return 1
 			;;
 	esac
@@ -175,15 +175,15 @@ function gbignore() {
 		return 1
 	fi
 
-	if grep -qF "$commit_hash" .git-blame-ignore-revs; then
-		print -P "%F{yellow}Skipped: %s is already in .git-blame-ignore-revs.%f" "$commit_hash" >&2
+	if grep -qF "${commit_hash}" .git-blame-ignore-revs; then
+		print -P "%F{yellow}Skipped: %s is already in .git-blame-ignore-revs.%f" "${commit_hash}" >&2
 		return 0
 	fi
 
-	printf "\n# %s\n%s\n" "$commit_title" "$commit_hash" >> .git-blame-ignore-revs
+	printf "\n# %s\n%s\n" "${commit_title}" "${commit_hash}" >> .git-blame-ignore-revs
 	git add .git-blame-ignore-revs
 	git commit -m "chore: Update .git-blame-ignore-revs"
-	print -P "%F{green}Done: added %s to .git-blame-ignore-revs.%f" "$commit_hash"
+	print -P "%F{green}Done: added %s to .git-blame-ignore-revs.%f" "${commit_hash}"
 }
 
 # Copies a file to all subdirectories in the current path, excluding the source directory.
@@ -192,33 +192,33 @@ syncfile() {
 	local src_file="$1"
 
 	# 1. Validation: Ensure source file exists
-	if [[ ! -f "$src_file" ]]; then
-		echo "🚫 Error: Source file '$src_file' not found."
+	if [[ ! -f "${src_file}" ]]; then
+		echo "🚫 Error: Source file '${src_file}' not found."
 		return 1
 	fi
 
 	# 2. Extraction: Get the filename and the absolute path of its parent directory
-	local filename=$(basename "$src_file")
-	local src_dir_abs=$(cd "$(dirname "$src_file")" && pwd)
+	local filename="$(basename "${src_file}")"
+	local src_dir_abs="$(cd "$(dirname "${src_file}")" && pwd)"
 
-	echo "🚀 Syncing '$filename' to all repositories (excluding origin)..."
+	echo "🚀 Syncing '${filename}' to all repositories (excluding origin)..."
 
 	# 3. Execution: Loop through all directories
 	for dir in */; do
 		# Remove trailing slash for path comparison
 		local target_dir="${dir%/}"
-		local target_dir_abs=$(cd "$target_dir" && pwd) || continue
+		local target_dir_abs="$(cd "${target_dir}" && pwd)" || continue
 
 		# Skip the directory that contains the source file
-		if [[ "$target_dir_abs" == "$src_dir_abs" ]]; then
-			echo "🏠 Skipping source: $target_dir"
+		if [[ "${target_dir_abs}" == "${src_dir_abs}" ]]; then
+			echo "🏠 Skipping source: ${target_dir}"
 			continue
 		fi
 
 		# Only sync to directories that are actually Git repositories (optional, but safer for you)
-		if [[ -d "$target_dir/.git" ]]; then
-			cp "$src_file" "$target_dir/$filename"
-			echo "✅ Synced to: $target_dir"
+		if [[ -d "${target_dir}/.git" ]]; then
+			cp "${src_file}" "${target_dir}/${filename}"
+			echo "✅ Synced to: ${target_dir}"
 		fi
 	done
 }
@@ -239,11 +239,11 @@ syncfile() {
 # List
 alias dirs="dirs -v"
 # Quick access by index
-for index in {1..9}; do alias "$index"="cd +${index}"; done
+for index in {1..9}; do alias "${index}"="cd +${index}"; done
 unset index
 
 # Quick-access directories
-alias repos="$HOME/repos/germanfrelo"
+alias repos="${HOME}/repos/germanfrelo"
 
 # List all files and directories in columns
 alias eza="eza -F --all --group-directories-first"
@@ -326,10 +326,10 @@ setopt no_auto_menu  # require an extra TAB press to open the completion menu
 # Warn if any chezmoi-managed file has drifted from its source.
 # Runs once per top-level shell (SHLVL=1) — skipped in subshells and nested zsh invocations.
 if (( SHLVL == 1 )); then
-    _chezmoi_status=$(chezmoi status 2>/dev/null)
-    if [[ -n "$_chezmoi_status" ]]; then
+    _chezmoi_status="$(chezmoi status 2>/dev/null)"
+    if [[ -n "${_chezmoi_status}" ]]; then
         print -P "%F{yellow}⚠ chezmoi: managed files have drifted — run \`chezmoi diff --use-builtin-diff\` to review:%f"
-        print "$_chezmoi_status"
+        print "${_chezmoi_status}"
     fi
     unset _chezmoi_status
 fi
