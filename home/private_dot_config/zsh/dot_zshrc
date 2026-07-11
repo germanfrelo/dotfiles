@@ -233,6 +233,9 @@ syncfile() {
 
 # Define aliases.
 
+# TODO:
+alias pip="pip3"
+
 # Files and directories
 
 # Recently visited directories
