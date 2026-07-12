@@ -32,15 +32,10 @@
 		"*ignore": "ignore",
 
 		// ini
-		"**/.ssh/config": "ini",
-		"**/*dot_ssh/*config*": "ini",
 		"**/*git/*config*": "ini",
 
 		// plaintext
 		"LICENSE": "plaintext",
-
-		// properties
-		"private_config.tmpl": "properties",
 
 		// shellscript
 		"*.sh.tmpl": "shellscript",
