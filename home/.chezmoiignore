@@ -1,3 +1,4 @@
+# TODO: Consider a simple approach rather than the current complex one: ignore all, then include only the files that are actually managed. This would be simpler to maintain, but would require a more careful review of the managed files to ensure that no important files are accidentally ignored.
 # =============================================================================
 # BROAD PATTERNS WITH NEGATIONS
 #
