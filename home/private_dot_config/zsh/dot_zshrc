@@ -6,6 +6,81 @@
 # 4. **Source the files:** Add the `z4h source "${XDG_CONFIG_HOME}/zsh/custom/..."` lines to the very bottom of `~/.zshrc`.
 # 5. **Track with chezmoi:** Run `chezmoi add ~/.config/zsh/custom/` to bring the new modular structure into your dotfiles repository.
 
+# TODO: That is an incredibly valid concern. When you are building your personal environment on top of a heavily engineered framework like `zsh4humans`, dealing with upstream drift is exactly the kind of "thorn in the side" that plagues developers over time.
+# 
+# Here is an analysis of your current diff, followed by a strategic breakdown of how to solve this exact architectural problem.
+# 
+# ### 1. Re-evaluation of the Diff
+# 
+# I have carefully reviewed your `changes.diff` against the boilerplate `zsh4humans` (v5) `.zshrc` template.
+# 
+# **The Verdict:** **Your current diff is 100% safe to commit.** Here is why:
+# 
+# - **The User Space:** All the heavy modifications (the quotes, the braces, the `$(...)` command substitutions) in this diff are applied exclusively to _your_ custom functions (`syncfile`, `gbignore`), _your_ custom loop (`dirs`), and _your_ added conditional (`_chezmoi_status`).
+# - **The WSL Line:** You correctly excluded the `z4h_win_home` line from this diff, leaving the author's strict Zsh-optimized assignment intact.
+# - **The Boilerplate Placeholders:** The only native `zsh4humans` boilerplate you touched was `path=(~/bin ${path})`. The framework author provides these specific lines (along with headers like `# Define aliases` and `# Export environment variables`) precisely as designated "fill-in-the-blank" areas for you. Wrapping `${path}` in braces here does not break any framework logic.
+# 
+# ### 2. The `zsh4humans` Philosophy on Customization
+# 
+# Roman Perepelitsa (the author of `zsh4humans`) designed the default `.zshrc` not as an immutable black box, but as a scaffold.
+# 
+# According to the official documentation, the author explicitly recommends keeping all shell customization within this file or in files sourced from it. The design relies on one massive architectural rule: **The `z4h init` boundary.**
+# 
+# - **Above `z4h init`:** This is the critical framework configuration zone. You declare what plugins to download, what SSH hosts to teleport to, and UI behaviors. Console I/O is unavailable here, and tampering with the logic can break the fast-loading UI.
+# 
+# - **Below `z4h init`:** This is the standard Zsh environment. Once `z4h init` fires, the framework steps back, and the rest of the file operates like a normal, everyday `.zshrc`. The author provides the `# Define aliases` and `# Autoload functions` headers as suggested slots, expecting you to write your custom code there.
+# 
+# However, as you have noticed, dumping hundreds of lines of custom functions into the bottom of this scaffold makes it incredibly difficult to track what belongs to you versus what came from the template.
+# 
+# ### 3. Solutions for Absolute Separation
+# 
+# If you want absolute peace of mind when pulling upstream changes from the `zsh4humans` repository, you need to physically separate the code. Here are the two best approaches.
+# 
+# #### Strategy A: The Modular "Source" Approach (Highly Recommended)
+# 
+# This is the cleanest, most professional way to organize dotfiles. Instead of using the `zsh4humans` `.zshrc` as your main coding canvas, you treat it purely as a bootloader.
+# 
+# 1. **Extract your code:** You create a new directory, for example, `~/.config/zsh/custom/`. Inside it, you create dedicated files like `aliases.zsh`, `functions.zsh`, and `exports.zsh`.
+# 2. **Move the logic:** You cut all your custom code (`syncfile`, `md`, `eza` aliases, `chezmoi` drift checker) out of `.zshrc` and paste them into these new files.
+# 3. **Source them in `.zshrc`:** At the very bottom of your `.zshrc`, you add a few clean lines:
+# 
+# ```zsh
+# # ==================================================
+# # Load Personal Customizations
+# 
+# z4h source "${XDG_CONFIG_HOME}/zsh/custom/exports.zsh"
+# z4h source "${XDG_CONFIG_HOME}/zsh/custom/functions.zsh"
+# z4h source "${XDG_CONFIG_HOME}/zsh/custom/aliases.zsh"
+# 
+# ```
+# 
+# **Why this wins:** Your `.zshrc` remains almost identical to the upstream `zsh4humans` template. If Roman pushes an update, you can effortlessly diff your `.zshrc` against the new boilerplate without your personal aliases getting in the way. Since you use `chezmoi`, managing these extra files in your `private_dot_config/zsh/custom/` directory is seamless.
+# 
+# #### Strategy B: The "Block Demarcation" Approach
+# 
+# If you strongly prefer keeping everything in a single file to avoid jumping between tabs in VS Code, you can use visual boundaries.
+# 
+# You leave the upper half of the file untouched. Right below `z4h init`, you wipe out the author's empty placeholder headers and replace them with a massive, unmissable ASCII block:
+# 
+# ```zsh
+# # ==============================================================================
+# # ⬇⬇⬇ END OF ZSH4HUMANS BOILERPLATE ⬇⬇⬇
+# # ==============================================================================
+# #
+# # Everything below this line is strictly personal configuration.
+# # Upstream zsh4humans changes should only be compared above this point.
+# 
+# export EDITOR="code --wait"
+# # ... rest of your code ...
+# 
+# ```
+# 
+# **Why this wins:** It requires zero file restructuring. You maintain the single-file convenience while giving yourself a psychological and visual "safe zone" where you know you can edit, format, and refactor without ever worrying about breaking framework initialization.
+# 
+# ---
+# 
+# Would you like me to draft the exact file split for the Modular Approach (Strategy A) so you can see what your stripped-down `.zshrc` and your new custom files would look like?
+#
 # =======================================================================
 # Personal Zsh configuration file. It is strongly recommended to keep all
 # shell customization and configuration (including exported environment
