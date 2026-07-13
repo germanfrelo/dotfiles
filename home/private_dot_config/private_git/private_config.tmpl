@@ -1,58 +1,18 @@
+# ========================================
+# Global Git configuration
+# https://git-scm.com/docs/git-config
+# ========================================
+
+# ------ IDENTITY ------
+
 [user]
 	name = Germán Freixinós
 	email = 14282156+germanfrelo@users.noreply.github.com
 
-[init]
-	defaultBranch = main
-
-[help]
-	autocorrect = prompt
-
-# Display the number of entries currently stashed away.
-[status]
-	showStash = true
-
-# Automatically use .git-blame-ignore-revs in any repo that has one.
-# Ref. https://stackoverflow.com/a/79824780
-[blame]
-	ignoreRevsFile = :(optional).git-blame-ignore-revs
-
-# Handle line endings properly.
-# Ref. https://docs.github.com/en/get-started/git-basics/configuring-git-to-handle-line-endings
-[core]
-{{- if or (eq .chezmoi.os "darwin") (eq .chezmoi.os "linux") }}
-	autocrlf = input # macOS & Linux
-{{- else if eq .chezmoi.os "windows" }}
-	autocrlf = true # Windows
-{{- else }}
-	autocrlf = input
-{{- end }}
-
-# --- EXTERNAL TOOLS ---
-
-# Editor
-# https://git-scm.com/docs/git-config#Documentation/git-config.txt-coreeditor
-# IMPORTANT: Do NOT set 'core.editor'. By default, Git uses the text editor defined via the '$VISUAL' shell environment variable in '$ZDOTDIR/.zshrc'. This is the desired behavior.
-
-# Diff
-# https://code.visualstudio.com/docs/sourcecontrol/merge-conflicts#_configure-vs-code-as-default-merge-tool
-[diff]
-	tool = vscode
-[difftool "vscode"]
-	cmd = code --wait --diff $LOCAL $REMOTE
-
-# Merge
-# https://code.visualstudio.com/docs/sourcecontrol/merge-conflicts#_configure-vs-code-as-default-merge-tool
-# https://code.visualstudio.com/updates/v1_70#_command-line-option-merge
-[merge]
-	tool = vscode
-[mergetool "vscode"]
-	cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
-
-# ---
+# ------ COMMIT SIGNING ------
 
 # Commit signing with SSH and 1Password.
-# Ref. https://developer.1password.com/docs/ssh/git-commit-signing/
+# Ref. https://www.1password.dev/ssh/git-commit-signing
 [user]
 	signingkey = {{ onepasswordRead "op://jzkvauzqt3adjmfkfl6ros3gc4/rzvcj7ec56xzr2ys5otprcvdsq/public_key" "VAEUN74C7FFWJITFMLLEXLAYFA" }}
 [commit]
@@ -63,3 +23,45 @@
 [gpg "ssh"]
 	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
 {{- end }}
+
+# ------ CORE & WORKFLOW ------
+
+[init]
+	defaultBranch = main
+
+[help]
+	autocorrect = prompt
+
+[status]
+	showStash = true
+
+# Automatically use .git-blame-ignore-revs when present in a repository.
+# Ref. https://stackoverflow.com/a/79824780
+[blame]
+	ignoreRevsFile = :(optional).git-blame-ignore-revs
+
+# Normalize line endings to LF on commit.
+# Ref. https://www.aleksandrhovhannisyan.com/blog/crlf-vs-lf-normalizing-line-endings-in-git/
+[core]
+	autocrlf = input
+
+# ------ EXTERNAL TOOLS ------
+
+# --- Editor ---
+# ❗️ IMPORTANT: Do NOT set 'core.editor'. By default, Git uses the text editor defined via the '$VISUAL' shell environment variable in '$ZDOTDIR/.zshrc'. This is the desired behavior.
+# Ref. https://git-scm.com/docs/git-config#Documentation/git-config.txt-coreeditor
+
+# --- Diff ---
+# Ref. https://code.visualstudio.com/docs/sourcecontrol/merge-conflicts#_configure-vs-code-as-default-merge-tool
+[diff]
+	tool = vscode
+[difftool "vscode"]
+	cmd = code --wait --diff $LOCAL $REMOTE
+
+# --- Merge ---
+# Ref. https://code.visualstudio.com/docs/sourcecontrol/merge-conflicts#_configure-vs-code-as-default-merge-tool
+# Ref. https://code.visualstudio.com/updates/v1_70#_command-line-option-merge
+[merge]
+	tool = vscode
+[mergetool "vscode"]
+	cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
