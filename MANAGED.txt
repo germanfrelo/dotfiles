@@ -8,6 +8,8 @@
 │   ├── git
 │   │   ├── config
 │   │   └── ignore
+│   ├── ncdu
+│   │   └── config
 │   └── zsh
 │       ├── .p10k.zsh
 │       ├── .zshenv
@@ -41,7 +43,7 @@
 │       └── com.germanfrelo.chezmoi-drift.plist
 └── svgo.config.js
 
-17 directories, 25 files
+18 directories, 26 files
 
 ## Enforced absent
 

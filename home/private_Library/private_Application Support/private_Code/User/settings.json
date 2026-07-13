@@ -246,6 +246,9 @@
 		// plaintext
 		"LICENSE": "plaintext",
 
+		// properties
+		"**/*ncdu/*config*": "properties",
+
 		// shellscript
 		"*.sh.tmpl": "shellscript",
 		"*dot_zprofile": "shellscript",

@@ -249,15 +249,11 @@ alias repos="${HOME}/repos/germanfrelo"
 alias eza="eza -F --all --group-directories-first"
 # Same as above, but displaying extended metadata as a table
 alias ezal="eza --long --header --smart-group --flags --time-style=iso --no-user --git-repos"
-# Same as above, but including recursive directory size and size of allocated file system blocks
-alias ezals="ezal --total-size --blocksize"
 # Show the contents of the current directory as a tree, including hidden files and directories
 alias tree="tree -a"
 alias tree1="tree -L 1"
 alias tree2="tree -L 2"
 alias tree3="tree -L 3"
-# List the size of files and directories of the current directory in ascending order (including a cumulative total)
-alias du="du -shc * | sort -h"
 
 # File contents
 alias bat="bat --paging=never"

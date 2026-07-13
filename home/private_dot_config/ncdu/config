@@ -1,0 +1,32 @@
+# TODO: When adding Windows/Linux support, convert this file to a chezmoi template (config.tmpl) and guard `--delete-command` with `{{ if eq .chezmoi.os "darwin" }}...{{ end }}`.
+
+# Documentation: https://dev.yorhel.nl/ncdu/man#configuration
+
+# --- Scan options ---
+
+# Do not cross filesystem boundaries (prevents scanning external drives/network mounts)
+--one-file-system
+
+# --- Interface options ---
+
+# Show the item counts column
+--show-itemcount
+
+# Hide the relative size bar column
+--hide-graph
+
+# Show the relative size percent column
+--show-percent
+
+# Require a confirmation before quitting ncdu
+--confirm-quit
+
+# Replace built-in permanent deletion with trash (macOS only; see TODO above).
+# Note: do not quote the value — the config parser passes it verbatim to the shell, so quotes become part of the command name and cause a "command not found" error.
+# No -- separator: macos-trash does not recognise it as end-of-options and would treat it as a literal filename. Safe to omit: ncdu always appends an absolute path (starting with /), which can never be mistaken for a flag.
+--delete-command trash
+
+# Colour scheme.
+# dark: inherits the terminal background colour (integrates with any terminal theme).
+# dark-bg: always forces a dark background regardless of terminal theme.
+--color dark
