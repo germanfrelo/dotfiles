@@ -1,4 +1,7 @@
 {
+	"[snippets]": {
+		"editor.defaultFormatter": "vscode.json-language-features"
+	},
 	"[markdown]": {
 		"editor.renderWhitespace": "boundary"
 	},
