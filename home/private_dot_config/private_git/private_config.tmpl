@@ -1,3 +1,46 @@
+# TODO: Three best practice ways to organise your sections, depending on how you mentally model your Git workflow.
+
+# ### Option 1: The Workflow / Lifecycle Approach (Recommended)
+# This is the most common approach for advanced dotfiles. It groups configurations based on *when* or *why* you interact with them during your daily development cycle.
+
+# *   `## IDENTITY & SECURITY`: Your basic `[user]` details, grouped together with your 1Password `[commit]` and `[gpg]` signing block.
+# *   `## CORE BEHAVIOUR`: Settings that affect Git's fundamental mechanics across all actions (e.g., `[init]` defaultBranch, `[help]` autocorrect, and `[core]` autocrlf).
+# *   `## WORKSPACE & REPOSITORY`: Settings that affect how you view the repository state (e.g., `[status]` showStash and `[blame]` ignoreRevsFile).
+# *   `## EXTERNAL TOOLING`: Your VS Code editor, diff, and merge blocks, along with the global `[difftool]` prompt suppression.
+
+# ### Option 2: The Native vs. External Approach (High Portability)
+# This approach strictly separates native Git preferences from third-party integrations (VS Code, 1Password). This is highly favoured by developers who use their dotfiles across vastly different environments (e.g., a local Mac vs. a headless Linux server) because the external integrations can easily be isolated or wrapped in conditional logic.
+
+# *   `## NATIVE PREFERENCES`: All standard Git settings (name, email, init, help, status, blame, autocrlf, and the global difftool prompt).
+# *   `## EDITOR & DIFF (VS CODE)`: The entire VS Code integration block.
+# *   `## SIGNING (1PASSWORD)`: The entire 1Password SSH signing block.
+
+# ### Option 3: The Action-Based Approach
+# This categorises settings by what you are actively doing when the setting comes into play. It is very intuitive for visual scanning.
+
+# *   `## SETUP & IDENTITY`: Who you are and how repositories are initialised (name, email, init, 1Password signing).
+# *   `## AUTHORING & COMMITTING`: Writing code and creating commits (core autocrlf, help autocorrect).
+# *   `## REVIEWING & RESOLVING`: Looking at code and fixing conflicts (VS Code integrations, difftool prompts, blame, status stash).
+
+# ### Formatting Tip
+# To make the h2-type comments pop visually against your standard explanatory comments, many developers use uppercase text or light ASCII padding. For example:
+
+# ```ini
+# ## ---------------------------------------------------------
+# ## IDENTITY & SECURITY
+# ## ---------------------------------------------------------
+
+# [user]
+#     name = Germán Freixinós
+# ```
+# Or simply keeping it clean and bold:
+# ```ini
+# ## IDENTITY & SECURITY
+
+# [user]
+#     name = Germán Freixinós
+# ```
+
 [user]
 	name = Germán Freixinós
 	email = 14282156+germanfrelo@users.noreply.github.com
