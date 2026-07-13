@@ -29,7 +29,8 @@
 {{- end }}
 
 # Use VS Code as Git editor, diff tool and merge tool.
-# Ref. https://code.visualstudio.com/docs/sourcecontrol/overview#_vs-code-as-git-editor
+# Ref. https://code.visualstudio.com/docs/sourcecontrol/merge-conflicts#_configure-vs-code-as-default-merge-tool
+# Ref. https://code.visualstudio.com/updates/v1_70#_command-line-option-merge
 [core]
 	editor = code --wait
 [diff]
@@ -42,7 +43,7 @@
 	cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
 
 # Commit signing with SSH and 1Password.
-# Ref. https://developer.1password.com/docs/ssh/git-commit-signing/
+# Ref. https://www.1password.dev/ssh/git-commit-signing
 [user]
 	signingkey = {{ onepasswordRead "op://jzkvauzqt3adjmfkfl6ros3gc4/rzvcj7ec56xzr2ys5otprcvdsq/public_key" "VAEUN74C7FFWJITFMLLEXLAYFA" }}
 [commit]
