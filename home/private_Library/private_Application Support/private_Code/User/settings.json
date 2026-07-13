@@ -93,6 +93,9 @@
 	"editor.cursorSmoothCaretAnimation": "on",
 	"editor.cursorSurroundingLines": 3,
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"[snippets]": {
+		"editor.defaultFormatter": "vscode.json-language-features"
+	},
 	"editor.detectIndentation": false,
 	"editor.dragAndDrop": false,
 	"editor.find.autoFindInSelection": "multiline",
