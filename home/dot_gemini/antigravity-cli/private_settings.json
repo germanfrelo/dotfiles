@@ -1,17 +1,20 @@
 {
   "colorScheme": "dark",
+  "editor": "code --wait",
   "enableTelemetry": false,
   "model": "Gemini 3.1 Pro (High)",
   "permissions": {
     "allow": [
+      "command(cat)",
+      "command(find)",
+      "command(git diff)",
       "command(git log)",
       "command(git show)",
-      "command(cat)",
-      "command(git diff)",
+      "command(git status)",
       "command(grep)",
       "command(head)",
-      "command(git status)",
       "command(ls)"
     ]
-  }
+  },
+  "trustedWorkspaces": ["~/repos/germanfrelo"]
 }
