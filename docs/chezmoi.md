@@ -662,3 +662,36 @@ code --diff /tmp/brewfile-current.txt /tmp/brewfile-template.txt
 
 Red (left only) = installed but not tracked → add to template or uninstall manually.
 Green (right only) = tracked but not installed → will be installed on next `chezmoi apply`.
+
+TODO: Re-evaluate chezmoi Attributes guide
+
+### How to Re-evaluate `chezmoi` Attributes
+
+When you originally added a file to `chezmoi`, it tracked the file permissions that existed on your local machine at that specific moment. If a directory was readable only by your user, `chezmoi` permanently locked it in the source state with the `private_` prefix.
+
+If you have since opened up the permissions locally and want `chezmoi` to detect that change, you have two approaches.
+
+#### Approach 1: Re-add the file (Recommended)
+
+The simplest method is to adjust the permissions on your actual, local file first, and then tell `chezmoi` to pull those changes back into its source state.
+
+```sh
+# 1. Update the permissions on your local machine
+chmod 755 ~/.config/my_directory
+
+# 2. Tell chezmoi to re-evaluate and sync the file's current state
+chezmoi re-add ~/.config/my_directory
+
+```
+
+If the permissions no longer dictate that the file must be kept private, `chezmoi` will automatically strip the `private_` prefix from the source repository.
+
+#### Approach 2: Manually change the attribute
+
+If you want to forcefully toggle an attribute purely within `chezmoi`'s source tree—without touching your local machine's filesystem—you can use the `chattr` command.
+
+```sh
+# Tell chezmoi to remove the private attribute from the tracked file
+chezmoi chattr -private ~/.config/my_directory
+
+```
