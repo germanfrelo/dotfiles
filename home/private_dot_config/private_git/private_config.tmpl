@@ -1,3 +1,11 @@
+# TODO: Consider adding these impactful, low-maintenance options, structured by the capability they provide:
+# - **Automatically set up upstream branches on first push.** `[push] autoSetupRemote = true` prevents the tedious `git push --set-upstream origin <branch>` error when you create a new local branch. Git will just do it for you automatically. *(Requires Git 2.37+).*
+# - **Keep your local branch list clutter-free.** `[fetch] prune = true` automatically deletes local tracking references when their counterparts are deleted on the remote (e.g., after a pull request is merged).
+# - **Generate much more readable and logical diffs.** `[diff] algorithm = histogram` replaces the default diff engine with one that is significantly better at understanding moved code blocks and curly braces, resulting in human-friendly diffs.
+# - **Find your active branches faster.** `[branch] sort = -committerdate` sorts the output of your `git branch` command by the most recent commits first, keeping your active work at the top rather than hiding it in an alphabetical list.
+# - **See the original base code during merge conflicts.** `[merge] conflictStyle = zdiff3` changes how conflict markers are written in the raw file. Instead of just showing "ours" and "theirs", it also shows the original code both sides diverged from, providing crucial context. *(Requires Git 2.35+).*
+# - **Keep your commit history linear and clean.** `[pull] rebase = true` forces Git to rebase your local unpushed commits on top of the incoming changes, preventing those messy, automated "Merge branch 'main' into main" commits.
+
 [user]
 	name = Germán Freixinós
 	email = 14282156+germanfrelo@users.noreply.github.com
