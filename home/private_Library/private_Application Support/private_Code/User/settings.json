@@ -13,6 +13,10 @@
 		"editor.unicodeHighlight.invisibleCharacters": true // Overrides default value of "false".
 	},
 	"accessibility.underlineLinks": true,
+	"better-todo-tree.filtering.excludeGlobs": [
+		"**/node_modules/*/**", // Default
+		"**/*p10k.zsh"
+	],
 	"better-todo-tree.general.showActivityBarBadge": true,
 	"betterStackingContexts.backgroundColor": "transparent",
 	"betterStackingContexts.messageText": " ℹ️ This property creates a new stacking context.",
