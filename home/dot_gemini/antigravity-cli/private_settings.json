@@ -1,20 +1,38 @@
 {
+  "agentMode": "plan",
+  "altScreenMode": "always",
   "colorScheme": "dark",
   "editor": "code --wait",
   "enableTelemetry": false,
-  "model": "Gemini 3.1 Pro (High)",
+  "model": "Gemini 3.6 Flash (Low)",
+  "notifications": true,
   "permissions": {
     "allow": [
       "command(cat)",
+      "command(echo)",
       "command(find)",
       "command(git diff)",
       "command(git log)",
+      "command(git ls-files)",
       "command(git show)",
       "command(git status)",
       "command(grep)",
       "command(head)",
-      "command(ls)"
+      "command(ls)",
+      "command(tail)",
+      "read_url(antigravity.google)"
     ]
   },
-  "trustedWorkspaces": ["~/repos/germanfrelo"]
+  "runningLightSpeed": "slow",
+  "showFeedbackSurvey": false,
+  "statusLine": {
+    "type": "command",
+    "command": "~/.gemini/antigravity-cli/statusline.sh"
+  },
+  "title": {
+    "type": "command",
+    "command": "~/.gemini/antigravity-cli/title.sh"
+  },
+  "trustedWorkspaces": [],
+  "verbosity": "low"
 }

@@ -1,0 +1,23 @@
+{
+  "userSettings": {
+    "autoExecutionPolicy": "CASCADE_COMMANDS_AUTO_EXECUTION_OFF",
+    "conversationWidth": "CONVERSATION_WIDTH_DEFAULT",
+    "customThemeSeedsDark": {
+      "background": "#101010",
+      "foregroundOverride": "#FFFFFF",
+      "primary": "#007acc"
+    },
+    "customThemeSeedsLight": {
+      "background": "#FFFFFF",
+      "foregroundOverride": "#101010",
+      "primary": "#007acc"
+    },
+    "enableTerminalSandbox": false,
+    "globalPermissionGrants": {
+      "allow": ["command(git diff)", "command(git log)", "command(git status)"]
+    },
+    "nonWorkspaceFileAccessPolicy": "AGENT_SETTING_POLICY_ASK",
+    "remoteControlHostname": "mba-local-frozen-eclipse",
+    "themeMode": "THEME_MODE_INHERIT"
+  }
+}

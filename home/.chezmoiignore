@@ -28,14 +28,20 @@
 !.config/zsh/.zshenv
 !.config/zsh/.zshrc
 
-# .gemini
+# Gemini/Antigravity
 .gemini/**
 !.gemini
 !.gemini/AGENTS.md
-!.gemini/settings.json
+.gemini/config/**
+!.gemini/config
+!.gemini/config/config.json
+.gemini/antigravity/**
+!.gemini/antigravity
 .gemini/antigravity-cli/**
 !.gemini/antigravity-cli
 !.gemini/antigravity-cli/settings.json
+!.gemini/antigravity-cli/statusline.sh
+!.gemini/antigravity-cli/title.sh
 
 # .ssh: ignore keys and session data; keep only the config file
 # config.local is intentionally excluded — machine-specific hosts go there
