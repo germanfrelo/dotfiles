@@ -43,6 +43,7 @@ The following rules apply only to the formatting of your own chat responses; the
 - Keep the capability sentence factual and specific — describe the actual outcome, not a vague quality ("consistent, automatically enforced code style on every commit" not "better code quality").
 - Cross-reference when a tool or file has a dual role that affects more than one section (e.g. `.editorconfig` is listed in Editor configuration but also feeds Prettier's formatting config — note both).
 - This rule applies to READMEs, template docs, and feature descriptions. It does not apply to API docs, changelogs, or migration guides, where the file/function _is_ the topic.
+- **Comments**: Do not hard-wrap comment lines. Write each logical comment sentence or paragraph as a single unbroken line and let the editor soft-wrap it because this ensures clean reading across varying window sizes.
 
 ## Session tracking
 

@@ -19,7 +19,7 @@ applyTo: "**"
 - Commit message subject format: `type: Message title`
   - Type in lowercase: `type:`
   - First letter after the colon and space must be uppercase. Correct: `chore: Add cache options`. Incorrect: `chore: add cache options`.
-- The subject line should describe the outcome or intent (the what), while the body explains the implementation details (the how and why).
+- The subject line should describe the primary outcome or intent (the what), while the body explains the implementation details (the how and why).
 - If the user explicitly requests a format that conflicts with these rules, point out the conflict and follow these rules unless the user confirms an override.
 
 ## Body
@@ -27,7 +27,7 @@ applyTo: "**"
 - Always include a body.
 - The commit body must explain _why_ the change was made, not restate what changed. The diff shows the what.
 - The commit body may use bullet points (`-`) to list multiple reasons or sub-points.
-- Do not hard-wrap the commit body. Use blank lines to separate paragraphs instead of inserting manual line breaks.
+- **Semantic line breaks**: Breaking lines between complete sentences is encouraged (one sentence per line) because it produces cleaner, more isolated diffs during future edits. Do not hard-wrap lines in the middle of a sentence. Use blank lines to separate paragraphs.
 - For breaking changes, append a `BREAKING CHANGE: <description>` footer explaining the migration path. Do not use the `!` shorthand.
 - For reverts, use `revert: <original subject>` and include `This reverts commit <hash>.` in the body.
 - Use footers for issue references (`Closes #123`, `Refs #456`) and co-authors (`Co-authored-by: Name <email>`). Place footers after a blank line at the end of the body.
