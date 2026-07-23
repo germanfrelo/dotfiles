@@ -17,7 +17,11 @@
 ├── .gemini
 │   ├── AGENTS.md
 │   ├── antigravity-cli
-│   │   └── settings.json
+│   │   ├── settings.json
+│   │   ├── statusline.sh
+│   │   └── title.sh
+│   ├── config
+│   │   └── config.json
 │   └── settings.json
 ├── .ssh
 │   └── config
@@ -43,7 +47,7 @@
 │       └── com.germanfrelo.chezmoi-drift.plist
 └── svgo.config.js
 
-18 directories, 26 files
+19 directories, 29 files
 
 ## Enforced absent
 

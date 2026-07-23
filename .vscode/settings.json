@@ -34,6 +34,9 @@
 		// ini
 		"**/*git/*config*": "ini",
 
+		// json
+		"*.json.tmpl": "json",
+
 		// plaintext
 		"LICENSE": "plaintext",
 
