@@ -366,7 +366,7 @@
 	],
 	"svg.preview.background": "transparent",
 	"telemetry.telemetryLevel": "error",
-	"terminal.external.osxExec": "iTerm.app",
+	"terminal.external.osxExec": "Ghostty.app",
 	"terminal.integrated.cursorBlinking": true,
 	"terminal.integrated.cursorStyle": "line",
 	"terminal.integrated.cursorStyleInactive": "none",
