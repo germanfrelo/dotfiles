@@ -142,30 +142,31 @@ autoload -Uz zmv
 function md() { [[ $# == 1 ]] && mkdir -p -- "$1" && cd -- "$1"; }
 compdef _directories md
 
-# Append the HEAD commit hash to .git-blame-ignore-revs.
+# Adds the current commit to .git-blame-ignore-revs and commits the file.
 # Only runs if the commit title matches style*:* (case-insensitive).
 # Skips automatically if the commit is itself a .git-blame-ignore-revs update.
 function gbignore() {
-	local commit_hash commit_title title_lower
+	local commit_hash short_hash commit_title title_lower
+	local msg_prefix="chore(git): Add commit "
+	local msg_suffix=" to blame ignore list"
 
 	commit_hash="$(git rev-parse HEAD 2>/dev/null)" || {
 		print -P "%F{red}Error: not a git repository or no commits.%f" >&2
 		return 1
 	}
+	short_hash="$(git rev-parse --short HEAD 2>/dev/null)"
 	commit_title="$(git log -1 --format=%s)"
 	title_lower="${commit_title:l}"
 
-	case "${title_lower}" in
-		*git-blame-ignore-revs*)
-			print -P "%F{yellow}Skipped: commit appears to be a .git-blame-ignore-revs update.%f" >&2
-			return 1
-			;;
-	esac
+	if [[ "${title_lower}" == *"git-blame-ignore-revs"* ]] || [[ "${commit_title}" == "${msg_prefix}"*"${msg_suffix}" ]]; then
+		print -P "%F{yellow}Skipped: The current commit (${short_hash}) is an automated update, which cannot be added to .git-blame-ignore-revs.%f" >&2
+		return 1
+	fi
 
 	case "${title_lower}" in
 		style*:*) ;;
 		*)
-			print -P "%F{red}Aborted: \"%s\" does not match style*:*.%f" "${commit_title}" >&2
+			print -P "%F{red}Aborted: \"${commit_title}\" does not match style*:*.%f" >&2
 			return 1
 			;;
 	esac
@@ -176,14 +177,15 @@ function gbignore() {
 	fi
 
 	if grep -qF "${commit_hash}" .git-blame-ignore-revs; then
-		print -P "%F{yellow}Skipped: %s is already in .git-blame-ignore-revs.%f" "${commit_hash}" >&2
+		print -P "%F{yellow}Skipped: Commit ${short_hash} is already in .git-blame-ignore-revs.%f" >&2
 		return 0
 	fi
 
 	printf "\n# %s\n%s\n" "${commit_title}" "${commit_hash}" >> .git-blame-ignore-revs
 	git add .git-blame-ignore-revs
-	git commit -m "chore: Update .git-blame-ignore-revs"
-	print -P "%F{green}Done: added %s to .git-blame-ignore-revs.%f" "${commit_hash}"
+	git commit -m "${msg_prefix}${short_hash}${msg_suffix}"
+	local new_hash="$(git rev-parse --short HEAD 2>/dev/null)"
+	print -P "%F{green}Done: Added commit ${short_hash} to .git-blame-ignore-revs (created commit ${new_hash}).%f"
 }
 
 # Copies a file to all subdirectories in the current path, excluding the source directory.
