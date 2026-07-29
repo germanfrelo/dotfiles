@@ -324,7 +324,7 @@ setopt no_auto_menu  # require an extra TAB press to open the completion menu
 if (( SHLVL == 1 )); then
     _chezmoi_status="$(chezmoi status 2>/dev/null)"
     if [[ -n "${_chezmoi_status}" ]]; then
-        print -P "%F{yellow}⚠ chezmoi: managed files have drifted — run \`chezmoi diff --use-builtin-diff\` to review:%f"
+        print -P "%F{yellow}⚠ chezmoi: pending changes or drift detected — run \`chezmoi diff\` to review:%f"
         print "${_chezmoi_status}"
     fi
     unset _chezmoi_status
