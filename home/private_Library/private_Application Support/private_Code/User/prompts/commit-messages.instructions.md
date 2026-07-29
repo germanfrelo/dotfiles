@@ -19,6 +19,7 @@ applyTo: "**"
 - Commit message subject format: `type: Message title`
   - Type in lowercase: `type:`
   - First letter after the colon and space must be uppercase. Correct: `chore: Add cache options`. Incorrect: `chore: add cache options`.
+- If you notice the user using lazy, generic, or non-conventional commit messages (e.g., `WIP`, `update`, `fix` as a standalone message), aggressively push back and ask the user to reword the commit following the Conventional Commits spec.
 - The subject line should describe the outcome or intent (the what), while the body explains the implementation details (the how and why).
 - If the user explicitly requests a format that conflicts with these rules, point out the conflict and follow these rules unless the user confirms an override.
 
@@ -35,9 +36,12 @@ applyTo: "**"
 ## Splitting commits
 
 - When suggesting a commit or set of commits, always list the exact files to include in each commit (e.g. `git add path/to/file1 path/to/file2`). Never assume the user knows which files belong to which commit.
+- **Non-negotiable top priority: atomic commits.** Never allow multiple unrelated logical changes to be mixed in a single commit, regardless of whether you or the user are creating it.
+- If you detect the user attempting to commit tangled changes, you must immediately push back, stop the process, and demand that the changes be split. If you notice the user has already made a tangled commit in the recent history, explicitly point it out and suggest an interactive rebase or reset to fix it.
 - Each commit must represent one logically distinct change with a single clear purpose.
 - If `git diff --staged` already contains multiple unrelated logical changes, recommend unstaging with `git reset HEAD` and restaging in groups via `git add -p` before proceeding.
 - Use `git add -p` for partial staging when changes to the same file belong to different commits.
+- Never execute a `git commit` command yourself without first presenting a staging plan to the user (listing the exact files per commit) and receiving explicit approval to proceed.
 
 ## Publishing commits
 
