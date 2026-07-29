@@ -13,7 +13,7 @@ Follow these while writing — the linter handles everything else automatically.
 - Do not hard-wrap prose paragraphs or list items. Write each as a single unbroken line and let the editor soft-wrap it.
 - Do not end headings with `,` `.` `;` or `:` — trailing `!` is allowed.
 - Do not repeat a heading title among sibling headings (same level, same parent section); identical titles at different nesting depths are allowed.
-- Prefix all relative links with `./` (e.g. `[file](./file.md)`) because editors use `./` to trigger file-path autocomplete.
+- Use absolute repository paths starting with `/` for all internal links to files within the workspace (e.g. `[file](/docs/file.md)`), rather than relative paths (`./` or `../`).
 
 ## Automated Verification
 
