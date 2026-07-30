@@ -7,31 +7,28 @@ root = true
 
 # All files
 [*]
-charset = utf-8                   # 1
-end_of_line = lf                  # 2
-insert_final_newline = true       # 3
-trim_trailing_whitespace = true   # 4
-indent_style = tab                # 5
+# https://www.w3.org/International/questions/qa-html-encoding-declarations
+charset = utf-8
+# https://aleksandrhovhannisyan.com/blog/crlf-vs-lf-normalizing-line-endings-in-git
+end_of_line = lf
+# https://stackoverflow.com/q/729692/10015695
+insert_final_newline = true
+# https://softwareengineering.stackexchange.com/q/121555
+trim_trailing_whitespace = true
+# https://gist.github.com/germanfrelo/fc3ac17ff5bd78b7bf0786734f15d8b4
+indent_style = tab
 
 # Markdown
 [*.md]
-indent_style = space              # 6
-indent_size = 2                   # 7
-trim_trailing_whitespace = false  # 8
+# https://github.com/DavidAnson/markdownlint/blob/main/doc/md010.md
+indent_style = space
+# https://github.com/DavidAnson/markdownlint/blob/main/doc/md007.md
+indent_size = 2
+# https://gist.github.com/germanfrelo/513086438cc38a6dadecb4ff49a46af4
+trim_trailing_whitespace = false
 
 # YAML
-[*.{yaml,yml}]                    # 9
+# https://localheinz.com/articles/2023/02/06/indenting-yaml-files
+[*.{yaml,yml}]
 indent_style = space
 indent_size = 2
-
-# ---
-
-# 1. https://www.w3.org/International/questions/qa-html-encoding-declarations
-# 2. https://aleksandrhovhannisyan.com/blog/crlf-vs-lf-normalizing-line-endings-in-git
-# 3. https://stackoverflow.com/q/729692/10015695
-# 4. https://softwareengineering.stackexchange.com/q/121555
-# 5. https://gist.github.com/germanfrelo/fc3ac17ff5bd78b7bf0786734f15d8b4
-# 6. https://github.com/DavidAnson/markdownlint/blob/main/doc/md010.md
-# 7. https://github.com/DavidAnson/markdownlint/blob/main/doc/md007.md
-# 8. https://gist.github.com/germanfrelo/513086438cc38a6dadecb4ff49a46af4
-# 9. https://localheinz.com/articles/2023/02/06/indenting-yaml-files
