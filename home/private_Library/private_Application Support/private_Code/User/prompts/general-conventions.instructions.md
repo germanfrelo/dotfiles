@@ -68,3 +68,11 @@ The following rules apply only to the formatting of your own chat responses; the
 
 - Never hard-wrap a comment that expresses a single thought. Write it as one unbroken line and let the editor soft-wrap it.
 - Do not repeat code-like content in comments (identifiers, enum values, function names, type literals, etc.) — they go stale when the code changes. Describe the intent in plain language or point to the canonical source instead.
+
+## Version control
+
+- Prioritise modern, specialized Git commands over older, overloaded equivalents:
+  - Use `git switch` instead of `git checkout` for branching.
+  - Use `git restore` instead of `git checkout` or `git reset` for unstaging/discarding file changes.
+  - Use `git push --force-with-lease` instead of `git push -f` for safer force pushing.
+  - Use `git rebase --update-refs` to automatically keep stacked branches in sync.

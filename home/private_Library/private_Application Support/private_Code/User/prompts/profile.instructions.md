@@ -21,6 +21,7 @@ Personal preferred stack:
 
 - OS: macOS (Apple Silicon).
 - Package manager: Homebrew.
+- Git: latest version.
 - Shell: zsh with zsh4humans (z4h) v5 — use zsh-compatible syntax for all shell commands.
 - Node: NVM.
 

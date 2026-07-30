@@ -21,6 +21,7 @@ Personal preferred stack:
 
 - OS: macOS (Apple Silicon).
 - Package manager: Homebrew.
+- Git: latest version.
 - Shell: zsh with zsh4humans (z4h) v5 — use zsh-compatible syntax for all shell commands.
 - Node: NVM.
 
@@ -106,6 +107,14 @@ The following rules apply only to the formatting of your own chat responses; the
 - Never hard-wrap a comment that expresses a single thought. Write it as one unbroken line and let the editor soft-wrap it.
 - Do not repeat code-like content in comments (identifiers, enum values, function names, type literals, etc.) — they go stale when the code changes. Describe the intent in plain language or point to the canonical source instead.
 
+## Version control
+
+- Prioritise modern, specialized Git commands over older, overloaded equivalents:
+  - Use `git switch` instead of `git checkout` for branching.
+  - Use `git restore` instead of `git checkout` or `git reset` for unstaging/discarding file changes.
+  - Use `git push --force-with-lease` instead of `git push -f` for safer force pushing.
+  - Use `git rebase --update-refs` to automatically keep stacked branches in sync.
+
 ## Commit messages
 
 ### Pre-commit workflow
@@ -143,7 +152,7 @@ The following rules apply only to the formatting of your own chat responses; the
 - **Non-negotiable top priority: atomic commits.** Never allow multiple unrelated logical changes to be mixed in a single commit, regardless of whether you or the user are creating it.
 - If you detect the user attempting to commit tangled changes, you must immediately push back, stop the process, and demand that the changes be split. If you notice the user has already made a tangled commit in the recent history, explicitly point it out and suggest an interactive rebase or reset to fix it.
 - Each commit must represent one logically distinct change with a single clear purpose.
-- If `git diff --staged` already contains multiple unrelated logical changes, recommend unstaging with `git reset HEAD` and restaging in groups via `git add -p` before proceeding.
+- If `git diff --staged` already contains multiple unrelated logical changes, recommend unstaging with `git restore --staged .` and restaging in groups via `git add -p` before proceeding.
 - Use `git add -p` for partial staging when changes to the same file belong to different commits.
 - Never execute a `git commit` command yourself without first presenting a staging plan to the user (listing the exact files per commit) and receiving explicit approval to proceed.
 
