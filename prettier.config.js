@@ -20,7 +20,7 @@ const config = {
 			},
 		},
 		{
-			files: ["home/dot_gemini/**/*.json"],
+			files: ["**/*dot_gemini/**/*.json*"],
 			options: {
 				useTabs: false,
 			},
