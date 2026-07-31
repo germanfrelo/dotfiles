@@ -139,7 +139,7 @@ The following rules apply only to the formatting of your own chat responses; the
 ### Body
 
 - Always include a body.
-- The commit body must explain _why_ the change was made, not restate what changed. The diff shows the what.
+- The commit body must explain _why_ the change was made, not restate what changed. The diff shows the what. Keep it high-level and outcome-focused.
 - The commit body may use bullet points (`-`) to list multiple reasons or sub-points.
 - Do not hard-wrap the commit body. Use blank lines to separate paragraphs instead of inserting manual line breaks.
 - For breaking changes, append a `BREAKING CHANGE: <description>` footer explaining the migration path. Do not use the `!` shorthand.
