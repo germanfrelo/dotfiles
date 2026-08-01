@@ -1,3 +1,14 @@
+<!-- TODO: Radically improve my information architecture using the Diátaxis framework
+Plan:
+1. Reorganize into four clear quadrants tailored to my workflow:
+   - How-To Guides (e.g. "How do I apply a single script?", "How do I manage my secrets?")
+   - Reference (Command flags, Source naming prefixes/suffixes)
+   - Explanation (My mental model, Target vs Source states, "run_" scripts behavior)
+   - Tutorials (My initial setup and onboarding process)
+2. Task-oriented indexing: Structure this by what I actually want to achieve day-to-day (e.g., "apply a template"), rather than grouping purely by the `chezmoi` subcommand.
+3. Explicit sections on edge cases: Document things I often forget, like `.chezmoiscripts` targeting (since their logical target path differs from their source path and trips me up).
+-->
+
 # chezmoi — Commands and Workflows
 
 > Verified against the [chezmoi documentation](https://chezmoi.io/) as of May 2026. Command headings link directly to their reference page.
