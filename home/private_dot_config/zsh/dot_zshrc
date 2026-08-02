@@ -143,7 +143,13 @@ function md() { [[ $# == 1 ]] && mkdir -p -- "$1" && cd -- "$1"; }
 compdef _directories md
 
 # Adds the current commit to .git-blame-ignore-revs and commits the file.
-# Only runs if the commit title matches one of the following types (case-insensitive): style, refactor, chore.
+# Only runs if the commit title matches one of the following types (case-insensitive):
+#   - style:    Formatting changes that do not affect the meaning of the code
+#               (e.g., changes an automated formatter like Prettier or Biome would make).
+#   - chore:    Changes to the build process, auxiliary tools, or configurations
+#               (e.g., updating package manager configs, modifying CI pipelines).
+#   - refactor: Restructuring internal logic or architecture without altering external behavior
+#               (e.g., renaming a variable, extracting a function).
 # Skips automatically if the commit is itself a .git-blame-ignore-revs update.
 function gbignore() {
 	local commit_hash short_hash commit_title title_lower
