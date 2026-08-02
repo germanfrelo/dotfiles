@@ -182,10 +182,14 @@ function gbignore() {
 	fi
 
 	printf "\n# %s\n%s\n" "${commit_title}" "${commit_hash}" >> .git-blame-ignore-revs
-	git add .git-blame-ignore-revs
-	git commit -m "${msg_prefix}${short_hash}${msg_suffix}"
-	local new_hash="$(git rev-parse --short HEAD 2>/dev/null)"
-	print -P "%F{green}Done: Added commit ${short_hash} to .git-blame-ignore-revs (created commit ${new_hash}).%f"
+
+	if git commit -q --no-verify --only .git-blame-ignore-revs -m "${msg_prefix}${short_hash}${msg_suffix}"; then
+		local new_hash="$(git rev-parse --short HEAD 2>/dev/null)"
+		print -P "%F{green}Done: Added commit ${short_hash} to .git-blame-ignore-revs (created commit ${new_hash}).%f"
+	else
+		print -P "%F{red}Error: Failed to commit .git-blame-ignore-revs.%f" >&2
+		return 1
+	fi
 }
 
 # Copies a file to all subdirectories in the current path, excluding the source directory.
