@@ -285,10 +285,10 @@
 	"github.copilot.chat.codesearch.enabled": true,
 	"github.copilot.chat.localIndex.enabled": true,
 	"github.copilot.enable": {
-		"*": true,
+		"*": true, // Default
 		"css": false,
 		"markdown": true,
-		"plaintext": false,
+		"plaintext": false, // Default
 		"scminput": true
 	},
 	"github.copilot.nextEditSuggestions.enabled": true,
