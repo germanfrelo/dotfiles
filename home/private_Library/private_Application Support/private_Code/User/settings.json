@@ -287,7 +287,7 @@
 	"github.copilot.enable": {
 		"*": true,
 		"css": false,
-		"markdown": false,
+		"markdown": true,
 		"plaintext": false,
 		"scminput": true
 	},
