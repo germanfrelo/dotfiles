@@ -382,6 +382,7 @@
 	"terminal.integrated.fontFamily": "'CommitMono Nerd Font Mono', 'MesloLGS NF', monospace", // Default = `editor.fontFamily`
 	"terminal.integrated.fontSize": 13, // Default = 12
 	"terminal.integrated.lineHeight": 1.3, // Default = 1
+	"terminal.integrated.smoothScrolling": true,
 	"window.confirmBeforeClose": "always",
 	"window.zoomLevel": 0.5,
 	"workbench.activityBar.compact": true,
