@@ -89,6 +89,7 @@
 		"source.addMissingImports": "explicit",
 		"source.fixAll.eslint": "explicit",
 		"source.fixAll.markdownlint": "explicit",
+		"source.fixAll.ruff": "explicit",
 		"source.fixAll.stylelint": "explicit",
 		"source.organizeImports": "explicit",
 		"source.organizeLinkDefinitions": "explicit",
@@ -360,6 +361,7 @@
 		"ul-indent": false // Conflicts with Prettier.
 	},
 	"prettier.useTabs": true,
+	"python.analysis.typeCheckingMode": "standard",
 	"scm.defaultViewMode": "tree",
 	"scm.diffDecorationsGutterPattern": {
 		"added": true,
