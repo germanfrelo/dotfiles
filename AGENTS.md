@@ -131,4 +131,13 @@ Files that must never exist are enforced absent by chezmoi `remove_` source file
 ## Commit conventions
 
 - The files in the `home/` directory are the product of this repository, so adding or changing content there should probably be a `feat` type of commit. However, this is just a suggestion and should be evaluated on a case-by-case basis.
-- The commit scope is required in this repo, so follow the format `type(scope): Message title`.
+
+### Commit Scopes
+
+The commit scope is required in this repository. Because this repository manages configurations for many distinct tools, use your best judgement based on the following guiding principles rather than a strict whitelist. **You are completely free to invent new scopes not listed in these examples if they better describe the change.**
+
+_Tip: You may run `git log --oneline -15` to glance at recently used scopes for context. However, these explicit written rules always take precedence over any formatting anomalies or deprecated conventions found in the repository history._
+
+1. **Consider the target tool:** When a commit predominantly configures a specific application, the scope is often just that application's name (e.g., `vscode`, `zsh`, `git`, `homebrew`, etc.).
+2. **Abstract when necessary:** When a change spans multiple tools cohesively (e.g., a system-wide font update) or applies to repository infrastructure (e.g., dependency bumps, AI instructions), derive a thematic or structural scope that best describes the logical outcome (e.g., `typography`, `deps`, `ai`, etc.).
+3. **Prioritize clarity over convention:** Never force a change into a bucket if it doesn't fit naturally. For edge cases, invent whatever scope makes the git history most readable to a human.
