@@ -21,7 +21,9 @@
 	"betterStackingContexts.backgroundColor": "transparent",
 	"betterStackingContexts.messageText": " ℹ️ This property creates a new stacking context.",
 	"chat.agent.maxRequests": 200,
+	"chat.assistedPermissions.enabled": true,
 	"chat.checkpoints.showFileChanges": true,
+	"chat.customizations.promptMigration.enabled": true,
 	"chat.editing.explainChanges.enabled": true,
 	"chat.editor.fontSize": 13, // Default = 12
 	"chat.editor.wordWrap": "on",
