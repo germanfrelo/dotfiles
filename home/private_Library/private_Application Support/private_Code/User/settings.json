@@ -395,6 +395,7 @@
 		"*.copilotmd": "vscode.markdown.preview.editor", // Default
 		"*.svg": "default"
 	},
+	"workbench.experimental.modernUI": true,
 	"workbench.iconTheme": "material-icon-theme",
 	"workbench.list.smoothScrolling": true,
 	"workbench.settings.showAISearchToggle": true,
