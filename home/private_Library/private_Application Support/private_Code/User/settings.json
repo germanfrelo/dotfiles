@@ -126,6 +126,7 @@
 	"editor.wordBasedSuggestions": "off",
 	"editor.wordWrap": "on",
 	"emmet.excludeLanguages": ["css", "markdown"],
+	"explorer.compactFolders": false,
 	"explorer.fileNesting.enabled": true,
 	"explorer.fileNesting.expand": true,
 	"explorer.fileNesting.patterns": {
