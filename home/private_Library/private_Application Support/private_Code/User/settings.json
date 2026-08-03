@@ -23,9 +23,10 @@
 	"chat.agent.maxRequests": 200,
 	"chat.checkpoints.showFileChanges": true,
 	"chat.editing.explainChanges.enabled": true,
+	"chat.editor.fontSize": 13, // Default = 12
 	"chat.editor.wordWrap": "on",
-	"chat.fontFamily": "IBM Plex Sans",
-	"chat.fontSize": 14,
+	"chat.fontFamily": "'IBM Plex Sans', system-ui", // Default = "default" (macOS: "-apple-system, BlinkMacSystemFont, sans-serif"); see https://github.com/microsoft/vscode/blob/main/src/vs/base/browser/fonts.ts
+	"chat.fontSize": 15, // Default = 13
 	"chat.includeReferencedInstructions": true,
 	"chat.restoreLastPanelSession": true,
 	"chat.sessionSync.enabled": true,
@@ -67,6 +68,8 @@
 	"CSSNavigation.enableReferenceCodeLens": true,
 	"debug.allowBreakpointsEverywhere": true,
 	"debug.confirmOnExit": "always",
+	"debug.console.fontFamily": "'CommitMono Nerd Font Mono', 'MesloLGS NF', monospace", // Default = "default" (macOS: "Menlo, Monaco, 'Courier New', monospace"); see https://github.com/microsoft/vscode/blob/main/src/vs/editor/common/config/fontInfo.ts
+	"debug.console.fontSize": 13, // Default = 12
 	"debug.internalConsoleOptions": "openOnSessionStart",
 	"debug.onTaskErrors": "showErrors",
 	"debug.openDebug": "openOnSessionStart",
@@ -97,9 +100,9 @@
 	"editor.dragAndDrop": false,
 	"editor.find.autoFindInSelection": "multiline",
 	"editor.find.globalFindClipboard": true,
-	"editor.fontFamily": "'JetBrains Mono'",
+	"editor.fontFamily": "'CommitMono', 'JetBrains Mono', monospace", // Default (macOS) = "Menlo, Monaco, 'Courier New', monospace"; see https://github.com/microsoft/vscode/blob/main/src/vs/editor/common/config/fontInfo.ts
 	"editor.fontLigatures": false,
-	"editor.fontSize": 13,
+	"editor.fontSize": 13, // Default = 12
 	"editor.formatOnPaste": true,
 	"editor.formatOnSave": true,
 	"editor.formatOnType": true,
@@ -357,6 +360,8 @@
 		"modified": true // Default
 	},
 	"scm.repositories.explorer": true,
+	"scm.inputFontFamily": "'CommitMono', 'JetBrains Mono', monospace", // Default = "default" (VS Code UI font family)
+	"scm.inputFontSize": 12, // Default = 13
 	"search.searchEditor.doubleClickBehaviour": "selectWord",
 	"search.searchEditor.reusePriorSearchConfiguration": true,
 	"stylelint.validate": [
@@ -373,9 +378,9 @@
 	"terminal.integrated.cursorBlinking": true,
 	"terminal.integrated.cursorStyle": "line",
 	"terminal.integrated.cursorStyleInactive": "none",
-	"terminal.integrated.fontFamily": "'MesloLGS NF'",
-	"terminal.integrated.fontSize": 13,
-	"terminal.integrated.lineHeight": 1.2,
+	"terminal.integrated.fontFamily": "'CommitMono Nerd Font Mono', 'MesloLGS NF', monospace", // Default = `editor.fontFamily`
+	"terminal.integrated.fontSize": 13, // Default = 12
+	"terminal.integrated.lineHeight": 1.3, // Default = 1
 	"window.confirmBeforeClose": "always",
 	"window.zoomLevel": 0.5,
 	"workbench.activityBar.compact": true,
