@@ -1,39 +1,17 @@
 # dotfiles
 
-My dotfiles, managed with [chezmoi](https://www.chezmoi.io/).
+My personal [dotfiles](https://dotfiles.github.io/), managed with [chezmoi](https://www.chezmoi.io/).
 
-## Managed files
+## Overview
 
-See [MANAGED.txt](/MANAGED.txt) for the full file list.
+The [`home/`](/home/) directory is the source directory where the actual dotfiles live.
 
-## Repository layout
+An index of all files tracked in this directory is maintained in [`MANAGED.txt`](/MANAGED.txt). This is automatically updated via a [pre-commit hook](/.husky/pre-commit), but can also be updated manually via the [`npm run managed`](/package.json) command. Both methods execute [`scripts/managed.js`](/scripts/managed.js).
 
-| Path              | Purpose                                                    |
-| ----------------- | ---------------------------------------------------------- |
-| `home/`           | Chezmoi source root (`.chezmoiroot = home`)                |
-| `docs/chezmoi.md` | Personal chezmoi reference and cheat sheet                 |
-| `scripts/`        | Automation scripts                                         |
-| `.husky/`         | Git hook scripts                                           |
-| `AGENTS.md`       | AI agent instructions with machine-readable chezmoi config |
+Chezmoi control files (such as [`.chezmoiignore`](/home/.chezmoiignore) and [`.chezmoi.toml.tmpl`](/home/.chezmoi.toml.tmpl)) and setup scripts (under [`.chezmoiscripts/`](/home/.chezmoiscripts/)) are not copied to the home directory.
 
-## Features
+Additionally, this directory handles system bootstrapping. A dedicated macOS setup script ([`run_once_before_install-packages-darwin.sh.tmpl`](/home/.chezmoiscripts/darwin/run_once_before_install-packages-darwin.sh.tmpl)) automatically installs Homebrew and all required system packages _before_ deploying any dotfiles. It acts as the single source of truth for macOS packages and automatically re-runs whenever the package list changes.
 
-- **Always-current managed file list** — the pre-commit hook regenerates and auto-stages `MANAGED.txt` whenever files in the chezmoi source root (`home/`) or the generator script (`scripts/managed.js`) are staged, with no manual step required.
-- **Unified chezmoi reference** — [`docs/chezmoi.md`](/docs/chezmoi.md) documents every command, workflow, and template pattern with examples.
-- **AI-ready agent instructions** — `AGENTS.md` gives Copilot and other AI agents full context on repo conventions, chezmoi source structure, and configuration deviations from chezmoi defaults.
-- **Guardrails on every commit** — Prettier formatting is enforced on staged files via Husky + lint-staged; post-checkout and post-merge hooks warn when `package-lock.json` changes and prompt to run `npm ci`.
-- **Automated dependency review** — a GitHub Action scans every pull request for dependency vulnerabilities and licence issues before merge.
+## Installation
 
-## npm scripts
-
-| Script         | Description                                                     |
-| -------------- | --------------------------------------------------------------- |
-| `managed`      | Regenerates `MANAGED.txt` from the current chezmoi source state |
-| `format`       | Formats all files with Prettier                                 |
-| `format:check` | Checks formatting without writing                               |
-
-## Tooling
-
-- [Prettier](https://prettier.io/) — formats JS, JSON, Markdown, and YAML.
-- [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) — lints all Markdown files.
-- [Husky](https://typicode.github.io/husky/) + [lint-staged](https://github.com/lint-staged/lint-staged) — enforces formatting on every commit.
+To apply these dotfiles to your machine, follow the chezmoi quick-start guide for [a new machine](https://www.chezmoi.io/quick-start/#set-up-a-new-machine-with-a-single-command) or [an existing machine](https://www.chezmoi.io/quick-start/#using-chezmoi-across-multiple-machines).
