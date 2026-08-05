@@ -368,6 +368,9 @@
 	"scm.repositories.explorer": true,
 	"scm.inputFontFamily": "'CommitMono', 'JetBrains Mono', monospace", // Default = "default" (VS Code UI font family)
 	"scm.inputFontSize": 12, // Default = 13
+	"search.exclude": {
+		"/var/folders/**": true // Hide chezmoi temporary files from Quick Open search results.
+	},
 	"search.searchEditor.doubleClickBehaviour": "selectWord",
 	"search.searchEditor.reusePriorSearchConfiguration": true,
 	"stylelint.validate": [
