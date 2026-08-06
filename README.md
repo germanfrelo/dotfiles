@@ -3,8 +3,7 @@
 My personal [dotfiles](https://dotfiles.github.io/), managed with [chezmoi](https://www.chezmoi.io/).
 
 > [!IMPORTANT]
-> These dotfiles are currently designed and tested **exclusively for macOS**.
-> Support for Linux/Windows may be added in the future.
+> Currently **macOS only**. Linux/Windows support may come later.
 
 ## Overview
 
