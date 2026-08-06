@@ -2,6 +2,9 @@
 
 My personal [dotfiles](https://dotfiles.github.io/), managed with [chezmoi](https://www.chezmoi.io/).
 
+> [!IMPORTANT]
+> **macOS only (for now).** These dotfiles are currently designed and tested exclusively for macOS. Support for Linux/Windows may be added in the future.
+
 ## Overview
 
 The [`home/`](/home/) directory is the root of the source state (where the actual dotfiles live). This is specified in the [`.chezmoiroot`](/.chezmoiroot) file.
