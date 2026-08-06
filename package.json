@@ -21,7 +21,6 @@
 	"type": "module",
 	"main": "",
 	"scripts": {
-		"chezmoi:sync": "node scripts/sync-chezmoi-config.js && prettier --write AGENTS.md docs/chezmoi.md",
 		"format": "prettier --write .",
 		"format:check": "prettier --check .",
 		"managed": "node scripts/managed.js > MANAGED.txt",
