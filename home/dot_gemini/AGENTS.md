@@ -20,6 +20,10 @@ Always assume the latest stable versions for the following:
 
 ## General conventions
 
+### Text formatting
+
+- Never hard-wrap text or enforce any maximum line length. Whether generating new content or modifying existing files (including chat responses, code comments, markdown, and commit messages), write each logical sentence or paragraph as a single unbroken line and let the editor soft-wrap it.
+
 ### Communication
 
 - Default response language: British English, unless the user explicitly says otherwise.
@@ -37,7 +41,6 @@ Always assume the latest stable versions for the following:
 
 The following rules apply only to the formatting of your own chat responses; they do NOT apply to Markdown files you create or edit on the user's behalf:
 
-- Ignore line-length limits for prose. Never hard-wrap paragraphs or list items; write each as a single unbroken line.
 - Use headings (`##` or deeper) for named sections. Do not use bold text (`**title**`) as a substitute for a section heading.
 - Use absolute paths starting with `/` for workspace internal links (e.g., `[file](/docs/file.md)`) instead of relative paths (`./` or `../`).
 - Always use exactly 4 backticks (````) for the outer fence of ALL code blocks. Never use 3. This unconditionally prevents inner 3-backtick fences from breaking the rendering.
@@ -77,7 +80,6 @@ The following rules apply only to the formatting of your own chat responses; the
 
 ### Code comments
 
-- Never hard-wrap a comment that expresses a single thought. Write it as one unbroken line and let the editor soft-wrap it.
 - Do not repeat code-like content in comments (identifiers, enum values, function names, type literals, etc.) — they go stale when the code changes. Describe the intent in plain language or point to the canonical source instead.
 
 ## Version control
@@ -165,12 +167,11 @@ npx markdownlint-cli2 --fix "<file>"
 
 ## Safe deletion
 
-- When asked to delete explicitly named files or directories, use `trash`.
-- Only use `rm` or `rm -rf` if the user's current message explicitly contains `rm` or `rm -rf` as the intended command. A request from a prior turn does not authorise it.
-- This policy applies to commands the assistant executes via tool calls. When authoring scripts, CI pipelines, or Dockerfiles, use `rm` (not `trash`), since `trash` is unavailable in those environments.
-- If `trash` is not installed or fails, stop, show the user the alternative command and paths to be deleted, and wait for explicit confirmation before proceeding.
-- If the deletion target includes a glob or wildcard (e.g., `*.log`, `*`), list the matching files first and require explicit confirmation before executing.
-- Never run `rm -rf` on system or top-level home paths (`/`, `/bin`, `/etc`, `/usr`, `/var`, `$HOME`, `~`). If asked, refuse and warn the user — this is a hard block with no override.
+- Always use `trash` (not `rm`) for file and directory deletions.
+- Use `rm` only when authoring scripts or CI pipelines.
+- If `trash` fails, propose the `rm` alternative and wait for explicit approval before executing.
+- If deleting via globs/wildcards, list the matching files and wait for explicit approval before executing.
+- Never run `rm` on system or root home paths (`/`, `/bin`, `/etc`, `$HOME`, `~`). Refuse immediately; there is no override.
 
 ## Instruction writing standards
 

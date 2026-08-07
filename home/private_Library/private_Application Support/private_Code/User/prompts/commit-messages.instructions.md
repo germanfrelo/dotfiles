@@ -4,6 +4,10 @@ description: "Git commit message conventions — Conventional Commits spec, atom
 applyTo: "**"
 ---
 
+## Text formatting
+
+- Never hard-wrap text or enforce any maximum line length. Whether generating new content or modifying existing files (including chat responses, code comments, markdown, and commit messages), write each logical sentence or paragraph as a single unbroken line and let the editor soft-wrap it.
+
 ## Pre-commit workflow
 
 - Before suggesting any commits, always run `git status` and `git log --oneline -5` to verify the actual working tree state. Never suggest commit contents or file lists based on assumptions about what has or hasn't been committed.
@@ -28,7 +32,6 @@ applyTo: "**"
 - Always include a body.
 - The commit body must explain _why_ the change was made, not restate what changed. The diff shows the what. Keep it high-level and outcome-focused.
 - The commit body may use bullet points (`-`) to list multiple reasons or sub-points.
-- Do not hard-wrap the commit body. Use blank lines to separate paragraphs instead of inserting manual line breaks.
 - For breaking changes, append a `BREAKING CHANGE: <description>` footer explaining the migration path. Do not use the `!` shorthand.
 - For reverts, use `revert: <original subject>` and include `This reverts commit <hash>.` in the body.
 - Use footers for issue references (`Closes #123`, `Refs #456`) and co-authors (`Co-authored-by: Name <email>`). Place footers after a blank line at the end of the body.
