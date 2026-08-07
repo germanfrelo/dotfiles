@@ -33,19 +33,14 @@ Always assume the latest stable versions for the following:
 - When making a claim about a tool's style convention or documented behaviour, distinguish between an explicitly documented rule (cite the exact page or section) and an observed pattern (flag it as such). Do not present observed conventions as documented rules.
 - When a workspace-specific instruction conflicts with this file, the workspace-specific rule takes precedence; flag the conflict on first encounter.
 
-### Response formatting
+### Chat response formatting
 
 The following rules apply only to the formatting of your own chat responses; they do NOT apply to Markdown files you create or edit on the user's behalf:
 
-- Never hard-wrap prose lines in chat responses. Write each sentence or paragraph as a single unbroken line and let the client soft-wrap it.
-- When showing file content that contains fenced code blocks, use an outer fence with one more backtick than the longest backtick run inside the content — minimum four backticks. This prevents any inner fence from being misread as the closing delimiter. For example:
-  ````md
-  ```js
-  console.log("This is a code block inside a chat response.");
-  ```
-  ````
-- When showing inline code in running text that itself contains backtick characters, use a `<code>` HTML tag rather than a backtick-delimited code span — e.g., write the following in the source: `<code>````md</code>` (without the enclosing backticks).
-- Use headings (`##` or deeper) for named sections within a chat response. Do not use bold text (`**title**`) as a substitute for a section heading.
+- Ignore line-length limits for prose. Never hard-wrap paragraphs or list items; write each as a single unbroken line.
+- Use headings (`##` or deeper) for named sections. Do not use bold text (`**title**`) as a substitute for a section heading.
+- Use absolute paths starting with `/` for workspace internal links (e.g., `[file](/docs/file.md)`) instead of relative paths (`./` or `../`).
+- Always use exactly 4 backticks (````) for the outer fence of ALL code blocks. Never use 3. This unconditionally prevents inner 3-backtick fences from breaking the rendering.
 
 ### Writing
 
@@ -151,25 +146,21 @@ The following rules apply only to the formatting of your own chat responses; the
 - Set `"private": true` in `package.json` unless it explicitly sets `publishConfig` or the README documents the package as a published library.
 - After changing any field in `package.json`, run `npm install` to update `package-lock.json`.
 
-## Markdown Lint & Enforcement
+## Markdown
 
-These rules apply to `.md` files and standalone Markdown documents, not to chat response formatting.
+### Rules
 
-### Non-auto-fixable Rules
+- Ignore line-length limits for prose. Never hard-wrap paragraphs or list items; write each as a single unbroken line.
+- Use headings (`##` or deeper) for named sections. Do not use bold text (`**title**`) as a substitute for a section heading.
+- Use absolute paths starting with `/` for workspace internal links (e.g., `[file](/docs/file.md)`) instead of relative paths (`./` or `../`).
 
-Follow these while writing — the linter handles everything else automatically.
+### Commands
 
-- Do not hard-wrap prose paragraphs or list items. Write each as a single unbroken line and let the editor soft-wrap it.
-- Do not end headings with `,` `.` `;` or `:` — trailing `!` is allowed.
-- Do not repeat a heading title among sibling headings (same level, same parent section); identical titles at different nesting depths are allowed.
-- Use absolute repository paths starting with `/` for all internal links to files within the workspace (e.g. `[file](/docs/file.md)`), rather than relative paths (`./` or `../`).
-
-### Automated Verification
-
-Whenever you finish modifying or creating a `.md` file, run:
+Always run after creating or modifying an `.md` file:
 
 ```sh
-npx markdownlint-cli2 --fix "<path_to_modified_file>"
+npx prettier --write "<file>"
+npx markdownlint-cli2 --fix "<file>"
 ```
 
 ## Safe deletion

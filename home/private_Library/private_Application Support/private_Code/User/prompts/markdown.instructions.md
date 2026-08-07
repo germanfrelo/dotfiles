@@ -1,24 +1,20 @@
 ---
-name: Markdown Lint & Enforcement
-description: Apply when creating or editing any Markdown file or standalone Markdown content
+name: Markdown
+description: "Markdown writing conventions"
 applyTo: "**/*.md"
 ---
 
-These rules apply to `.md` files and standalone Markdown documents, not to chat response formatting.
+## Rules
 
-## Non-auto-fixable Rules
+- Ignore line-length limits for prose. Never hard-wrap paragraphs or list items; write each as a single unbroken line.
+- Use headings (`##` or deeper) for named sections. Do not use bold text (`**title**`) as a substitute for a section heading.
+- Use absolute paths starting with `/` for workspace internal links (e.g., `[file](/docs/file.md)`) instead of relative paths (`./` or `../`).
 
-Follow these while writing — the linter handles everything else automatically.
+## Commands
 
-- Do not hard-wrap prose paragraphs or list items. Write each as a single unbroken line and let the editor soft-wrap it.
-- Do not end headings with `,` `.` `;` or `:` — trailing `!` is allowed.
-- Do not repeat a heading title among sibling headings (same level, same parent section); identical titles at different nesting depths are allowed.
-- Use absolute repository paths starting with `/` for all internal links to files within the workspace (e.g. `[file](/docs/file.md)`), rather than relative paths (`./` or `../`).
-
-## Automated Verification
-
-Whenever you finish modifying or creating a `.md` file, run:
+Always run after creating or modifying an `.md` file:
 
 ```sh
-npx markdownlint-cli2 --fix "<path_to_modified_file>"
+npx prettier --write "<file>"
+npx markdownlint-cli2 --fix "<file>"
 ```

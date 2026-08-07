@@ -17,19 +17,14 @@ applyTo: "**"
 - When making a claim about a tool's style convention or documented behaviour, distinguish between an explicitly documented rule (cite the exact page or section) and an observed pattern (flag it as such). Do not present observed conventions as documented rules.
 - When a workspace-specific instruction conflicts with this file, the workspace-specific rule takes precedence; flag the conflict on first encounter.
 
-## Response formatting
+## Chat response formatting
 
 The following rules apply only to the formatting of your own chat responses; they do NOT apply to Markdown files you create or edit on the user's behalf:
 
-- Never hard-wrap prose lines in chat responses. Write each sentence or paragraph as a single unbroken line and let the client soft-wrap it.
-- When showing file content that contains fenced code blocks, use an outer fence with one more backtick than the longest backtick run inside the content — minimum four backticks. This prevents any inner fence from being misread as the closing delimiter. For example:
-  ````md
-  ```js
-  console.log("This is a code block inside a chat response.");
-  ```
-  ````
-- When showing inline code in running text that itself contains backtick characters, use a `<code>` HTML tag rather than a backtick-delimited code span — e.g., write the following in the source: `<code>````md</code>` (without the enclosing backticks).
-- Use headings (`##` or deeper) for named sections within a chat response. Do not use bold text (`**title**`) as a substitute for a section heading.
+- Ignore line-length limits for prose. Never hard-wrap paragraphs or list items; write each as a single unbroken line.
+- Use headings (`##` or deeper) for named sections. Do not use bold text (`**title**`) as a substitute for a section heading.
+- Use absolute paths starting with `/` for workspace internal links (e.g., `[file](/docs/file.md)`) instead of relative paths (`./` or `../`).
+- Always use exactly 4 backticks (````) for the outer fence of ALL code blocks. Never use 3. This unconditionally prevents inner 3-backtick fences from breaking the rendering.
 
 ## Writing
 
