@@ -1,5 +1,5 @@
 ---
-name: User profile
+name: Developer profile
 description: "Developer stack, environment, and persistent context for all interactions"
 applyTo: "**"
 ---

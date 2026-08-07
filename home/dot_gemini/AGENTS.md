@@ -2,7 +2,7 @@
 
 This file contains the verbatim global instructions and conventions for all sessions.
 
-## User profile
+## Developer profile
 
 ### Role
 
