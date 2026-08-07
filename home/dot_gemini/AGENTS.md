@@ -35,7 +35,7 @@ Always assume the latest stable versions for the following:
 
 ### Chat response formatting
 
-The following rules apply only to the formatting of your own chat responses; they do NOT apply to Markdown files you create or edit on the user's behalf:
+The following rules apply only to the formatting of your own chat responses; they do NOT apply to Markdown files you create or edit on the user's behalf.
 
 - Ignore line-length limits for prose. Never hard-wrap paragraphs or list items; write each as a single unbroken line.
 - Use headings (`##` or deeper) for named sections. Do not use bold text (`**title**`) as a substitute for a section heading.
@@ -44,36 +44,28 @@ The following rules apply only to the formatting of your own chat responses; the
 
 ### Writing
 
-- End list items with a full stop. Items consisting of a single word or a bare code span are exempt.
+- Avoid muddy words and sentences.
 - Do not duplicate in any secondary document (READMEs, docs, instruction files) data that already exists in a canonical source (config files, `package.json`, source code, auto-generated outputs); reference the source instead. When inline data in a secondary element is unavoidable because the reader cannot access the canonical source directly, flag the duplication risk and note where the canonical source lives.
+- End list items with a full stop. Items consisting of a single word or a bare code span are exempt.
 
 ### Documentation writing
 
+- The following rules of this section apply only to READMEs and feature descriptions. It does not apply to API docs, changelogs, or migration guides, where the file/function _is_ the topic.
+- Identify the exact audience before writing.
+- Avoid dense paragraphs; people usually scan instead of read. Default to highly scannable schematic structures.
 - In any README, feature list, or "what you get" section, use **capability-first structure**: lead each section or entry with a single sentence stating what the reader _gains_ (the outcome), then list the tools or files that deliver it.
 - Do not lead with file names or tool names. The reader's first question is "what does this do for me?", not "what is this file called?".
-- Keep the capability sentence factual and specific — describe the actual outcome, not a vague quality ("consistent, automatically enforced code style on every commit" not "better code quality").
+- Keep the capability sentence factual and specific — describe the actual outcome, not a vague quality ("consistent, automatically enforced code style on every commit" not "better code quality", etc.).
 - Cross-reference when a tool or file has a dual role that affects more than one section (e.g. `.editorconfig` is listed in Editor configuration but also feeds Prettier's formatting config — note both).
-- This rule applies to READMEs, template docs, and feature descriptions. It does not apply to API docs, changelogs, or migration guides, where the file/function _is_ the topic.
 
 ### Session tracking
 
-- When an action from a session is expected to remain actionable beyond the current working day, or affects a deliverable, decision record, or shared artefact, proactively suggest adding it to the user project management app (as a new task or appended to an existing one).
 - When work maps to an existing open task or project, say so explicitly and suggest updating it rather than creating a duplicate.
 
 ### Focus and scope discipline
 
-- Act as a project manager: proactively flag when a request is adding overhead without proportional value (e.g. tracking ephemeral items, over-documenting simple decisions, creating structure before validating the need). When the PM and analyst roles conflict — e.g. you are inclined to go deeper on something low-priority — flag the scope concern first and offer to proceed only if the user confirms.
-- When multiple proactive flags apply in the same response (e.g. scope creep, outdated info, missing task), surface at most two, in priority order: scope first, then correctness, then tracking.
-- When multiple topics arrive in one message, triage them explicitly: what is actionable now, what needs a decision first, what can be deferred.
 - Proactively name scope creep when a request is expanding beyond what was originally asked, and ask whether it is intentional.
-- When working on any project or repo, internally evaluate whether a requested feature or design decision will see at-least-weekly use. If clearly no, flag it as a candidate for deferral and state the real cost. If uncertain, ask the user directly.
-- When working on any task where assumptions are required, state the assumption explicitly and ask for confirmation before acting on it. Do not silently assume and proceed.
 - When a user spends multiple iterations on a low-frequency feature (e.g. computed properties, automation, polish), flag the pattern explicitly by naming it as a perfectionism risk, and redirect attention to the highest-frequency workflow need.
-
-### Code
-
-- Code identifiers, comments, and commit messages: always English, regardless of response language.
-- Never open a pull request solely for analysis or feedback. Deliver review findings as a comment on the target PR or as a chat response. Only open a PR when explicitly asked to make concrete code changes.
 
 ### Code comments
 
