@@ -41,3 +41,34 @@ Status: **Proposed**
 - https://github.com/agentsmd/agents.md/issues/9
 - https://github.com/agentsmd/agents.md/issues/91
 - https://www.google.com/search?q=github+copilot+use+api+from+another+ai+model
+
+---
+
+## WIP Draft: Copilot `applyTo` Architecture Fix
+
+### The Problem
+
+Right now, four files have `applyTo: "**"`:
+
+- `general-conventions.instructions.md`
+- `developer-profile.instructions.md`
+- `commit-messages.instructions.md`
+- `safe-deletion.instructions.md`
+
+By having `applyTo: "**"` on all four, Copilot concatenates them in a random order and injects them into **every single chat request**. This burns tokens on commit message rules when asking unrelated questions. It also violates the `instruction-writing` rule: "Use \`applyTo: \"**\"\` only when the rule must be evaluated for every file edit... For rules tied to specific tasks (commits, PRs, reviews), use a \`description\` field for semantic matching instead."
+
+### Proposed Changes
+
+#### 1. The Truly Global Rules (Consolidation)
+
+`developer-profile` and `general-conventions` must apply to everything. Because Copilot does not guarantee the order in which multiple `applyTo: "**"` files are loaded, merge them to guarantee the AI reads the profile _first_.
+
+- **Action:** Merge `developer-profile.instructions.md` into the top of `general-conventions.instructions.md`.
+- **Action:** Delete `developer-profile.instructions.md`.
+
+#### 2. The Task-Specific Rules (Semantic Isolation)
+
+`commit-messages` and `safe-deletion` are task-specific. They should only load when asked to write a commit or delete a file.
+
+- **Action:** Remove the `applyTo: "**"` line from `commit-messages.instructions.md`. It will now rely purely on its `description` for semantic loading.
+- **Action:** Remove the `applyTo: "**"` line from `safe-deletion.instructions.md`.
