@@ -57,6 +57,7 @@ The following rules apply only to the formatting of your own chat responses; the
 - Do not lead with file names or tool names. The reader's first question is "what does this do for me?", not "what is this file called?".
 - Keep the capability sentence factual and specific — describe the actual outcome, not a vague quality ("consistent, automatically enforced code style on every commit" not "better code quality", etc.).
 - Cross-reference when a tool or file has a dual role that affects more than one section (e.g. `.editorconfig` is listed in Editor configuration but also feeds Prettier's formatting config — note both).
+- **Comments**: Do not hard-wrap comment lines. Write each logical comment sentence or paragraph as a single unbroken line and let the editor soft-wrap it because this ensures clean reading across varying window sizes.
 
 ### Session tracking
 
