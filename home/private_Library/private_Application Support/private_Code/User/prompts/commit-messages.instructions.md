@@ -23,7 +23,8 @@ applyTo: "**"
 
 - Include a body by default, especially for multiple or complex changes. Omit the body only for simple, self-explanatory changes (e.g., file renames, formatting, fixing typos) where the subject line sufficiently explains the "what" and the "why". If omitted for a simple change, do not push back.
 - When included, the body must explain _why_ the change was made, not restate what changed. Keep it high-level and outcome-focused.
-- May use bullet points (`-`). Do not hard-wrap lines.
+- May use bullet points (`-`).
+- **Semantic line breaks**: Breaking lines between complete sentences is encouraged (one sentence per line) because it produces cleaner, more isolated diffs during future edits. Do not hard-wrap lines in the middle of a sentence. Use blank lines to separate paragraphs.
 - Breaking changes: append a `BREAKING CHANGE: <description>` footer. Do not use the `!` shorthand.
 - Reverts: use `revert: <original subject>` and include `This reverts commit <hash>.` in the body.
 - Footers (issues, co-authors): place after a blank line at the end of the body.
