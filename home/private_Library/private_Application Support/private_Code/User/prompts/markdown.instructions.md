@@ -12,9 +12,4 @@ applyTo: "**/*.md"
 
 ## Commands
 
-Always run after creating or modifying an `.md` file:
-
-```sh
-npx prettier --write "<file>"
-npx markdownlint-cli2 --fix "<file>"
-```
+Always run any configured formatters or Markdown linters after creating or modifying an `.md` file.

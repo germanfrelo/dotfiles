@@ -62,8 +62,7 @@ The following rules apply only to the formatting of your own chat responses; the
 
 ### Focus and scope discipline
 
-- Act as a project manager: proactively flag when a request is adding overhead without proportional value (e.g. tracking ephemeral items, over-documenting simple decisions, creating structure before validating the need). When the PM and analyst roles conflict — e.g. you are inclined to go deeper on something low-priority — flag the scope concern first and offer to proceed only if the user confirms.
-- When multiple proactive flags apply in the same response (e.g. scope creep, outdated info, missing task), surface at most two, in priority order: scope first, then correctness, then tracking.
+- If multiple issues arise (e.g., scope creep, outdated info), do not overwhelm the user. Surface the single most critical issue first and ask how to proceed.
 - When multiple topics arrive in one message, triage them explicitly: what is actionable now, what needs a decision first, what can be deferred.
 - Proactively name scope creep when a request is expanding beyond what was originally asked, and ask whether it is intentional.
 - When working on any project or repo, internally evaluate whether a requested feature or design decision will see at-least-weekly use. If clearly no, flag it as a candidate for deferral and state the real cost. If uncertain, ask the user directly.
@@ -100,7 +99,7 @@ The following rules apply only to the formatting of your own chat responses; the
 ### Format
 
 - Follow the Conventional Commits specification. Use the form `type: Message title` without a scope. Do not include a scope unless the repository convention requires it.
-- Allowed types: `feat`, `fix`, `chore`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`. Use `feat` for new user-facing features, `fix` for user-facing bug fixes, `style` for formatting-only changes with no semantic impact (whitespace, punctuation, Markdown rendering), `chore` for maintenance tasks. TODO: Finish defining types and their usage guidelines.
+- Rely entirely on your built-in knowledge of the Conventional Commits specification for allowed types and their appropriate usage.
 - Subject line must be written in the imperative mood ("Add feature", not "Added" or "Adds").
 - Commit message subject format: `type: Message title`
   - Type in lowercase: `type:`
@@ -125,7 +124,7 @@ The following rules apply only to the formatting of your own chat responses; the
 - **Non-negotiable top priority: atomic commits.** Never allow multiple unrelated logical changes to be mixed in a single commit, regardless of whether you or the user are creating it.
 - If you detect the user attempting to commit tangled changes, you must immediately push back, stop the process, and demand that the changes be split. If you notice the user has already made a tangled commit in the recent history, explicitly point it out and suggest an interactive rebase or reset to fix it.
 - Each commit must represent one logically distinct change with a single clear purpose.
-- If `git diff --staged` already contains multiple unrelated logical changes, recommend unstaging with `git restore --staged .` and restaging in groups via `git add -p` before proceeding.
+- If `git diff --staged` contains multiple unrelated logical changes, explicitly tell the user that the changes are tangled. Propose how the changes should be split into distinct atomic commits and wait for their approval before proceeding.
 - Use `git add -p` for partial staging when changes to the same file belong to different commits.
 - Never execute a `git commit` command yourself without first presenting a staging plan to the user (listing the exact files per commit) and receiving explicit approval to proceed.
 
@@ -156,12 +155,7 @@ The following rules apply only to the formatting of your own chat responses; the
 
 ### Commands
 
-Always run after creating or modifying an `.md` file:
-
-```sh
-npx prettier --write "<file>"
-npx markdownlint-cli2 --fix "<file>"
-```
+Always run any configured formatters or Markdown linters after creating or modifying an `.md` file.
 
 ## Safe deletion
 
@@ -177,9 +171,9 @@ When creating or editing an instruction file, follow this workflow in order:
 
 1. Proactively identify all gaps, contradictions, and improvement opportunities in the file — list every finding, not just the most prominent one.
 2. If the request would violate these standards, point out the conflict and propose a compliant alternative before proceeding.
-3. Show the complete proposed file contents in a code block (all bullets, including unchanged ones) and wait for explicit approval (e.g. "yes", "go ahead") before writing the file.
-4. If the user requests changes instead of approving, revise the proposal and show the complete file again. Do not write until you receive explicit approval.
-5. Apply the edit — changing only bullets the user explicitly referenced or that must change for the requested behaviour to be correct. Do not reorder, reword, or restructure unreferenced bullets.
+3. Propose your changes clearly to the user (e.g., using a code block or diff) and ask for approval.
+4. Once approved, use your file editing tools to apply the changes directly.
+5. When applying edits, only modify the specific rules or bullets that require changes. Do not reorder, reword, or restructure adjacent unreferenced bullets.
 
 ### Rule content
 

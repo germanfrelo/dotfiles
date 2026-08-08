@@ -14,7 +14,7 @@ applyTo: "**"
 ## Format
 
 - Follow the Conventional Commits specification. Use the form `type: Message title` without a scope. Do not include a scope unless the repository convention requires it.
-- Allowed types: `feat`, `fix`, `chore`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`. Use `feat` for new user-facing features, `fix` for user-facing bug fixes, `style` for formatting-only changes with no semantic impact (whitespace, punctuation, Markdown rendering), `chore` for maintenance tasks. TODO: Finish defining types and their usage guidelines.
+- Rely entirely on your built-in knowledge of the Conventional Commits specification for allowed types and their appropriate usage.
 - Subject line must be written in the imperative mood ("Add feature", not "Added" or "Adds").
 - Commit message subject format: `type: Message title`
   - Type in lowercase: `type:`
@@ -39,7 +39,7 @@ applyTo: "**"
 - **Non-negotiable top priority: atomic commits.** Never allow multiple unrelated logical changes to be mixed in a single commit, regardless of whether you or the user are creating it.
 - If you detect the user attempting to commit tangled changes, you must immediately push back, stop the process, and demand that the changes be split. If you notice the user has already made a tangled commit in the recent history, explicitly point it out and suggest an interactive rebase or reset to fix it.
 - Each commit must represent one logically distinct change with a single clear purpose.
-- If `git diff --staged` already contains multiple unrelated logical changes, recommend unstaging with `git restore --staged .` and restaging in groups via `git add -p` before proceeding.
+- If `git diff --staged` contains multiple unrelated logical changes, explicitly tell the user that the changes are tangled. Propose how the changes should be split into distinct atomic commits and wait for their approval before proceeding.
 - Use `git add -p` for partial staging when changes to the same file belong to different commits.
 - Never execute a `git commit` command yourself without first presenting a staging plan to the user (listing the exact files per commit) and receiving explicit approval to proceed.
 
