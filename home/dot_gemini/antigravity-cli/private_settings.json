@@ -2,7 +2,7 @@
   "agentMode": "plan",
   "altScreenMode": "always",
   "colorScheme": "dark",
-  "editor": "code --wait",
+  "editor": "code --new-window --wait",
   "enableTelemetry": false,
   "model": "Gemini 3.1 Pro (High)",
   "notifications": true,

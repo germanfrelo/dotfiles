@@ -75,8 +75,8 @@ path=(~/bin $path)
 # Export environment variables.
 
 # Preferred editor for CLI tools.
-export EDITOR="code --wait"
-export VISUAL="code --wait"
+export EDITOR="code --new-window --wait"
+export VISUAL="code --new-window --wait"
 
 # GPG TTY for passphrase prompts
 export GPG_TTY=$TTY
@@ -238,6 +238,11 @@ syncfile() {
 # ==================================================
 
 # Define aliases.
+
+# Editors
+
+# Open VS Code in new windows by default
+alias code="code --new-window"
 
 # Files and directories
 

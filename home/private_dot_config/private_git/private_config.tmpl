@@ -31,15 +31,15 @@
 # Use VS Code as Git editor, diff tool and merge tool.
 # Ref. https://code.visualstudio.com/docs/sourcecontrol/overview#_vs-code-as-git-editor
 [core]
-	editor = code --wait
+	editor = code --new-window --wait
 [diff]
 	tool = vscode
 [difftool "vscode"]
-	cmd = code --wait --diff $LOCAL $REMOTE
+	cmd = code --new-window --wait --diff $LOCAL $REMOTE
 [merge]
 	tool = vscode
 [mergetool "vscode"]
-	cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
+	cmd = code --new-window --wait --merge $REMOTE $LOCAL $BASE $MERGED
 
 # Commit signing with SSH and 1Password.
 # Ref. https://developer.1password.com/docs/ssh/git-commit-signing/

@@ -18,12 +18,12 @@ sourceDir = {{ $source_dir | quote }}
 # Ref. https://www.chezmoi.io/user-guide/tools/diff/#use-vscode-as-the-diff-tool
 [diff]
 	command = "code"
-	args = ["--wait", "--diff"]
+	args = ["--new-window", "--wait", "--diff"]
 
 # Ref. https://www.chezmoi.io/user-guide/tools/editor/
 [edit]
 	command = "code"
-	args = ["--wait"]
+	args = ["--new-window", "--wait"]
 
 # Show human-friendly diffs for binary files.
 # Ref. https://www.chezmoi.io/user-guide/tools/diff/#show-human-friendly-diffs-for-binary-files
