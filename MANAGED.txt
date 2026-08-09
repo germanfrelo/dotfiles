@@ -24,7 +24,9 @@
 │   │   ├── config.json
 │   │   └── skills
 │   │       └── evaluate-ai-instructions
-│   │           └── SKILL.md
+│   │           ├── SKILL.md
+│   │           └── examples
+│   │               └── evaluation-examples.md
 │   └── settings.json
 ├── .ssh
 │   └── config
@@ -48,7 +50,7 @@
 │                   └── css.json
 └── svgo.config.js
 
-20 directories, 29 files
+21 directories, 30 files
 
 ## Enforced absent
 
