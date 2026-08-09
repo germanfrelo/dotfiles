@@ -21,7 +21,10 @@
 │   │   ├── statusline.sh
 │   │   └── title.sh
 │   ├── config
-│   │   └── config.json
+│   │   ├── config.json
+│   │   └── skills
+│   │       └── evaluate-ai-instructions
+│   │           └── SKILL.md
 │   └── settings.json
 ├── .ssh
 │   └── config
@@ -45,7 +48,7 @@
 │                   └── css.json
 └── svgo.config.js
 
-18 directories, 28 files
+20 directories, 29 files
 
 ## Enforced absent
 
