@@ -75,8 +75,16 @@ path=(~/bin $path)
 # Export environment variables.
 
 # Preferred editor for CLI tools.
-export EDITOR="code --new-window --wait"
-export VISUAL="code --new-window --wait"
+
+# VS Code
+# https://code.visualstudio.com/docs/editor/command-line
+export EDITOR="code --wait"
+export VISUAL="code --wait"
+# If not inside VS Code's integrated terminal, open a new window.
+if [[ "$TERM_PROGRAM" != "vscode" ]]; then
+	export EDITOR="code --wait --new-window"
+	export VISUAL="code --wait --new-window"
+fi
 
 # GPG TTY for passphrase prompts
 export GPG_TTY=$TTY
@@ -241,8 +249,10 @@ syncfile() {
 
 # Editors
 
-# Open VS Code in new windows by default
-alias code="code --new-window"
+# VS Code: if not inside its integrated terminal, open a new window.
+if [[ "$TERM_PROGRAM" != "vscode" ]]; then
+	alias code="code --new-window"
+fi
 
 # Files and directories
 

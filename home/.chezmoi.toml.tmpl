@@ -15,15 +15,19 @@ sourceDir = {{ $source_dir | quote }}
 [data]
 	machine_type = {{ $machine_type | quote }}
 
-# Ref. https://www.chezmoi.io/user-guide/tools/diff/#use-vscode-as-the-diff-tool
+# --- TOOLS ---
+
+# Editor
+# https://www.chezmoi.io/user-guide/tools/editor/
+# IMPORTANT: Do NOT set 'edit.command'. By default, chezmoi uses the text editor defined via the '$VISUAL' shell environment variable in '$ZDOTDIR/.zshrc'. This is the desired behavior.
+
+# Diff
+# https://www.chezmoi.io/user-guide/tools/diff/
 [diff]
 	command = "code"
-	args = ["--new-window", "--wait", "--diff"]
+	args = ["--wait", "--diff"]
 
-# Ref. https://www.chezmoi.io/user-guide/tools/editor/
-[edit]
-	command = "code"
-	args = ["--new-window", "--wait"]
+# ---
 
 # Show human-friendly diffs for binary files.
 # Ref. https://www.chezmoi.io/user-guide/tools/diff/#show-human-friendly-diffs-for-binary-files

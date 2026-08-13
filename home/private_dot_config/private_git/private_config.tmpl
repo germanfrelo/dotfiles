@@ -28,18 +28,28 @@
 	autocrlf = input
 {{- end }}
 
-# Use VS Code as Git editor, diff tool and merge tool.
-# Ref. https://code.visualstudio.com/docs/sourcecontrol/overview#_vs-code-as-git-editor
-[core]
-	editor = code --new-window --wait
+# --- EXTERNAL TOOLS ---
+
+# Editor
+# https://git-scm.com/docs/git-config#Documentation/git-config.txt-coreeditor
+# IMPORTANT: Do NOT set 'core.editor'. By default, Git uses the text editor defined via the '$VISUAL' shell environment variable in '$ZDOTDIR/.zshrc'. This is the desired behavior.
+
+# Diff
+# https://code.visualstudio.com/docs/sourcecontrol/merge-conflicts#_configure-vs-code-as-default-merge-tool
 [diff]
 	tool = vscode
 [difftool "vscode"]
-	cmd = code --new-window --wait --diff $LOCAL $REMOTE
+	cmd = code --wait --diff $LOCAL $REMOTE
+
+# Merge
+# https://code.visualstudio.com/docs/sourcecontrol/merge-conflicts#_configure-vs-code-as-default-merge-tool
+# https://code.visualstudio.com/updates/v1_70#_command-line-option-merge
 [merge]
 	tool = vscode
 [mergetool "vscode"]
-	cmd = code --new-window --wait --merge $REMOTE $LOCAL $BASE $MERGED
+	cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
+
+# ---
 
 # Commit signing with SSH and 1Password.
 # Ref. https://developer.1password.com/docs/ssh/git-commit-signing/
