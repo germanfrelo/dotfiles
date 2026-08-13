@@ -27,6 +27,15 @@ sourceDir = {{ $source_dir | quote }}
 	command = "code"
 	args = ["--wait", "--diff"]
 
+# Merge
+# https://www.chezmoi.io/user-guide/tools/merge/
+[merge]
+	command = "bash"
+	args = [
+		"-c",
+		{{ `cp {{ .Target | quote }} {{ printf "%s.base" .Target | quote }} && code --wait --merge {{ .Destination | quote }} {{ .Target | quote }} {{ printf "%s.base" .Target | quote }} {{ .Source | quote }}` | quote }},
+]
+
 # ---
 
 # Show human-friendly diffs for binary files.
