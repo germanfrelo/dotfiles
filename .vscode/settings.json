@@ -52,13 +52,5 @@
 
 		// toml
 		"*.toml.tmpl": "toml"
-	},
-
-	// Workspace color customizations
-	"workbench.colorCustomizations": {
-		"statusBar.background": "#4051b5",
-		"statusBar.foreground": "#d9ddf2",
-		"statusBarItem.hoverBackground": "#33408F",
-		"statusBarItem.hoverForeground": "#fff"
 	}
 }
