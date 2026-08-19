@@ -49,7 +49,7 @@
 !.ssh
 !.ssh/config
 
-# Library: ignore all app and system data; keep only managed VS Code User files
+# Library
 Library/**
 !Library
 !Library/Application Support
@@ -60,6 +60,8 @@ Library/**
 !Library/Application Support/Code/User/prompts/*.instructions.md
 !Library/Application Support/Code/User/snippets
 !Library/Application Support/Code/User/snippets/*.json
+!Library/Preferences
+!Library/Preferences/com.MrKai77.Loop.plist
 
 # repos: ignore all individual repos and workspace files (no exceptions needed)
 repos/**
