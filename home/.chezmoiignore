@@ -63,8 +63,6 @@ Library/**
 !Library/Preferences
 !Library/Preferences/com.MrKai77.Loop.plist
 
-# repos: ignore all individual repos and workspace files (no exceptions needed)
-repos/**
 
 # =============================================================================
 # SPECIFIC IGNORES
@@ -99,6 +97,7 @@ repos/**
 # Standard macOS user directories (personal data, not configuration)
 Applications
 Desktop
+Developer
 Documents
 Downloads
 Movies

@@ -1,5 +1,5 @@
 {{- $machine_type := promptChoiceOnce . "machine_type" "Machine type" (list "personal" "work") -}}
-{{- $source_dir := joinPath .chezmoi.homeDir "repos/germanfrelo/dotfiles" -}}
+{{- $source_dir := joinPath .chezmoi.homeDir "Developer/repos/dotfiles" -}}
 {{- if eq $machine_type "work" -}}
 {{-   $source_dir = promptStringOnce . "source_dir" "Dotfiles source directory" -}}
 {{- end -}}

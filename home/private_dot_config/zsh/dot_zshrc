@@ -264,7 +264,7 @@ for index in {1..9}; do alias "${index}"="cd +${index}"; done
 unset index
 
 # Quick-access directories
-alias repos="${HOME}/repos/germanfrelo"
+alias repos="${HOME}/Developer/repos"
 
 # List all files and directories in columns
 alias eza="eza -F --all --group-directories-first"
