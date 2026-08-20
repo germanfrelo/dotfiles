@@ -118,3 +118,14 @@ _Tip: You may run `git log --oneline -15` to glance at recently used scopes for 
 1. **Consider the target tool:** When a commit predominantly configures a specific application, the scope is often just that application's name (e.g., `vscode`, `zsh`, `git`, `homebrew`, etc.).
 2. **Abstract when necessary:** When a change spans multiple tools cohesively (e.g., a system-wide font update) or applies to repository infrastructure (e.g., dependency bumps, AI instructions), derive a thematic or structural scope that best describes the logical outcome (e.g., `typography`, `deps`, `ai`, etc.).
 3. **Prioritize clarity over convention:** Never force a change into a bucket if it doesn't fit naturally. For edge cases, invent whatever scope makes the git history most readable to a human.
+
+### Repository path resolution
+
+When writing or modifying scripts (Bash, Node.js, Python, etc.) that need to reference or access my local repositories directory, you MUST NOT hardcode absolute or home-relative paths. NEVER use specific path strings like `~/path/to/repos`, `$HOME/path/to/repos`, or Node's `os.homedir()`.
+
+Instead, you must strictly use one of the following dynamic resolution methods:
+
+1. **Relative paths (preferred):** If the script lives inside a repository and needs to access sibling repositories, calculate the path relative to the script's execution location (e.g., navigating up the directory tree using `path.resolve(__dirname, '../../')` in Node.js, or `$(cd "$(dirname "$0")/../.." && pwd)` in Bash).
+2. **Environment variable fallback:** If using relative paths is impossible or the script runs globally, read the `$REPOS_DIR` environment variable. Because environment variables can be missing in certain execution contexts (like GUI apps, Cron, or CI), you must always provide a mathematical relative fallback if applicable (e.g., `const REPOS_DIR = process.env.REPOS_DIR || path.resolve(__dirname, '../../');`).
+
+[Reference: ADR 0005](/docs/decisions/0005-repos-directory-path-architecture.md)

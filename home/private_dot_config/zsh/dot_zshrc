@@ -107,6 +107,10 @@ export NVM_DIR="${HOME}/.nvm"
 # man / less
 export LESSHISTFILE=- # avoid showing .lesshst file in $HOME when using `man' command
 
+# Repositories
+# IMPORTANT: The path below defines where all my repositories live. If I ever change it to a new folder, I must search this entire dotfiles repository for the old path and update all occurrences to prevent breakage. (See ADR 0005 for details).
+export REPOS_DIR="${REPOS_DIR:-$HOME/Developer/repos}"
+
 # ==================================================
 
 # Source additional local files if they exist.
@@ -264,7 +268,7 @@ for index in {1..9}; do alias "${index}"="cd +${index}"; done
 unset index
 
 # Quick-access directories
-alias repos="${HOME}/Developer/repos"
+alias repos="${REPOS_DIR}"
 
 # List all files and directories in columns
 alias eza="eza -F --all --group-directories-first"

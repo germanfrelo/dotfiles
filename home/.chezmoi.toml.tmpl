@@ -1,4 +1,5 @@
 {{- $machine_type := promptChoiceOnce . "machine_type" "Machine type" (list "personal" "work") -}}
+# IMPORTANT: The path below defines where all my repositories live. If I ever change it to a new folder, I must search this entire dotfiles repository for the old path and update all occurrences to prevent breakage. (See ADR 0005 for details).
 {{- $source_dir := joinPath .chezmoi.homeDir "Developer/repos/dotfiles" -}}
 {{- if eq $machine_type "work" -}}
 {{-   $source_dir = promptStringOnce . "source_dir" "Dotfiles source directory" -}}
