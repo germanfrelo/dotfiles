@@ -5,8 +5,8 @@
 # local directories. Runs once on a new machine via chezmoi.
 #
 # Directories:
-#   Personal repos: ~/repos/germanfrelo/
-#   Forks:          ~/repos/forks/
+#   Personal repos: ${REPOS_DIR:-~/Developer/repos/}
+#   Forks:          ~/Downloads/repos/
 #
 # Safety rules:
 #   - NEVER modifies existing repos (no pull, no reset, no force).
@@ -19,8 +19,8 @@
 set -euo pipefail
 
 GITHUB_USER="germanfrelo"
-PERSONAL_DIR="${HOME}/repos/germanfrelo"
-FORKS_DIR="${HOME}/repos/forks"
+PERSONAL_DIR="${REPOS_DIR:-$HOME/Developer/repos}"
+FORKS_DIR="${HOME}/Downloads/repos"
 
 # Repos to skip even if not archived (e.g. empty repos with no commits).
 SKIP_REPOS=("test")
