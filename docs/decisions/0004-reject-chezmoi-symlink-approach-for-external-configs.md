@@ -7,7 +7,7 @@ date: 2026-08-01
 
 ## Context and Problem Statement
 
-Some configuration files tracked in this repository (such as VS Code settings, Antigravity settings, or Powerlevel10k) are actively mutated by those programs. The [chezmoi documentation](https://www.chezmoi.io/docs/user-guide/manage-different-types-of-file/#handle-configuration-files-which-are-externally-modified) warns that running `chezmoi apply` blindly will overwrite and lose any modifications made by these external programs.
+Some configuration files tracked in this repository (such as VS Code settings, Antigravity settings, or Powerlevel10k) are actively mutated by those programs. The [chezmoi documentation](https://www.chezmoi.io/user-guide/manage-different-types-of-file/#handle-configuration-files-which-are-externally-modified) warns that running `chezmoi apply` blindly will overwrite and lose any modifications made by these external programs.
 
 To solve this, chezmoi proposes a "symlink approach": replacing the live configuration file on the target machine with a symbolic link pointing directly back to the file inside the chezmoi source directory (which is under version control). When the external program modifies its configuration, it writes directly into the Git repository.
 
