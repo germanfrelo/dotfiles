@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
+
 # run_once_after_clone-github-repos.sh
 # =====================================
-# Clones all non-archived, non-empty personal GitHub repos and forks to their
-# local directories. Runs once on a new machine via chezmoi.
+#
+# Clones all non-archived, non-empty personal GitHub repos and forks to their local directories.
+# Runs once on a new machine via chezmoi.
 #
 # Directories:
 #   Personal repos: ${REPOS_DIR:-~/Developer/repos/}
@@ -180,4 +182,25 @@ for item in json.load(sys.stdin):
 ")
 
 echo ""
+
+echo ""
+echo "── Post-clone automated setups ───────────────────────────────────────────"
+# The 'external-drive-snapshots' repository manages its own macOS background daemon (LaunchAgent)
+# to automatically snapshot connected drives. We trigger its self-install script here so it sets itself up automatically on a fresh macOS installation.
+# Ref: https://github.com/germanfrelo/external-drive-snapshots
+if [[ -d "${PERSONAL_DIR}/external-drive-snapshots" ]]; then
+    echo "  ↓ external-drive-snapshots: installing macOS daemon (see repo README)…"
+
+    # Safety check: if node/npm aren't in PATH during the chezmoi run, fail gracefully
+    if ! command -v npm &>/dev/null; then
+        echo "    ✗ npm not found in PATH; skipping daemon installation."
+    else
+        if npm --prefix "${PERSONAL_DIR}/external-drive-snapshots" run install-daemon --silent &>/dev/null; then
+            echo "    ✓ daemon installed and loaded"
+        else
+            echo "    ✗ failed to install daemon (run manually: npm run install-daemon)"
+        fi
+    fi
+fi
+
 echo "Done."
