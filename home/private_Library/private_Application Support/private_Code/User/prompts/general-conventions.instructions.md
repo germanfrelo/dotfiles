@@ -66,6 +66,7 @@ The following rules apply only to the formatting of your own chat responses; the
 
 ## Version control
 
+- Always use the tilde syntax (e.g. `HEAD~1`, `commit~1`) instead of the caret syntax (`^`) for Git parent references because the caret triggers Zsh history expansion errors.
 - Prioritise modern, specialized Git commands over older, overloaded equivalents:
   - Use `git switch` instead of `git checkout` for branching.
   - Use `git restore` instead of `git checkout` or `git reset` for unstaging/discarding file changes.
