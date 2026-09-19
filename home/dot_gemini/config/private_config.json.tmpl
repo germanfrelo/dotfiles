@@ -5,8 +5,6 @@
     }
   },
   "userSettings": {
-    "autoExecutionPolicy": "CASCADE_COMMANDS_AUTO_EXECUTION_OFF",
-    "conversationWidth": "CONVERSATION_WIDTH_DEFAULT",
     "customThemeSeedsDark": {
       "background": "#101010",
       "foregroundOverride": "#FFFFFF",
@@ -17,7 +15,6 @@
       "foregroundOverride": "#101010",
       "primary": "#007acc"
     },
-    "enableTerminalSandbox": false,
     "globalPermissionGrants": {
       "allow": [
         "command(cat)",
@@ -33,6 +30,7 @@
         "command(grep)",
         "command(head)",
         "command(ls)",
+        "command(tail)",
         "command(wc)",
         "read_url(agentskills.io)",
         "read_url(antigravity.google)",
@@ -42,9 +40,10 @@
         "read_url(raw.githubusercontent.com)"
       ]
     },
-    "nonWorkspaceFileAccessPolicy": "AGENT_SETTING_POLICY_ASK",
+    "permissionGrantsV2Migrated": true,
     "remoteControlEnabled": true,
     "remoteControlHostname": "{{ .chezmoi.hostname }}",
+    "sandboxEnabledAtV2Migration": true,
     "themeMode": "THEME_MODE_INHERIT"
   }
 }
