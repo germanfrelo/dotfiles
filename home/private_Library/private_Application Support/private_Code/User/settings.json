@@ -13,6 +13,10 @@
 		"prettier.trailingComma": "none"
 	},
 	"[markdown]": {
+		"editor.codeActionsOnSave": {
+			"source.fixAll.markdownlint": "explicit",
+			"source.organizeLinkDefinitions": "explicit"
+		},
 		"editor.unicodeHighlight.invisibleCharacters": true // Overrides default value of "false".
 	},
 	"accessibility.underlineLinks": true,
@@ -91,10 +95,8 @@
 	"editor.codeActionsOnSave": {
 		"source.addMissingImports": "explicit",
 		"source.fixAll.eslint": "explicit",
-		"source.fixAll.markdownlint": "explicit",
 		"source.fixAll.stylelint": "explicit",
 		"source.organizeImports": "explicit",
-		"source.organizeLinkDefinitions": "explicit",
 		"source.sortImports": "explicit"
 	},
 	"editor.cursorBlinking": "phase",
