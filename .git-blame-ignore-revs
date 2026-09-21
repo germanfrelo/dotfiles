@@ -22,3 +22,6 @@
 
 # chore(homebrew): Sync package descriptions
 0d8dc13ce09ac8e09a5bb8b90af38b0fb286b28c
+
+# style(workspace): Sort vscode settings and remove comments
+96764d2fbc358da5eff0473a7379b2ffafb1ed35
