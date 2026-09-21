@@ -387,6 +387,12 @@
 		"strong-style": false, // Conflicts with Prettier.
 		"ul-indent": false // Conflicts with Prettier.
 	},
+	"peacock.favoriteColors": [
+		{
+			"name": "CSS",
+			"value": "#663399"
+		}
+	],
 	"prettier.useTabs": true,
 	"python.analysis.typeCheckingMode": "basic",
 	"scm.defaultViewMode": "tree",
