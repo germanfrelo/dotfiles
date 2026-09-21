@@ -20,6 +20,13 @@
 		},
 		"editor.unicodeHighlight.invisibleCharacters": true // Overrides default value of "false".
 	},
+	"[python]": {
+		"editor.codeActionsOnSave": {
+			"source.fixAll.ruff": "explicit",
+			"source.organizeImports.ruff": "explicit"
+		},
+		"editor.defaultFormatter": "charliermarsh.ruff"
+	},
 	"accessibility.underlineLinks": true,
 	"better-todo-tree.filtering.excludeGlobs": [
 		"**/node_modules/*/**", // Default
@@ -366,6 +373,7 @@
 		"ul-indent": false // Conflicts with Prettier.
 	},
 	"prettier.useTabs": true,
+	"python.analysis.typeCheckingMode": "basic",
 	"scm.defaultViewMode": "tree",
 	"scm.diffDecorationsGutterPattern": {
 		"added": true,
