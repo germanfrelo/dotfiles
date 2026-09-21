@@ -407,6 +407,7 @@
 	"workbench.editor.wrapTabs": true,
 	"workbench.editorAssociations": {
 		"*.copilotmd": "vscode.markdown.preview.editor", // Default
+		"*.plist": "binaryPlistEditor.edit",
 		"*.svg": "default"
 	},
 	"workbench.experimental.modernUI": true,
