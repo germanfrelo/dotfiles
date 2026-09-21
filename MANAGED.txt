@@ -5,6 +5,8 @@
 ├── .config
 │   ├── gh
 │   │   └── config.yml
+│   ├── ghostty
+│   │   └── config.ghostty
 │   ├── git
 │   │   ├── config
 │   │   └── ignore
@@ -50,7 +52,7 @@
 │       └── com.MrKai77.Loop.plist
 └── svgo.config.js
 
-21 directories, 30 files
+22 directories, 31 files
 
 ## Enforced absent
 

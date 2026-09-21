@@ -1,0 +1,20 @@
+# Documentation: https://ghostty.org/docs/config
+
+# --- Appearance ---
+adjust-cell-height = 40%
+font-family = "CommitMono Nerd Font"
+font-family = "MesloLGS NF"
+font-feature = -liga
+font-size = 14
+minimum-contrast = 4.5
+theme = GitHub Dark High Contrast
+
+# --- Behavior ---
+scrollback-limit = 1000000
+
+# --- Keybindings ---
+keybind = option+backspace=text:\x1b\x7f
+
+# --- Window ---
+window-padding-x = 20
+window-padding-y = 20
