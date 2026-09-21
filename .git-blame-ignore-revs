@@ -25,3 +25,6 @@
 
 # style(vscode): Sort vscode settings.json
 6a3aebaf02de4ee2ff3b5df9216583e45339f052
+
+# style(workspace): Sort vscode settings and remove comments
+52a6fd896c44a42dc7df717410daa6ca1358614f
