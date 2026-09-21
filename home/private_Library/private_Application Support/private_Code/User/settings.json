@@ -284,6 +284,7 @@
 	"files.insertFinalNewline": true,
 	"files.trimFinalNewlines": true,
 	"files.trimTrailingWhitespace": true,
+	"git-graph.date.format": "Relative",
 	"git.addAICoAuthor": "off",
 	"git.autofetch": true,
 	"git.blame.editorDecoration.enabled": true,
