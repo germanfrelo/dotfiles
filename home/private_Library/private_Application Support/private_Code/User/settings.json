@@ -2,6 +2,10 @@
 	"[astro][css][html]": {
 		"prettier.printWidth": 9999
 	},
+	"[ignore][shellscript]": {
+		// Unset Prettier as default formatter for unsupported languages.
+		"editor.defaultFormatter": null
+	},
 	"[javascript][javascriptreact][typescript][typescriptreact][vue]": {
 		"prettier.singleAttributePerLine": true
 	},
