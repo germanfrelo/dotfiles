@@ -22,3 +22,6 @@
 
 # chore(homebrew): Sync package descriptions
 0d8dc13ce09ac8e09a5bb8b90af38b0fb286b28c
+
+# style(vscode): Sort vscode settings.json
+37fc1099c82ae628a3866602d611479be30f0c39
