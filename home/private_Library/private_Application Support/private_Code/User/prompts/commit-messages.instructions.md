@@ -37,6 +37,7 @@ applyTo: "**"
 
 - When suggesting a commit or set of commits, always list the exact files to include in each commit (e.g. `git add path/to/file1 path/to/file2`). Never assume the user knows which files belong to which commit.
 - **Non-negotiable top priority: atomic commits.** Never allow multiple unrelated logical changes to be mixed in a single commit, regardless of whether you or the user are creating it.
+- When splitting commits, rewriting history, or rebasing, never rely solely on file-level boundaries. Always verify the **semantic meaning** of each change line-by-line. For example, if a documentation file is updated to reflect an architectural change or a removed feature, that documentation change belongs in the exact same atomic commit as the code that made the change, rather than being grouped arbitrarily with other generic documentation changes.
 - If you detect the user attempting to commit tangled changes, you must immediately push back, stop the process, and demand that the changes be split. If you notice the user has already made a tangled commit in the recent history, explicitly point it out and suggest an interactive rebase or reset to fix it.
 - Each commit must represent one logically distinct change with a single clear purpose.
 - If `git diff --staged` already contains multiple unrelated logical changes, recommend unstaging with `git restore --staged .` and restaging in groups via `git add -p` before proceeding.
