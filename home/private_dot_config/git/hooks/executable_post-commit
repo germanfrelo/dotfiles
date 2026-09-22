@@ -1,0 +1,59 @@
+#!/usr/bin/env zsh
+
+# # Formatter Upgrade Guide
+
+# Use this step-by-step workflow each time you update an auto-formatter (such as Prettier, Biome, etc.) and reformat the source codebase, to ensure all changes are tracked cleanly, avoid unnecessary formatting in future PRs, and preserve meaningful git history and blame accuracy.
+
+# ## 1. Update the formatter and commit it
+
+# Commit message example:
+
+# ```text
+# chore(deps-dev): Bump <formatter_name> from X.X.X to X.X.X
+# ```
+
+# ## 2. Reformat the codebase and commit it
+
+# Ensure this commit only includes automatic formatting changes.
+
+# Commit message:
+
+# ```text
+# style: Reformat codebase after formatter update
+# ```
+
+# ## 3. Append the formatting commit to `.git-blame-ignore-revs` and commit it
+
+# Append the formatting commit's message and full 40-character hash (from Step 2) to the end of `.git-blame-ignore-revs` (in chronological order). Example:
+
+# ```ignore
+
+# # style: Reformat codebase after formatter update
+# <commit_full_hash>
+# ```
+
+# Commit this file. Example:
+
+# ```text
+# chore: Update .git-blame-ignore-revs
+# ```
+
+# Get the last commit message
+commit_msg=$(git log -1 --format=%s)
+
+# If it's a style/formatting commit
+if [[ "$commit_msg" == style:* || "$commit_msg" == style\(*\):* ]]; then
+	print -P "%F{cyan}🎨 Formatting commit detected.%f"
+
+	# Git hooks run without standard input, so we MUST read directly from /dev/tty
+	printf "Do you want to run 'gbignore' to add this to .git-blame-ignore-revs? [y/N] "
+
+	if read -q </dev/tty; then
+		echo ""
+		# Source your zshrc so the gbignore function is available to this non-interactive script
+		source ~/.config/zsh/.zshrc
+		gbignore
+	else
+		echo ""
+	fi
+fi
