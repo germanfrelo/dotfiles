@@ -1,0 +1,7 @@
+# npm configuration file
+# https://docs.npmjs.com/cli/configuring-npm/npmrc
+
+# Dependencies saved to package.json will be configured with an exact version rather than using npm's default semver range operator.
+# Docs: https://docs.npmjs.com/cli/v11/using-npm/config#save-exact
+# Rationale: https://docs.renovatebot.com/dependency-pinning/
+save-exact = true
