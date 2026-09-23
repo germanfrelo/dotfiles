@@ -2,7 +2,7 @@
 	"[astro][css][html]": {
 		"prettier.printWidth": 9999
 	},
-	"[ignore][shellscript]": {
+	"[ignore][ini][plaintext][properties][shellscript]": {
 		// Unset Prettier as default formatter for unsupported languages.
 		"editor.defaultFormatter": null
 	},
