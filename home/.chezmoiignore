@@ -39,7 +39,6 @@
 !.gemini/config/config.json
 !.gemini/config/skills/**
 .gemini/antigravity/**
-!.gemini/antigravity
 .gemini/antigravity-cli/**
 !.gemini/antigravity-cli
 !.gemini/antigravity-cli/settings.json
@@ -82,6 +81,7 @@ Library/**
 .afirma
 .idlerc
 .pyload
+Obsidian
 
 # Cache and local runtime state
 .cache
@@ -89,6 +89,7 @@ Library/**
 .npm
 
 # Shell history and session state (machine-specific, never track)
+.viminfo
 .zsh_history
 .zsh_sessions
 
