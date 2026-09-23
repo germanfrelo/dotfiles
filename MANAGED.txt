@@ -25,6 +25,8 @@
 │   ├── config
 │   │   ├── config.json
 │   │   └── skills
+│   │       ├── cli-output-standards
+│   │       │   └── SKILL.md
 │   │       └── evaluate-ai-instructions
 │   │           └── SKILL.md
 │   └── settings.json
@@ -52,7 +54,7 @@
 │       └── com.MrKai77.Loop.plist
 └── svgo.config.js
 
-22 directories, 31 files
+23 directories, 32 files
 
 ## Enforced absent
 
