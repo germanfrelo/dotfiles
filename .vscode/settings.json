@@ -41,9 +41,9 @@
 
 		// shellscript
 		"*.sh.tmpl": "shellscript",
-		"*dot_zprofile": "shellscript",
-		"*dot_zshenv": "shellscript",
-		"*dot_zshrc": "shellscript",
+		"*zprofile": "shellscript",
+		"*zshenv": "shellscript",
+		"*zshrc": "shellscript",
 		"pre-commit": "shellscript",
 
 		// toml
