@@ -270,6 +270,7 @@
 
 		// properties
 		"**/*ncdu/*config*": "properties",
+		"*npmrc": "properties", // See https://github.com/microsoft/vscode/pull/92397
 		"CODEOWNERS": "properties",
 
 		// shellscript

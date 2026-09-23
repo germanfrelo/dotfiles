@@ -30,6 +30,7 @@
 │   │       └── evaluate-ai-instructions
 │   │           └── SKILL.md
 │   └── settings.json
+├── .npmrc
 ├── .ssh
 │   └── config
 ├── .zshenv
@@ -54,7 +55,7 @@
 │       └── com.MrKai77.Loop.plist
 └── svgo.config.js
 
-23 directories, 32 files
+23 directories, 33 files
 
 ## Enforced absent
 
