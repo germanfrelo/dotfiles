@@ -270,6 +270,7 @@
 
 		// properties
 		"**/*ncdu/*config*": "properties",
+		"CODEOWNERS": "properties",
 
 		// shellscript
 		"*.sh.tmpl": "shellscript",
