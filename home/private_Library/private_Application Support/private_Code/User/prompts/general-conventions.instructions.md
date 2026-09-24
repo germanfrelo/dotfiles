@@ -19,7 +19,7 @@ applyTo: "**"
 
 ## Chat response formatting
 
-The following rules apply only to the formatting of your own chat responses; they do NOT apply to Markdown files you create or edit on the user's behalf:
+The following rules apply only to the formatting of your own chat responses; they do NOT apply to Markdown files you create or edit on the user's behalf.
 
 - Ignore line-length limits for prose. Never hard-wrap paragraphs or list items; write each as a single unbroken line.
 - Use headings (`##` or deeper) for named sections. Do not use bold text (`**title**`) as a substitute for a section heading.
@@ -28,16 +28,20 @@ The following rules apply only to the formatting of your own chat responses; the
 
 ## Writing
 
+- Use clear, direct, and concise language. Avoid filler words, corporate jargon, and typical AI fluff (e.g., 'delve', 'robust', 'seamless', 'leverage').
 - End list items with a full stop. Items consisting of a single word or a bare code span are exempt.
 - Do not duplicate in any secondary document (READMEs, docs, instruction files) data that already exists in a canonical source (config files, `package.json`, source code, auto-generated outputs); reference the source instead. When inline data in a secondary element is unavoidable because the reader cannot access the canonical source directly, flag the duplication risk and note where the canonical source lives.
 
 ## Documentation writing
 
+The following rules of this section apply only to READMEs and feature descriptions. It does not apply to API docs, changelogs, or migration guides, where the file/function _is_ the topic.
+
+- Do not guess the intended audience. Always ask the user to explicitly specify the target audience before drafting documentation.
+- Avoid dense paragraphs; people usually scan instead of read. Default to highly scannable schematic structures.
 - In any README, feature list, or "what you get" section, use **capability-first structure**: lead each section or entry with a single sentence stating what the reader _gains_ (the outcome), then list the tools or files that deliver it.
 - Do not lead with file names or tool names. The reader's first question is "what does this do for me?", not "what is this file called?".
-- Keep the capability sentence factual and specific — describe the actual outcome, not a vague quality ("consistent, automatically enforced code style on every commit" not "better code quality").
+- Keep the capability sentence factual and specific — describe the actual outcome, not a vague quality ("consistent, automatically enforced code style on every commit" not "better code quality", etc.).
 - Cross-reference when a tool or file has a dual role that affects more than one section (e.g. `.editorconfig` is listed in Editor configuration but also feeds Prettier's formatting config — note both).
-- This rule applies to READMEs, template docs, and feature descriptions. It does not apply to API docs, changelogs, or migration guides, where the file/function _is_ the topic.
 
 ## Code
 
