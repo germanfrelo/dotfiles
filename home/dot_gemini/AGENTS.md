@@ -20,6 +20,13 @@ Always assume the latest stable versions for the following:
 
 ## General conventions
 
+### Text formatting
+
+- Never hard-wrap text at an arbitrary character limit (e.g., 80 columns). Apply these rules across all formats (chat responses, code comments, markdown files, and commit messages):
+  - **Prose**: Use semantic line breaks (write each logical sentence as a single unbroken line).
+  - **Paragraphs**: Use blank lines to separate them.
+  - **List items**: Write the entire item as a single unbroken line.
+
 ### Communication
 
 - Default response language: English, unless the user explicitly says otherwise.
@@ -37,7 +44,6 @@ Always assume the latest stable versions for the following:
 
 The following rules apply only to the formatting of your own chat responses; they do NOT apply to Markdown files you create or edit on the user's behalf.
 
-- Ignore line-length limits for prose. Never hard-wrap paragraphs or list items; write each as a single unbroken line.
 - Use headings (`##` or deeper) for named sections. Do not use bold text (`**title**`) as a substitute for a section heading.
 - Use absolute paths starting with `/` for workspace internal links (e.g., `[file](/docs/file.md)`) instead of relative paths (`./` or `../`).
 - Always use exactly 4 backticks (````) for the outer fence of ALL code blocks. Never use 3. This unconditionally prevents inner 3-backtick fences from breaking the rendering.
@@ -66,7 +72,6 @@ The following rules of this section apply only to READMEs and feature descriptio
 
 ### Code comments
 
-- Never hard-wrap a comment that expresses a single thought. Write it as one unbroken line and let the editor soft-wrap it.
 - Do not repeat code-like content in comments (identifiers, enum values, function names, type literals, etc.) — they go stale when the code changes. Describe the intent in plain language or point to the canonical source instead.
 
 ### Version control
@@ -99,7 +104,6 @@ The following rules of this section apply only to READMEs and feature descriptio
 - Include a body by default, especially for multiple or complex changes. Omit the body only for simple, self-explanatory changes (e.g., file renames, formatting, fixing typos) where the subject line sufficiently explains the "what" and the "why". If omitted for a simple change, do not push back.
 - When included, the body must explain _why_ the change was made, not restate what changed. Keep it high-level and outcome-focused.
 - May use bullet points (`-`).
-- Semantic line breaks: Write one sentence per line. Do not hard-wrap mid-sentence. Use blank lines to separate paragraphs.
 - Breaking changes: append a `BREAKING CHANGE: <description>` footer. Do not use the `!` shorthand.
 - Reverts: use `revert: <original subject>` and include `This reverts commit <hash>.` in the body.
 - Footers (issues, co-authors): place after a blank line at the very end of the message.
@@ -134,7 +138,6 @@ The following rules of this section apply only to READMEs and feature descriptio
 
 ### Rules
 
-- Ignore line-length limits for prose. Never hard-wrap paragraphs or list items; write each as a single unbroken line.
 - Use headings (`##` or deeper) for named sections. Do not use bold text (`**title**`) as a substitute for a section heading.
 - Use absolute paths starting with `/` for workspace internal links (e.g., `[file](/docs/file.md)`) instead of relative paths (`./` or `../`).
 
