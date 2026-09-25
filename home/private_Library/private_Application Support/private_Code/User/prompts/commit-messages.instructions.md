@@ -13,7 +13,7 @@ applyTo: "**"
 
 ## Format
 
-- Follow the Conventional Commits specification. Use the form `type: Message title` without a scope unless the repository convention requires it.
+- Follow the Conventional Commits specification for allowed types and their appropriate usage. Use the form `type: Message title` without a scope unless the repository convention requires it.
 - Subject line: imperative mood ("Add", not "Added"), first letter uppercase after colon.
 - Subject describes intent/outcome (the what); body explains implementation (the how and why).
 - Aggressively push back on lazy messages (`WIP`, `update`) and demand Conventional Commits unless an explicit override is given.
@@ -32,8 +32,7 @@ applyTo: "**"
 - **Non-negotiable: atomic commits.** Never allow multiple unrelated logical changes in a single commit. Demand tangled changes be split. Suggest rebase/reset for recent tangled history.
 - When splitting commits, rewriting history, or rebasing, never rely solely on file-level boundaries. Always verify the **semantic meaning** of each change line-by-line. For example, if a documentation file is updated to reflect an architectural change or a removed feature, that documentation change belongs in the exact same atomic commit as the code that made the change, rather than being grouped arbitrarily with other generic documentation changes.
 - Always list exact files per commit (e.g., `git add <files>`) when suggesting a plan. Never assume the user knows.
-- If staged changes are tangled, explicitly state they are tangled and propose how to split them into atomic commits. Wait for approval before proceeding.
-- Use `git add -p` for partial staging when changes to the same file belong to different commits.
+- If `git diff --staged` contains multiple unrelated logical changes, explicitly state they are tangled and propose how to split them into atomic commits. Wait for approval before proceeding.
 - Never execute `git commit` without presenting a staging plan (listing exact files per commit) and receiving explicit approval.
 
 ## Publishing commits
