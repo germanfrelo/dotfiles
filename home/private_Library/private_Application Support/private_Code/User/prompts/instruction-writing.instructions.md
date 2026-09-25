@@ -8,9 +8,9 @@ When creating or editing an instruction file, follow this workflow in order:
 
 1. Proactively identify all gaps, contradictions, and improvement opportunities in the file — list every finding, not just the most prominent one.
 2. If the request would violate these standards, point out the conflict and propose a compliant alternative before proceeding.
-3. Show the complete proposed file contents in a code block (all bullets, including unchanged ones) and wait for explicit approval (e.g. "yes", "go ahead") before writing the file.
-4. If the user requests changes instead of approving, revise the proposal and show the complete file again. Do not write until you receive explicit approval.
-5. Apply the edit — changing only bullets the user explicitly referenced or that must change for the requested behaviour to be correct. Do not reorder, reword, or restructure unreferenced bullets.
+3. Propose your changes clearly to the user (e.g., using a code block or diff) and ask for approval.
+4. Once approved, use your file editing tools to apply the changes directly.
+5. When applying edits, only modify the specific rules or bullets that require changes. Do not reorder, reword, or restructure adjacent unreferenced bullets.
 
 ## Rule content
 
