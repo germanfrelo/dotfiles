@@ -21,9 +21,12 @@ Chezmoi-managed dotfiles. For general chezmoi commands, concepts, and workflows,
 
 ## Applying changes
 
-Never edit target files — always edit source under `home/`, then run `chezmoi diff` and show the output to the user. Only run `chezmoi apply` after the user confirms the diff looks correct.
+**For existing managed files:** Never edit target files — always edit the source under `home/` directly, then run `chezmoi diff` and show the output to the user. You must **NEVER** run `chezmoi apply` or suggest the user run it, to prevent target data loss.
 
-When creating a new `private_` file, always author it as a template using `onepasswordRead` — never paste secret values directly. If the target file was edited directly and must be preserved, use `chezmoi re-add` instead — but if the source template calls any `onepassword*` function, abort and ask the user to re-template manually, to avoid rendering secrets into the source.
+**For new unmanaged files or directories:** Create them in the target state first (e.g., `~/<path>`), then prompt the user to run `chezmoi add <target-path>` themselves, so `chezmoi` automatically evaluates permissions and assigns the correct source prefixes (like `dot_` or `private_`).
+Because `chezmoi add` is a risky action, you must prompt the user to run it themselves instead of doing it automatically. Do not scaffold them from scratch in the source tree unless you are absolutely certain of the required prefixes.
+
+**Exception for new secrets:** When creating a new `private_` file, always author it directly in the source tree as a template using `onepasswordRead` — never paste secret values directly into a target file. If an existing target file was edited directly and must be preserved, use `chezmoi re-add` instead — but if the source template calls any `onepassword*` function, abort and ask the user to re-template manually, to avoid rendering secrets into the source.
 
 ## Command flags
 
@@ -31,12 +34,8 @@ Always include `--verbose` in every suggested chezmoi command. For commands that
 
 **State-modifying commands** (preview-first pattern): `apply`, `add`, `re-add`, `update`, `forget`, `merge`, `merge-all`
 
-Example:
-
-```sh
-chezmoi apply --dry-run --verbose  # preview — no changes made
-chezmoi apply --verbose            # execute
-```
+**NEVER run `chezmoi apply`**.
+You must **NEVER** suggest the user run it, to prevent target data loss.
 
 **Read-only commands** (`--verbose` only): `diff`, `status`, `cat`, `managed`, `unmanaged`, `data`, `doctor`, `execute-template`, `edit`
 
@@ -90,9 +89,8 @@ Files that must never exist are enforced absent by chezmoi `remove_` source file
    # Decision: /docs/decisions/NNNN-<slug>.md
    ```
 4. If the target is under a broadly-ignored directory, update [`home/.chezmoiignore`](/home/.chezmoiignore) — see `.chezmoiignore maintenance` above.
-5. `chezmoi apply --dry-run --verbose` — confirm the target appears as deleted.
-6. `chezmoi apply --verbose`.
-7. Commit (`MANAGED.txt` regenerates automatically via pre-commit hook).
+5. You must **NEVER** run or suggest running `chezmoi apply`. Stop and let the user manage application.
+6. Commit (`MANAGED.txt` regenerates automatically via pre-commit hook).
 
 ### Reverting a `remove_` target (re-enabling a file)
 
@@ -101,9 +99,8 @@ Files that must never exist are enforced absent by chezmoi `remove_` source file
 3. If re-managing the file: `chezmoi add <target-path>` or create a source file manually.
 4. Update [`home/.chezmoiignore`](/home/.chezmoiignore): the negation for the target may now need adjusting.
 5. Update any section in this file that described the specific file's absence.
-6. `chezmoi apply --dry-run --verbose` — confirm.
-7. `chezmoi apply --verbose`.
-8. Commit.
+6. You must **NEVER** run or suggest running `chezmoi apply`. Stop and let the user manage application.
+7. Commit.
 
 ## Commit conventions
 
