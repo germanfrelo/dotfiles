@@ -1,9 +1,16 @@
 # .chezmoiignore
 #
-# Negation patterns always take priority over includes (chezmoi semantics).
-# MAINTENANCE: When adding a new managed file under a broadly-ignored directory (.config/, .gemini/, .ssh/, Library/), add a matching negation here.
-# Stale negations surface as a non-empty 'chezmoi unmanaged' — that output must always be empty.
-# NOTE: '/**' patterns match the directory itself too (doublestar semantics), so you need a negation for the TOP-LEVEL directory AND every intermediate directory in the path — otherwise chezmoi stops traversal at the first ignored entry and the file is never reached.
+# List of patterns that chezmoi should ignore.
+# Patterns are relative to the destination directory (usually $HOME), not the source directory (this repository).
+# It's interpreted as a template, whether or not it has a .tmpl extension.
+#
+# NOTE:
+# `dir/**` ignores `dir/` itself, not just its contents (despite what some docs imply).
+# To unignore a nested file inside an ignored directory, you MUST explicitly negate (`!`) every intermediate directory.
+#
+# References:
+# - https://www.chezmoi.io/reference/special-files/chezmoiignore/
+# - https://www.chezmoi.io/user-guide/manage-machine-to-machine-differences/#ignore-files-or-a-directory-on-different-machines
 
 # GLOBAL PATTERNS
 **/.DS_Store
