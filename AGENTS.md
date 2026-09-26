@@ -14,16 +14,23 @@ Chezmoi-managed dotfiles. For general chezmoi commands, concepts, and workflows,
 
 ## Pre-operation workflow
 
-- **At session start:** run `chezmoi status` before any other work to establish the baseline state.
+As a standard safety practice, treat `chezmoi status`, `chezmoi unmanaged`, and `chezmoi ignored` as your baseline checks (akin to `git status`).
+
+**Invariant:** `chezmoi unmanaged` must always return empty. Its main job is to catch unmanaged target files (which naturally includes surfacing stale negations). If this invariant is ever violated (e.g., at session start or before a commit), stop and surface the unmanaged files to the user before proceeding.
+
+- **At session start:** run `chezmoi status`, `chezmoi unmanaged`, and `chezmoi ignored` before any other work to establish the baseline state. If `chezmoi status` shows unexpected pending changes, inform the user.
 - **Before any state-modifying operation** (`apply`, `add`, `re-add`, `forget`, `merge`, `merge-all`): run `chezmoi status` to verify actual state. Never assume what has or hasn't been applied. If output is empty, there is nothing pending — do not fabricate changes.
-- **After every state-modifying operation:** run `chezmoi status` again to confirm the change landed correctly.
-- **Before committing any file under `home/`:** run `chezmoi status` to check whether the source changes are already reflected in the target files. If pending changes exist, surface them before proceeding.
+- **After every state-modifying operation:** run `chezmoi status` to confirm the change landed correctly. Also run `chezmoi unmanaged` and `chezmoi ignored` to verify they reflect the expected new state (e.g., after `add`, `forget`, or modifying `.chezmoiignore`).
+- **Before committing any file under `home/`:** run `chezmoi status` to check whether the source changes are already reflected in the target files, and run `chezmoi unmanaged` to ensure the invariant holds. If pending changes exist, surface them before proceeding.
 
 ## Applying changes
 
-Never edit target files — always edit source under `home/`, then run `chezmoi diff` and show the output to the user. Only run `chezmoi apply` after the user confirms the diff looks correct.
+**For existing managed files:** Never edit target files — always edit the source under `home/` directly, then run `chezmoi diff` and show the output to the user. You must **NEVER** run `chezmoi apply` or suggest the user run it, to prevent target data loss.
 
-When creating a new `private_` file, always author it as a template using `onepasswordRead` — never paste secret values directly. If the target file was edited directly and must be preserved, use `chezmoi re-add` instead — but if the source template calls any `onepassword*` function, abort and ask the user to re-template manually, to avoid rendering secrets into the source.
+**For new unmanaged files or directories:** Create them in the target state first (e.g., `~/<path>`), then prompt the user to run `chezmoi add <target-path>` themselves, so `chezmoi` automatically evaluates permissions and assigns the correct source prefixes (like `dot_` or `private_`).
+Because `chezmoi add` is a risky action, you must prompt the user to run it themselves instead of doing it automatically. Do not scaffold them from scratch in the source tree unless you are absolutely certain of the required prefixes.
+
+**Exception for new secrets:** When creating a new `private_` file, always author it directly in the source tree as a template using `onepasswordRead` — never paste secret values directly into a target file. If an existing target file was edited directly and must be preserved, use `chezmoi re-add` instead — but if the source template calls any `onepassword*` function, abort and ask the user to re-template manually, to avoid rendering secrets into the source.
 
 ## Command flags
 
@@ -31,12 +38,8 @@ Always include `--verbose` in every suggested chezmoi command. For commands that
 
 **State-modifying commands** (preview-first pattern): `apply`, `add`, `re-add`, `update`, `forget`, `merge`, `merge-all`
 
-Example:
-
-```sh
-chezmoi apply --dry-run --verbose  # preview — no changes made
-chezmoi apply --verbose            # execute
-```
+**NEVER run `chezmoi apply`**.
+You must **NEVER** suggest the user run it, to prevent target data loss.
 
 **Read-only commands** (`--verbose` only): `diff`, `status`, `cat`, `managed`, `unmanaged`, `data`, `doctor`, `execute-template`, `edit`
 
@@ -49,26 +52,6 @@ chezmoi apply --verbose            # execute
 Data variable `machine_type` is `"personal"` or `"work"` — if unset or has an unexpected value, stop and ask the user to fix `~/.config/chezmoi/chezmoi.toml` before continuing.
 
 **Heredoc pitfall:** Inside `<<'EOF'` heredocs, never use `-}}` (right whitespace trim) — it strips the trailing newline and merges the next line. Use `{{- if … }}` (left trim only) or `{{ if … }}` (no trim).
-
-## .chezmoiignore maintenance
-
-`home/.chezmoiignore` uses broad directory patterns (`Library/**`, `.config/**`, etc.) with `!`-negations for every managed file inside them. Negation patterns always take priority over includes in chezmoi.
-
-**Critical gotcha — `/**` matches the directory itself:** In chezmoi's doublestar matching,`Library/**`also matches`Library` (not just its contents). This means you need a negation for the top-level directory **and\*\* every intermediate directory in the path, not only the final file. Without `!Library`, chezmoi never traverses into `Library/` at all, so no nested negations ever fire.
-
-**Rule:** When adding a new managed file under a broadly-ignored directory (any directory covered by a broad pattern in `home/.chezmoiignore`), add negations for the file **and every directory component in its path** (including the root like `!.config`, `!Library`).
-
-Example — to manage `Library/Application Support/Code/User/settings.json`, you need:
-
-```gitignore
-!Library
-!Library/Application Support
-!Library/Application Support/Code
-!Library/Application Support/Code/User
-!Library/Application Support/Code/User/settings.json
-```
-
-**Invariant:** `chezmoi unmanaged` must always return empty. A stale negation (left after `chezmoi forget`) makes a forgotten file reappear in that output, surfacing the oversight immediately.
 
 ## Homebrew packages
 
@@ -89,10 +72,9 @@ Files that must never exist are enforced absent by chezmoi `remove_` source file
    # This file instructs chezmoi to delete `~/<target>` if it exists.
    # Decision: /docs/decisions/NNNN-<slug>.md
    ```
-4. If the target is under a broadly-ignored directory, update [`home/.chezmoiignore`](/home/.chezmoiignore) — see `.chezmoiignore maintenance` above.
-5. `chezmoi apply --dry-run --verbose` — confirm the target appears as deleted.
-6. `chezmoi apply --verbose`.
-7. Commit (`MANAGED.txt` regenerates automatically via pre-commit hook).
+4. If the target is under a broadly-ignored directory, update [`home/.chezmoiignore`](/home/.chezmoiignore) to explicitly un-ignore its path.
+5. You must **NEVER** run or suggest running `chezmoi apply`. Stop and let the user manage application.
+6. Commit (`MANAGED.txt` regenerates automatically via pre-commit hook).
 
 ### Reverting a `remove_` target (re-enabling a file)
 
@@ -101,9 +83,8 @@ Files that must never exist are enforced absent by chezmoi `remove_` source file
 3. If re-managing the file: `chezmoi add <target-path>` or create a source file manually.
 4. Update [`home/.chezmoiignore`](/home/.chezmoiignore): the negation for the target may now need adjusting.
 5. Update any section in this file that described the specific file's absence.
-6. `chezmoi apply --dry-run --verbose` — confirm.
-7. `chezmoi apply --verbose`.
-8. Commit.
+6. You must **NEVER** run or suggest running `chezmoi apply`. Stop and let the user manage application.
+7. Commit.
 
 ## Commit conventions
 
