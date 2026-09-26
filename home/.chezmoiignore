@@ -1,117 +1,85 @@
-# =============================================================================
-# BROAD PATTERNS WITH NEGATIONS
+# .chezmoiignore
 #
 # Negation patterns always take priority over includes (chezmoi semantics).
-# MAINTENANCE: When adding a new managed file under a broadly-ignored directory
-# (.config/, .gemini/, .ssh/, Library/), add a matching negation here.
-# Stale negations surface as a non-empty `chezmoi unmanaged` — that output
-# must always be empty.
-# =============================================================================
+# MAINTENANCE: When adding a new managed file under a broadly-ignored directory (.config/, .gemini/, .ssh/, Library/), add a matching negation here.
+# Stale negations surface as a non-empty 'chezmoi unmanaged' — that output must always be empty.
+# NOTE: '/**' patterns match the directory itself too (doublestar semantics), so you need a negation for the TOP-LEVEL directory AND every intermediate directory in the path — otherwise chezmoi stops traversal at the first ignored entry and the file is never reached.
 
-# .config: ignore all; exceptions for managed files
-# NOTE: `/**` patterns match the directory itself too (doublestar semantics),
-# so you need a negation for the TOP-LEVEL directory AND every intermediate
-# directory in the path — otherwise chezmoi stops traversal at the first
-# ignored entry and the file is never reached.
+# GLOBAL PATTERNS
+**/.DS_Store
+
+# HOME DIRECTORY PATTERNS
+# Sorted alphabetically, with directories grouped at the top.
+.afirma/
+.cache/
 .config/**
-!.config
-!.config/gh
+!.config/
+!.config/gh/
 !.config/gh/config.yml
-!.config/ghostty
+!.config/ghostty/
 !.config/ghostty/config.ghostty
-!.config/git
+!.config/git/
 !.config/git/config
 !.config/git/ignore
-!.config/ncdu
+!.config/ncdu/
 !.config/ncdu/config
-!.config/zsh
+!.config/zsh/
 !.config/zsh/.p10k.zsh
-!.config/zsh/.zprofile  # managed as remove_ (chezmoi deletes it); negation required for remove_ to run under .config/**
+!.config/zsh/.zprofile # managed as 'remove_' (chezmoi deletes it); negation required for 'remove_' to run under '.config/**'
 !.config/zsh/.zshenv
 !.config/zsh/.zshrc
-
-# Gemini/Antigravity
+.copilot/
 .gemini/**
-!.gemini
-!.gemini/AGENTS.md
-.gemini/config/**
-!.gemini/config
-!.gemini/config/config.json
-!.gemini/config/rules/**
-!.gemini/config/skills/**
+!.gemini/
 .gemini/antigravity/**
 .gemini/antigravity-cli/**
-!.gemini/antigravity-cli
+!.gemini/antigravity-cli/
 !.gemini/antigravity-cli/settings.json
 !.gemini/antigravity-cli/statusline.sh
 !.gemini/antigravity-cli/title.sh
-
-# .ssh: ignore keys and session data; keep only the config file
-# config.local is intentionally excluded — machine-specific hosts go there
+.gemini/config/**
+!.gemini/config/
+!.gemini/config/rules/**
+!.gemini/config/skills/**
+!.gemini/config/config.json
+!.gemini/AGENTS.md
+.idlerc/
+.local/
+.npm/
+.pyload/
 .ssh/**
-!.ssh
+!.ssh/
 !.ssh/config
-
-# Library
+.terminfo/
+.Trash/
+.vscode/
+.vscode-shared/
+.zsh_sessions/
+Applications/
+bin/
+Desktop/
+Developer/
+Documents/
+Downloads/
 Library/**
-!Library
-!Library/Application Support
-!Library/Application Support/Code
-!Library/Application Support/Code/User
-!Library/Application Support/Code/User/settings.json
-!Library/Application Support/Code/User/prompts
+!Library/
+!Library/Application Support/
+!Library/Application Support/Code/
+!Library/Application Support/Code/User/
+!Library/Application Support/Code/User/prompts/
 !Library/Application Support/Code/User/prompts/*.instructions.md
-!Library/Application Support/Code/User/snippets
+!Library/Application Support/Code/User/snippets/
 !Library/Application Support/Code/User/snippets/*.json
-!Library/Preferences
+!Library/Application Support/Code/User/settings.json
+!Library/Preferences/
 !Library/Preferences/com.MrKai77.Loop.plist
-
-
-# =============================================================================
-# SPECIFIC IGNORES
-# =============================================================================
-
-# macOS system files
-**/.DS_Store
+Movies/
+Music/
+Obsidian/
+Pictures/
+Public/
+zsh-backup/
 .CFUserTextEncoding
-.Trash
-.terminfo
-**/*.zwc
-
-# App data directories (not configuration)
-.afirma
-.idlerc
-.pyload
-Obsidian
-
-# Cache and local runtime state
-.cache
-.local
-.npm
-
-# Shell history and session state (machine-specific, never track)
 .viminfo
 .zsh_history
-.zsh_sessions
-
-# Auth tokens and machine-specific tool state
-.copilot
-.vscode
-.vscode-shared
-
-# Standard macOS user directories (personal data, not configuration)
-Applications
-Desktop
-Developer
-Documents
-Downloads
-Movies
-Music
-Pictures
-Public
-
-# ~/bin — scripts live as shell functions in .zshrc instead
-bin
-
-# z4h migration backup — not configuration
-zsh-backup
+.zshrc.zwc
