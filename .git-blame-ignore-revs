@@ -28,3 +28,6 @@
 
 # style(vscode): Sort vscode settings.json
 52714865f109a21c34820d74c5ac72cbc3327e71
+
+# style(chezmoi): Consolidate and sort .chezmoiignore rules
+06880f6222824718a9da32974312efe4089d2cd5
