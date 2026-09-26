@@ -1,7 +1,9 @@
 ---
-name: Developer Profile
-applyTo: "**"
+trigger: always_on
+description: "Global developer profile and environment context."
 ---
+
+# Developer Profile
 
 ## Role
 

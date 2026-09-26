@@ -37,6 +37,7 @@
 .gemini/config/**
 !.gemini/config
 !.gemini/config/config.json
+!.gemini/config/rules/**
 !.gemini/config/skills/**
 .gemini/antigravity/**
 .gemini/antigravity-cli/**

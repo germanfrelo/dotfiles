@@ -1,8 +1,9 @@
 ---
-name: Safe deletion
-description: "Deletion safety: prefer trash over rm for all file and directory removal commands"
-applyTo: "**"
+trigger: always_on
+description: "Safe file deletion practices to prevent accidental data loss."
 ---
+
+# Safe Deletion
 
 - Always use `trash` (not `rm`) for file and directory deletions.
 - Use `rm` only when authoring scripts or CI pipelines.
