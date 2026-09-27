@@ -21,27 +21,26 @@
 │   │   ├── settings.json
 │   │   ├── statusline.sh
 │   │   └── title.sh
-│   ├── config
-│   │   ├── config.json
-│   │   ├── rules
-│   │   │   ├── _markdown-rules-shared.md
-│   │   │   ├── developer-profile.md
-│   │   │   ├── documentation-conventions.md
-│   │   │   ├── general-conventions.md
-│   │   │   ├── javascript-conventions.md
-│   │   │   ├── markdown-conventions.md
-│   │   │   ├── package-json-conventions.md
-│   │   │   └── safe-deletion.md
-│   │   └── skills
-│   │       ├── cli-output-standards
-│   │       │   └── SKILL.md
-│   │       ├── commit-workflow
-│   │       │   └── SKILL.md
-│   │       ├── evaluate-antigravity-rules
-│   │       │   └── SKILL.md
-│   │       └── evaluate-skills
-│   │           └── SKILL.md
-│   └── settings.json
+│   └── config
+│       ├── config.json
+│       ├── rules
+│       │   ├── _markdown-rules-shared.md
+│       │   ├── developer-profile.md
+│       │   ├── documentation-conventions.md
+│       │   ├── general-conventions.md
+│       │   ├── javascript-conventions.md
+│       │   ├── markdown-conventions.md
+│       │   ├── package-json-conventions.md
+│       │   └── safe-deletion.md
+│       └── skills
+│           ├── cli-output-standards
+│           │   └── SKILL.md
+│           ├── commit-workflow
+│           │   └── SKILL.md
+│           ├── evaluate-antigravity-rules
+│           │   └── SKILL.md
+│           └── evaluate-skills
+│               └── SKILL.md
 ├── .npmrc
 ├── .ssh
 │   └── config
@@ -59,7 +58,7 @@
 │       └── com.MrKai77.Loop.plist
 └── svgo.config.js
 
-25 directories, 35 files
+25 directories, 34 files
 
 ## Enforced absent
 
