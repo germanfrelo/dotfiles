@@ -5,8 +5,8 @@
 # It's interpreted as a template, whether or not it has a .tmpl extension.
 #
 # NOTE:
-# `dir/**` ignores `dir/` itself, not just its contents (despite what some docs imply).
-# To unignore a nested file inside an ignored directory, you MUST explicitly negate (`!`) every intermediate directory.
+# `dir/**/*` ignores all contents recursively, but NOT `dir/` itself (saving you from writing `!dir/`).
+# However, to manage a nested file, you MUST STILL explicitly negate (`!`) every intermediate directory in its path (e.g., `!dir/sub/`).
 #
 # References:
 # - https://www.chezmoi.io/reference/special-files/chezmoiignore/
@@ -19,8 +19,7 @@
 # Sorted alphabetically, with directories grouped at the top.
 .afirma/
 .cache/
-.config/**
-!.config/
+.config/**/*
 !.config/gh/
 !.config/gh/config.yml
 !.config/ghostty/
@@ -32,19 +31,15 @@
 !.config/ncdu/config
 !.config/zsh/
 !.config/zsh/.p10k.zsh
-!.config/zsh/.zprofile # managed as 'remove_' (chezmoi deletes it); negation required for 'remove_' to run under '.config/**'
+!.config/zsh/.zprofile # Required to allow chezmoi to see and execute the 'remove_' operation for this file (see 'home/private_dot_config/zsh/remove_dot_zprofile')
 !.config/zsh/.zshenv
 !.config/zsh/.zshrc
 .copilot/
-.gemini/**
-!.gemini/
-.gemini/antigravity/**
-.gemini/antigravity-cli/**
+.gemini/**/*
 !.gemini/antigravity-cli/
 !.gemini/antigravity-cli/settings.json
 !.gemini/antigravity-cli/statusline.sh
 !.gemini/antigravity-cli/title.sh
-.gemini/config/**
 !.gemini/config/
 !.gemini/config/rules/**
 !.gemini/config/skills/**
@@ -53,9 +48,7 @@
 .idlerc/
 .local/
 .npm/
-.pyload/
-.ssh/**
-!.ssh/
+.ssh/**/*
 !.ssh/config
 .terminfo/
 .Trash/
@@ -68,15 +61,12 @@ Desktop/
 Developer/
 Documents/
 Downloads/
-Library/**
-!Library/
+Library/**/*
 !Library/Application Support/
 !Library/Application Support/Code/
 !Library/Application Support/Code/User/
-!Library/Application Support/Code/User/prompts/
-!Library/Application Support/Code/User/prompts/*.instructions.md
-!Library/Application Support/Code/User/snippets/
-!Library/Application Support/Code/User/snippets/*.json
+!Library/Application Support/Code/User/prompts/**
+!Library/Application Support/Code/User/snippets/**
 !Library/Application Support/Code/User/settings.json
 !Library/Preferences/
 !Library/Preferences/com.MrKai77.Loop.plist
@@ -85,7 +75,6 @@ Music/
 Obsidian/
 Pictures/
 Public/
-zsh-backup/
 .CFUserTextEncoding
 .viminfo
 .zsh_history
