@@ -1,0 +1,12 @@
+[
+	// ============ Terminal ============
+
+	// Simulate `cmd+z` in the terminal to undo the last action
+	// Ref. https://stackoverflow.com/a/76826255
+	{
+		"key": "cmd+z",
+		"command": "workbench.action.terminal.sendSequence",
+		"args": { "text": "\u001f" },
+		"when": "terminalFocus"
+	}
+]

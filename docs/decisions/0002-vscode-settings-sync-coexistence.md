@@ -7,7 +7,7 @@ date: 2026-06-02
 
 ## Context and Problem Statement
 
-`settings.json`, `prompts/*.instructions.md`, and `snippets/*.json` are managed by chezmoi and therefore tracked in git. VS Code Settings Sync also manages these same files, syncing them across machines via a GitHub account. Both systems write to the same live files, creating a conflict: if Settings Sync pulls a newer version from the cloud, chezmoi's source becomes stale; if `chezmoi apply` runs afterwards, it silently overwrites Settings Sync's version with the stale backup.
+`settings.json`, `keybindings.json`, `prompts/*.instructions.md`, and `snippets/*.json` are managed by chezmoi and therefore tracked in git. VS Code Settings Sync also manages these same files, syncing them across machines via a GitHub account. Both systems write to the same live files, creating a conflict: if Settings Sync pulls a newer version from the cloud, chezmoi's source becomes stale; if `chezmoi apply` runs afterwards, it silently overwrites Settings Sync's version with the stale backup.
 
 ## Considered Options
 
@@ -37,4 +37,4 @@ If `chezmoi apply` prompts about a VS Code file, always choose **keep destinatio
 
 ### What is not tracked in chezmoi
 
-Extensions, keyboard shortcuts, tasks, MCP servers, UI state, and profiles are managed by Settings Sync only and are not tracked in chezmoi.
+Extensions, tasks, MCP servers, UI state, and profiles are managed by Settings Sync only and are not tracked in chezmoi.

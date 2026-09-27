@@ -50,6 +50,7 @@
 │   ├── Application Support
 │   │   └── Code
 │   │       └── User
+│   │           ├── keybindings.json
 │   │           ├── settings.json
 │   │           └── snippets
 │   │               ├── astro.json
@@ -58,7 +59,7 @@
 │       └── com.MrKai77.Loop.plist
 └── svgo.config.js
 
-25 directories, 34 files
+25 directories, 35 files
 
 ## Enforced absent
 
