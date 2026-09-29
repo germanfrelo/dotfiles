@@ -97,7 +97,6 @@ export XDG_DATA_HOME="${HOME}/.local/share"
 export XDG_STATE_HOME="${HOME}/.local/state"
 
 # Homebrew
-export HOMEBREW_BUNDLE_FILE="${XDG_CONFIG_HOME}/homebrew/Brewfile"
 export HOMEBREW_NO_ANALYTICS=1
 
 # NVM (Node Version Manager)
@@ -151,6 +150,88 @@ autoload -Uz zmv
 # ==================================================
 
 # Define functions and completions.
+
+# Homebrew Background Sync Wrapper
+_wrap_pkg_manager() {
+	local tool="$1"
+	shift
+	local cmd="$1"
+
+	# --- 1. EXECUTE THE NATIVE COMMAND IMMEDIATELY ---
+	# This guarantees that even if the wrapper's logic completely fails later, your command (e.g. brew install X) will always run exactly as you intended.
+	command "$tool" "$@"
+	local exit_code=$?
+
+	# If the command failed, or if we aren't in an interactive terminal, stop here.
+	if [[ $exit_code -ne 0 ]] || [[ ! -t 0 ]]; then
+		return $exit_code
+	fi
+
+	# --- 2. PARSE THE COMMAND ---
+	local target=""
+	local is_install=false
+	local is_uninstall=false
+
+	if [[ "$tool" == "brew" || "$tool" == "mas" ]]; then
+		target="$2" # $1 was cmd
+		if [[ "$cmd" == "install" ]]; then is_install=true; fi
+		if [[ "$cmd" == "uninstall" ]]; then is_uninstall=true; fi
+	elif [[ "$tool" == "npm" ]]; then
+		if [[ "$*" == *"-g"* || "$*" == *"--global"* ]]; then
+			for arg in "$@"; do
+				# Skip cmd and flags to find the package name
+				if [[ "$arg" != "$cmd" && "$arg" != "-"* ]]; then
+					target="$arg"
+					break
+				fi
+			done
+			if [[ "$cmd" == "install" || "$cmd" == "i" ]]; then is_install=true; fi
+			if [[ "$cmd" == "uninstall" || "$cmd" == "rm" ]]; then is_uninstall=true; fi
+		fi
+	fi
+
+	# If this wasn't an install/uninstall command, we are done.
+	if [[ ($is_install == false && $is_uninstall == false) || -z "$target" ]]; then
+		return $exit_code
+	fi
+
+	# --- 3. BACKGROUND SYNC TO BREWFILE ---
+	(
+		local target_brewfile="${HOME}/.config/homebrew/{{ .machine_type }}/Brewfile"
+
+		if [[ $is_install == true ]]; then
+			if [[ "$tool" == "brew" ]]; then
+				local cask_flag=""
+				brew ls --cask "$target" >/dev/null 2>&1 && cask_flag="--cask"
+				# word splitting is intended for $cask_flag here
+				command brew bundle add "$target" $cask_flag --file="$target_brewfile" >/dev/null 2>&1
+			elif [[ "$tool" == "mas" ]]; then
+				if ! grep -q "id: ${target}" "$target_brewfile"; then
+					echo "mas \"${target}\", id: ${target}" >>"$target_brewfile"
+				fi
+			elif [[ "$tool" == "npm" ]]; then
+				command brew bundle add "$target" --npm --file="$target_brewfile" >/dev/null 2>&1
+			fi
+		elif [[ $is_uninstall == true ]]; then
+			for bfile in "$common_file" "$personal_file" "$work_file"; do
+				if [[ -f "$bfile" ]] && chezmoi managed "$bfile" >/dev/null 2>&1; then
+					if [[ "$tool" == "brew" || "$tool" == "npm" ]]; then
+						command brew bundle remove "$target" --file="$bfile" >/dev/null 2>&1
+					elif [[ "$tool" == "mas" ]]; then
+						sed -i '' "/id: ${target}/d" "$bfile"
+					fi
+				fi
+			done
+		fi
+	) &!
+
+	return $exit_code
+}
+
+brew() { _wrap_pkg_manager brew "$@"; }
+mas() { _wrap_pkg_manager mas "$@"; }
+npm() { _wrap_pkg_manager npm "$@"; }
+# TODO: Explore VSCode extensions management considering ADR 0002 (Settings Sync)
 
 # Create a new directory and instantly navigate into it (with folder tab-completion)
 function md() { [[ $# == 1 ]] && mkdir -p -- "$1" && cd -- "$1"; }

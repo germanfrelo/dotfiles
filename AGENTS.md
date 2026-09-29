@@ -53,10 +53,6 @@ Data variable `machine_type` is `"personal"` or `"work"` — if unset or has an 
 
 **Heredoc pitfall:** Inside `<<'EOF'` heredocs, never use `-}}` (right whitespace trim) — it strips the trailing newline and merges the next line. Use `{{- if … }}` (left trim only) or `{{ if … }}` (no trim).
 
-## Homebrew packages
-
-The Homebrew packages script (see the `homebrew` key in the configuration block above) is the single source of truth for all Homebrew packages. `brew bundle` is never destructive — removing a package from the template does **not** uninstall it; instruct the user to run `brew uninstall <pkg>` manually first. Do not run `brew uninstall` yourself — decline even if explicitly asked.
-
 ## `remove_` targets
 
 Files that must never exist are enforced absent by chezmoi `remove_` source files. The current list of enforced-absent targets is in the "Enforced absent" section of [`MANAGED.txt`](/MANAGED.txt).

@@ -22,6 +22,14 @@
 .config/**/*
 !.config/gh/
 !.config/gh/config.yml
+!.config/homebrew/
+{{- if eq .machine_type "work" }}
+!.config/homebrew/work/
+!.config/homebrew/work/Brewfile
+{{- else if eq .machine_type "personal" }}
+!.config/homebrew/personal/
+!.config/homebrew/personal/Brewfile
+{{- end }}
 !.config/ghostty/
 !.config/ghostty/config.ghostty
 !.config/git/

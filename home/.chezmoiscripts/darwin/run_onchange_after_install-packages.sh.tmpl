@@ -1,0 +1,36 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/usr/bin/env bash
+
+# Exit immediately if a command fails, or if an unset variable is used.
+set -euo pipefail
+
+# --- 1. Automatic re-run condition ---
+
+# Rerun this script automatically if the source Brewfile is modified.
+# hash: {{ include (printf "private_dot_config/homebrew/%s/Brewfile" .machine_type) | sha256sum }}
+
+# --- 2. Require Homebrew ---
+
+if ! command -v brew &>/dev/null; then
+	echo "❌ Homebrew is NOT installed."
+	echo "Install it manually from https://brew.sh/."
+	exit 1
+fi
+
+# --- 3. Brew Bundle ---
+
+# Run `brew bundle check` and `brew bundle install`.
+
+brewfile="{{ .chezmoi.homeDir }}/.config/homebrew/{{ .machine_type }}/Brewfile"
+
+echo "Verifying packages from {{ .machine_type }}/Brewfile..."
+if brew bundle check --no-upgrade --file="${brewfile}" >/dev/null 2>&1; then
+	echo "✅ Packages in {{ .machine_type }}/Brewfile are already up-to-date."
+else
+	echo "Installing missing packages from {{ .machine_type }}/Brewfile..."
+	brew bundle install --no-upgrade --quiet --file="${brewfile}"
+fi
+
+echo "✅ Homebrew packages synced."
+
+{{- end -}}

@@ -1,7 +1,8 @@
 .
 ├── .chezmoiscripts
 │   └── darwin
-│       └── install-packages-darwin.sh
+│       ├── compare_brewfiles.sh
+│       └── install-packages.sh
 ├── .config
 │   ├── gh
 │   │   └── config.yml
@@ -10,6 +11,11 @@
 │   ├── git
 │   │   ├── config
 │   │   └── ignore
+│   ├── homebrew
+│   │   ├── personal
+│   │   │   └── Brewfile
+│   │   └── work
+│   │       └── Brewfile
 │   ├── ncdu
 │   │   └── config
 │   └── zsh
@@ -59,7 +65,7 @@
 │       └── com.MrKai77.Loop.plist
 └── svgo.config.js
 
-25 directories, 35 files
+28 directories, 38 files
 
 ## Enforced absent
 

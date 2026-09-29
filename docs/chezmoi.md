@@ -616,29 +616,3 @@ Repo-specific notes not covered by the reference above.
 ### Heredoc pitfall in templates
 
 Inside `<<'EOF'` heredocs in shell scripts, never use `-}}` (right whitespace trim) — it strips the trailing newline and merges the next line into the current one. Use `{{- if … }}` (left trim only) or `{{ if … }}` (no trim) instead.
-
-### Homebrew packages
-
-`home/.chezmoiscripts/darwin/run_once_before_install-packages-darwin.sh.tmpl` is the single source of truth for all Homebrew packages.
-
-`brew bundle` is intentionally **not destructive** — removing a package from the template does **not** uninstall it. You must run `brew uninstall <pkg>` manually first; the template removal is bookkeeping only.
-
-#### Reconcile installed packages against the template
-
-```sh
-# Re-render the template
-chezmoi execute-template --verbose < home/.chezmoiscripts/darwin/run_once_before_install-packages-darwin.sh.tmpl > /tmp/rendered.sh
-
-# Extract and sort the tracked list
-awk '/<<.*BUNDLED_PACKAGES_EOF/{f=1;next} /^BUNDLED_PACKAGES_EOF/{f=0} f && /^(brew|cask|mas)/{gsub(/ #.*/, ""); print}' /tmp/rendered.sh | sort > /tmp/brewfile-template.txt
-
-# Extract and sort the installed list
-brew bundle dump --file=/tmp/brewfile-installed-raw.txt --force --no-vscode
-grep -E '^(brew |cask |mas )' /tmp/brewfile-installed-raw.txt | sort > /tmp/brewfile-current.txt
-
-# Compare
-code --diff /tmp/brewfile-current.txt /tmp/brewfile-template.txt
-```
-
-Red (left only) = installed but not tracked → add to template or uninstall manually.
-Green (right only) = tracked but not installed → will be installed on next `chezmoi apply`.
