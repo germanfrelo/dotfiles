@@ -1,0 +1,88 @@
+# personal.Brewfile
+brew "aria2"
+brew "bash"
+brew "bat"
+brew "chezmoi"
+brew "exiftool"
+brew "eza"
+brew "fd"
+brew "fdupes"
+brew "ffmpeg"
+brew "fzf"
+brew "gh"
+brew "git"
+brew "grep"
+brew "imagemagick"
+brew "jq"
+brew "mackup"
+brew "macos-trash"
+brew "mas"
+brew "mkvtoolnix"
+brew "ncdu"
+brew "onefetch"
+brew "python@3.14"
+brew "ruff"
+brew "svgo"
+brew "testdisk"
+brew "tlrc"
+brew "tree"
+brew "webp"
+brew "wget"
+brew "woff2"
+brew "xdg-ninja", args: ["HEAD"]
+brew "yt-dlp"
+cask "1password-cli"
+cask "1password"
+cask "affinity"
+cask "antigravity-cli"
+cask "antigravity"
+cask "appcleaner"
+cask "colour-contrast-analyser"
+cask "cyberduck"
+cask "deepl"
+cask "discord"
+cask "fastmail"
+cask "figma"
+cask "firefox"
+cask "font-atkinson-hyperlegible-next"
+cask "font-commit-mono-nerd-font"
+cask "font-commit-mono"
+cask "font-ibm-plex-sans"
+cask "font-inter"
+cask "font-jetbrains-mono-nerd-font"
+cask "font-jetbrains-mono"
+cask "font-meslo-for-powerlevel10k"
+cask "ghostty"
+cask "google-chrome"
+cask "hp-easy-start"
+cask "imageoptim"
+cask "keka"
+cask "kekaexternalhelper"
+cask "logi-options+"
+cask "loop"
+cask "maccy"
+cask "notion"
+cask "obsidian"
+cask "qbittorrent"
+cask "safari-technology-preview"
+cask "slack"
+cask "surfshark"
+cask "visual-studio-code"
+cask "vlc"
+mas "1Password for Safari", id: 1569813296
+mas "Actions", id: 1586435171
+mas "Color Picker", id: 1545870783
+mas "Fonts Ninja", id: 1480227114
+mas "Keepa - Price Tracker", id: 1533805339
+mas "Magnet", id: 441258766
+mas "Notion Web Clipper", id: 1559269364
+mas "Obsidian Web Clipper", id: 6720708363
+mas "Online Check", id: 6504709660
+mas "Pandan", id: 1569600264
+mas "Pure Paste", id: 1611378436
+mas "Refined GitHub", id: 1519867270
+mas "Shazam", id: 897118787
+mas "Sofa", id: 1276554886
+mas "Speediness", id: 1596706466
+mas "Super Agent", id: 1568262835
+mas "uBlock Origin Lite", id: 6745342698

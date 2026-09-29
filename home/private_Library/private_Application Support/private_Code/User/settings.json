@@ -257,6 +257,9 @@
 		// editorconfig
 		"*dot_editorconfig": "editorconfig",
 
+		// go
+		"Brewfile.tmpl": "go",
+
 		// ignore
 		"*ignore": "ignore",
 
@@ -273,6 +276,9 @@
 		"**/*ncdu/*config*": "properties",
 		"*npmrc": "properties", // See https://github.com/microsoft/vscode/pull/92397
 		"CODEOWNERS": "properties",
+
+		// ruby
+		"*.Brewfile": "ruby",
 
 		// shellscript
 		"*.sh.tmpl": "shellscript",

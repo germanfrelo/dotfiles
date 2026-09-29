@@ -23,6 +23,9 @@
 		// editorconfig
 		"*dot_editorconfig": "editorconfig",
 
+		// go
+		"Brewfile.tmpl": "go",
+
 		// ignore
 		"*ignore": "ignore",
 
@@ -44,7 +47,7 @@
 		"*.sh.tmpl": "shellscript",
 		"*zprofile": "shellscript",
 		"*zshenv": "shellscript",
-		"*zshrc": "shellscript",
+		"*zshrc*": "shellscript",
 		"pre-commit": "shellscript",
 
 		// toml
