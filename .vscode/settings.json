@@ -12,13 +12,15 @@
 		"*.toml.tmpl": "toml",
 		"**/*git/*config*": "ini",
 		"**/*ncdu/*config*": "properties",
+		"*Brewfile": "ruby",
 		"*dot_editorconfig": "editorconfig",
 		"*ignore": "ignore",
 		"*npmrc": "properties", // See https://github.com/microsoft/vscode/pull/92397
 		"*p10k.zsh": "plaintext",
 		"*zprofile": "shellscript",
 		"*zshenv": "shellscript",
-		"*zshrc": "shellscript"
+		"*zshrc*": "shellscript",
+		"Brewfile.tmpl": "go"
 	},
 	"shellLsp.format.spaceRedirects": true,
 	"shellLsp.format.switchCaseIndent": true
