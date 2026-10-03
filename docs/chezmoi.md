@@ -1,59 +1,6 @@
-# chezmoi — Commands and Workflows
+# chezmoi
 
-> Verified against the [chezmoi documentation](https://chezmoi.io/) as of May 2026. Command headings link directly to their reference page.
-
----
-
-## Mental model
-
-The fundamental rule: **source → live**. The [source directory](https://chezmoi.io/reference/concepts/) is the single source of truth. Live files are generated output. Never edit live files directly — see [Edit a managed file](#edit-a-managed-file).
-
-| Term                                                                | Definition                                                                       |
-| ------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| **[Source directory](https://chezmoi.io/reference/concepts/)**      | Where chezmoi stores your desired state. Default: `~/.local/share/chezmoi`       |
-| **[Source state](https://chezmoi.io/reference/concepts/)**          | The desired state as declared in the source directory (templates, scripts, etc.) |
-| **[Destination directory](https://chezmoi.io/reference/concepts/)** | The directory chezmoi manages. Default: `~`                                      |
-| **Destination state**                                               | The current actual state of files on disk                                        |
-| **Target state**                                                    | The computed desired state = source state + config data + template evaluation    |
-| **Config file**                                                     | Machine-specific data. Default: `~/.config/chezmoi/chezmoi.toml`                 |
-| **Working tree**                                                    | The git working tree of the source directory                                     |
-
----
-
-## Source file naming
-
-Chezmoi encodes file attributes in [source state attribute](https://chezmoi.io/reference/source-state-attributes/) filenames using prefixes and suffixes. Attributes are stripped when computing the target filename.
-
-### Prefixes
-
-| Prefix        | Effect                                                                                      |
-| ------------- | ------------------------------------------------------------------------------------------- |
-| `dot_`        | Target filename starts with `.` — `dot_zshrc` → `.zshrc`                                    |
-| `private_`    | Clear all group and world permissions                                                       |
-| `readonly_`   | Clear all write permission bits                                                             |
-| `executable_` | Set executable bits                                                                         |
-| `empty_`      | Keep file even if empty (default: empty files are removed)                                  |
-| `encrypted_`  | File is encrypted in the source state                                                       |
-| `exact_`      | Remove from target anything not managed by chezmoi in this directory                        |
-| `create_`     | Create file with source contents only if target does not exist yet                          |
-| `modify_`     | Contents are a script that receives the existing file on stdin and outputs the new contents |
-| `symlink_`    | Create a symbolic link; file contents are the link target path                              |
-| `run_`        | Contents are a script to run                                                                |
-| `once_`       | Combine with `run_`: run only when rendered content has never been seen before              |
-| `onchange_`   | Combine with `run_`: run whenever contents change since last successful run                 |
-| `before_`     | Combine with `run_`: run before file/directory updates                                      |
-| `after_`      | Combine with `run_`: run after file/directory updates                                       |
-| `remove_`     | Remove this entry from the target                                                           |
-| `literal_`    | Stop parsing further prefix attributes                                                      |
-
-### Suffixes
-
-| Suffix     | Effect                                                                            |
-| ---------- | --------------------------------------------------------------------------------- |
-| `.tmpl`    | Treat file contents as a [Go template](https://chezmoi.io/user-guide/templating/) |
-| `.literal` | Stop parsing further suffix attributes                                            |
-
----
+Cheat sheet.
 
 ## Quick reference
 
@@ -84,136 +31,7 @@ Chezmoi encodes file attributes in [source state attribute](https://chezmoi.io/r
 | Merge all conflicted files                 | `chezmoi merge-all`                                |
 | Stop managing a file                       | `chezmoi forget ~/.file`                           |
 
----
-
 ## Core commands
-
-### Daily
-
-#### [`add`](https://chezmoi.io/reference/commands/add/)
-
-Add a file from your home directory to the source state. If already managed, replaces the source with the current destination state.
-
-| Flag                | Effect                                                                                              |
-| ------------------- | --------------------------------------------------------------------------------------------------- |
-| `--template` / `-T` | Mark file as a template (adds `.tmpl` suffix)                                                       |
-| `--encrypt`         | Encrypt using the configured method                                                                 |
-| `--exact`           | Set `exact_` on added directories                                                                   |
-| `--follow`          | Follow symlinks: add the symlink target, not the symlink itself                                     |
-| `--autotemplate`    | Auto-generate template by replacing data values with template expressions — review output carefully |
-
-```sh
-chezmoi add --dry-run --verbose "$ZDOTDIR/.zshrc"                        # preview
-chezmoi add --verbose "$ZDOTDIR/.zshrc"                                  # plain file
-chezmoi add --verbose "$XDG_CONFIG_HOME/git/config" --template           # as template
-chezmoi add --verbose ~/.ssh/id_ed25519 --encrypt                        # encrypted
-```
-
----
-
-#### [`edit`](https://chezmoi.io/reference/commands/edit/)
-
-Open your editor on the source state file for a target. With no argument, opens the source directory. Handles decryption/re-encryption transparently for encrypted files. The editor opens with the target filename so syntax highlighting works correctly.
-
-| Flag             | Effect                                                                |
-| ---------------- | --------------------------------------------------------------------- |
-| `--apply` / `-a` | Run `chezmoi apply` on quit. Does not work for directories or scripts |
-| `--watch`        | Auto-apply on every file save                                         |
-
-```sh
-chezmoi edit --verbose "$ZDOTDIR/.zshrc"
-chezmoi edit --apply --verbose "$ZDOTDIR/.zshrc"
-chezmoi edit --watch --verbose "$ZDOTDIR/.zshrc"
-chezmoi edit --verbose                               # open the entire source directory
-```
-
----
-
-#### [`apply`](https://chezmoi.io/reference/commands/apply/)
-
-Ensure targets match the target state, updating them if necessary. Prompts if a target was modified since chezmoi last wrote it.
-
-| Flag               | Effect                                                           |
-| ------------------ | ---------------------------------------------------------------- |
-| `-n` / `--dry-run` | Never modify destination (combine with `-v` to preview)          |
-| `-v` / `--verbose` | Print a shell-like description of all changes plus unified diffs |
-| `--force`          | Make changes without prompting                                   |
-
-```sh
-chezmoi apply --dry-run --verbose                    # preview
-chezmoi apply --verbose                              # apply all
-chezmoi apply --dry-run --verbose "$ZDOTDIR/.zshrc"  # preview one file
-chezmoi apply --verbose "$ZDOTDIR/.zshrc"            # apply one file
-```
-
----
-
-#### [`diff`](https://chezmoi.io/reference/commands/diff/)
-
-Print the difference between the target state and the destination state — i.e., what `chezmoi apply` would change.
-
-| Flag        | Effect                                                                          |
-| ----------- | ------------------------------------------------------------------------------- |
-| `--reverse` | Reverse direction: show changes needed to make the destination match the target |
-
-```sh
-chezmoi diff --verbose
-chezmoi diff --verbose "$ZDOTDIR/.zshrc"
-```
-
----
-
-#### [`status`](https://chezmoi.io/reference/commands/status/)
-
-Print a `git status`-like summary of pending changes.
-
-Column 1 = difference between the last-written state and the current destination. Column 2 = difference between the current destination and target state (what `apply` will do).
-
-| Character | Meaning         |
-| --------- | --------------- |
-| `A`       | Added           |
-| `D`       | Deleted         |
-| `M`       | Modified        |
-| `R`       | Script will run |
-
-```sh
-chezmoi status
-```
-
----
-
-#### [`cd`](https://chezmoi.io/reference/commands/cd/)
-
-Launch a new shell inside the source directory. Does **not** change your current shell's directory. To navigate directly instead: `cd $(chezmoi source-path)`.
-
-```sh
-chezmoi cd
-```
-
----
-
-#### [`git`](https://chezmoi.io/reference/commands/git/)
-
-Run `git` inside the source directory. Flags passed to git must come after `--`.
-
-```sh
-chezmoi git add .
-chezmoi git -- commit -m "Update dotfiles"
-chezmoi git -- push
-```
-
----
-
-#### [`update`](https://chezmoi.io/reference/commands/update/)
-
-Pull from the remote repository and apply. Runs `git pull --autostash --rebase` then `chezmoi apply`.
-
-```sh
-chezmoi update --dry-run --verbose  # preview
-chezmoi update --verbose            # pull and apply
-```
-
----
 
 ### Occasional
 
@@ -224,8 +42,6 @@ Print the target state contents of a file to stdout without writing anything to 
 ```sh
 chezmoi cat --verbose "$XDG_CONFIG_HOME/git/config"
 ```
-
----
 
 #### [`re-add`](https://chezmoi.io/reference/commands/re-add/)
 
@@ -238,8 +54,6 @@ chezmoi re-add --dry-run --verbose                    # preview all modified
 chezmoi re-add --verbose                              # re-add all modified files
 ```
 
----
-
 #### [`merge`](https://chezmoi.io/reference/commands/merge/)
 
 Three-way merge between the destination state, target state, and source state. Default tool: `vimdiff`.
@@ -248,8 +62,6 @@ Three-way merge between the destination state, target state, and source state. D
 chezmoi merge --verbose "$ZDOTDIR/.zshrc"
 ```
 
----
-
 #### [`merge-all`](https://chezmoi.io/reference/commands/merge-all/)
 
 Run `chezmoi merge` for every file whose actual state does not match the target state.
@@ -257,8 +69,6 @@ Run `chezmoi merge` for every file whose actual state does not match the target 
 ```sh
 chezmoi merge-all --verbose
 ```
-
----
 
 #### [`managed`](https://chezmoi.io/reference/commands/managed/)
 
@@ -270,8 +80,6 @@ chezmoi managed --verbose --include=files
 chezmoi managed --verbose -i files ~/.config
 ```
 
----
-
 #### [`unmanaged`](https://chezmoi.io/reference/commands/unmanaged/)
 
 List all files in the home directory not managed by chezmoi.
@@ -280,8 +88,6 @@ List all files in the home directory not managed by chezmoi.
 chezmoi unmanaged --verbose
 chezmoi unmanaged --verbose ~/.config
 ```
-
----
 
 #### [`data`](https://chezmoi.io/reference/commands/data/)
 
@@ -292,8 +98,6 @@ chezmoi data --verbose
 chezmoi data --verbose --format=yaml
 ```
 
----
-
 #### [`doctor`](https://chezmoi.io/reference/commands/doctor/)
 
 Check for common problems. Run this first when something unexpected happens.
@@ -301,8 +105,6 @@ Check for common problems. Run this first when something unexpected happens.
 ```sh
 chezmoi doctor --verbose
 ```
-
----
 
 #### [`execute-template`](https://chezmoi.io/reference/commands/execute-template/)
 
@@ -314,8 +116,6 @@ chezmoi execute-template --verbose '{{ .chezmoi.hostname }}'
 chezmoi execute-template --verbose < "$(chezmoi source-path)/dot_zshrc.tmpl"
 ```
 
----
-
 #### [`forget`](https://chezmoi.io/reference/commands/forget/)
 
 Stop managing a file — removes it from the source state only. The file remains in your home directory unchanged. Alias: `unmanage`.
@@ -325,27 +125,7 @@ chezmoi forget --dry-run --verbose ~/.file  # preview
 chezmoi forget --verbose ~/.file            # execute
 ```
 
----
-
 ## Workflows
-
-### Add a new file
-
-```sh
-chezmoi add --dry-run --verbose "$ZDOTDIR/.zshrc"                        # preview
-chezmoi add --verbose "$ZDOTDIR/.zshrc"                                  # plain file
-chezmoi add --verbose "$XDG_CONFIG_HOME/git/config" --template           # as template
-chezmoi add --verbose ~/.ssh/id_ed25519 --encrypt                        # encrypted
-```
-
-Then commit from inside the source directory:
-
-```sh
-chezmoi git add .
-chezmoi git -- commit -m "Add .zshrc"
-```
-
----
 
 ### Edit a managed file
 
@@ -358,7 +138,6 @@ Opens the source file in your editor with the correct filename for syntax highli
 ```sh
 chezmoi edit --verbose "$ZDOTDIR/.zshrc"                         # edit only
 chezmoi edit --apply --verbose "$ZDOTDIR/.zshrc"                 # edit and apply on quit
-chezmoi edit --watch --verbose "$ZDOTDIR/.zshrc"                 # edit and auto-apply on every save
 chezmoi edit --verbose                                           # open entire source directory
 ```
 
@@ -385,72 +164,7 @@ chezmoi re-add --verbose "$ZDOTDIR/.zshrc"            # execute (plain files onl
 chezmoi merge --verbose "$ZDOTDIR/.zshrc"             # when both source and live have changes to keep
 ```
 
-`re-add` does **not** overwrite templates. If the source file is a template, use `chezmoi add --force ~/.file` to replace it, then restore the template logic manually.
-
----
-
-### Diff then apply
-
-Always preview before applying:
-
-```sh
-chezmoi diff --verbose                               # all pending changes
-chezmoi diff --verbose "$ZDOTDIR/.zshrc"             # changes for one file
-chezmoi apply --dry-run --verbose                    # preview — no changes made
-chezmoi apply --verbose                              # apply all
-chezmoi apply --dry-run --verbose "$ZDOTDIR/.zshrc"  # preview one file
-chezmoi apply --verbose "$ZDOTDIR/.zshrc"            # apply one file
-```
-
----
-
-### Commit and push
-
-```sh
-chezmoi git add .
-chezmoi git -- commit -m "Update dotfiles"
-chezmoi git -- push
-```
-
-Or open a shell in the source directory and use git directly:
-
-```sh
-chezmoi cd
-git add .
-git commit -m "Update dotfiles"
-git push
-exit
-```
-
----
-
-### Cross-machine setup
-
-On a new machine, install chezmoi then initialise from your repo:
-
-```sh
-brew install chezmoi
-chezmoi init git@github.com:username/dotfiles.git
-chezmoi diff --verbose                  # preview changes
-chezmoi apply --dry-run --verbose       # dry-run apply
-chezmoi apply --verbose                 # apply
-```
-
-Short form for public repos (chezmoi guesses the GitHub URL):
-
-```sh
-chezmoi init username
-chezmoi init username --apply --verbose  # init and apply in one step
-```
-
-Pull and apply the latest changes on any machine:
-
-```sh
-chezmoi update --dry-run --verbose  # preview
-chezmoi update --verbose            # pull and apply
-```
-
----
+`re-add` does **not** overwrite templates. If the source file is a template, modify the template logic manually.
 
 ### VS Code managed files
 
@@ -494,8 +208,6 @@ chezmoi diff --use-builtin-diff ~/Library/Application\ Support/Code/User/
 chezmoi re-add --verbose ~/Library/Application\ Support/Code/User/<file>
 chezmoi git add . && chezmoi git -- commit -m "chore: ..."
 ```
-
----
 
 ## Template basics
 
@@ -544,66 +256,6 @@ chezmoi execute-template --verbose < "$(chezmoi source-path)/dot_zshrc.tmpl"
 chezmoi cat --verbose "$ZDOTDIR/.zshrc"    # render and show full target output
 chezmoi data --verbose                     # inspect all available variables
 ```
-
----
-
-## Script types
-
-Reference: [user-guide/use-scripts-to-perform-actions](https://chezmoi.io/user-guide/use-scripts-to-perform-actions/)
-
-Scripts are source files with a `run_` prefix. They must have a shebang line (e.g. `#!/usr/bin/env bash`) and should be **idempotent**.
-
-### Run on every apply — `run_`
-
-```text
-run_setup.sh
-```
-
-Executes every time `chezmoi apply` runs.
-
----
-
-### Run once — `run_once_`
-
-```text
-run_once_install-packages.sh.tmpl
-```
-
-Runs only when the SHA256 hash of the **rendered** script content has not been recorded before. The filename does not matter — renaming the file will not trigger a re-run if the content is identical. To force a re-run:
-
-```sh
-chezmoi state delete-bucket --bucket=scriptState
-```
-
----
-
-### Run on change — `run_onchange_`
-
-```text
-run_onchange_configure-defaults.sh
-```
-
-Runs whenever the rendered content changes since the last successful run. Unlike `run_once_`, this is keyed by **filename** — renaming the file forces a re-run even if the content is identical. To reset:
-
-```sh
-chezmoi state delete-bucket --bucket=entryState
-```
-
----
-
-### Execution timing — `before_` and `after_`
-
-Add `before_` or `after_` to control when a script runs relative to file/directory updates:
-
-```text
-run_before_setup.sh                          # runs before any file updates
-run_after_setup.sh                           # runs after all file updates
-run_onchange_before_install-packages.sh.tmpl     # common pattern
-```
-
-[Application order](https://chezmoi.io/reference/application-order/): `run_before_` scripts → file/directory updates (sorted alphabetically by target name, after stripping all attributes) → `run_after_` scripts.
-
----
 
 ## My notes
 
