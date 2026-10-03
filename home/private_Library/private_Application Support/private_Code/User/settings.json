@@ -139,6 +139,7 @@
 	"editor.suggest.showStatusBar": true,
 	"editor.wordBasedSuggestions": "off",
 	"editor.wordWrap": "on",
+	"editor.wordWrapIndicator": true,
 	"emmet.excludeLanguages": ["css", "markdown"],
 	"explorer.compactFolders": false,
 	"explorer.fileNesting.enabled": true,
