@@ -1,98 +1,59 @@
-# Dotfiles — Agent Instructions
+# dotfiles — Agent Instructions
 
-Chezmoi-managed dotfiles. For general chezmoi commands, concepts, and workflows, see [`docs/chezmoi.md`](/docs/chezmoi.md).
+> My dotfiles across multiple machines, managed with [chezmoi](https://www.chezmoi.io/).
+
+**Note:** For the full overview of this repository, read the `README.md`.
 
 ## Source structure
 
-`.chezmoiroot = home` — chezmoi's source root is `home/`.
-
-- `private_` prefix → file contains secrets; chezmoi treats it as sensitive. Never paste rendered content of `private_` files into chat or commit messages. When showing diffs that include `private_` content (or any file containing `op://` references, PEM blocks, or secret-like key=value pairs), apply the rules in order:
-  1. Replace any `op://…` reference with `[REDACTED]`.
-  2. Replace any PEM block with `[REDACTED]`.
-  3. For any `key = value` line where the key matches `token`, `secret`, `password`, `key`, or `apikey` (case-insensitive), replace the value with `[REDACTED]`.
-  4. If the value is longer than 20 characters or appears to be base64, hex, or JWT format, redact the entire right-hand side of `key = value` lines.
+- **Source directory:** not `~/.local/share/chezmoi`; resolve dynamically in scripts and CLI using `$(chezmoi source-path)`.
+- **Source state root:** the `home/` subdirectory of this repository.
 
 ## Pre-operation workflow
 
-As a standard safety practice, treat `chezmoi status`, `chezmoi unmanaged`, and `chezmoi ignored` as your baseline checks (akin to `git status`).
+**Invariant:** `chezmoi unmanaged` MUST always return empty. If violated, stop and surface the unmanaged files to the user.
 
-**Invariant:** `chezmoi unmanaged` must always return empty. Its main job is to catch unmanaged target files (which naturally includes surfacing stale negations). If this invariant is ever violated (e.g., at session start or before a commit), stop and surface the unmanaged files to the user before proceeding.
-
-- **At session start:** run `chezmoi status`, `chezmoi unmanaged`, and `chezmoi ignored` before any other work to establish the baseline state. If `chezmoi status` shows unexpected pending changes, inform the user.
-- **Before any state-modifying operation** (`apply`, `add`, `re-add`, `forget`, `merge`, `merge-all`): run `chezmoi status` to verify actual state. Never assume what has or hasn't been applied. If output is empty, there is nothing pending — do not fabricate changes.
-- **After every state-modifying operation:** run `chezmoi status` to confirm the change landed correctly. Also run `chezmoi unmanaged` and `chezmoi ignored` to verify they reflect the expected new state (e.g., after `add`, `forget`, or modifying `.chezmoiignore`).
-- **Before committing any file under `home/`:** run `chezmoi status` to check whether the source changes are already reflected in the target files, and run `chezmoi unmanaged` to ensure the invariant holds. If pending changes exist, surface them before proceeding.
+- **Always run** `chezmoi status`, `chezmoi unmanaged`, and `chezmoi ignored` before/after operations, and before committing.
+- **Never fabricate changes** if `chezmoi status` is empty.
 
 ## Applying changes
 
-**For existing managed files:** Never edit target files — always edit the source under `home/` directly, then run `chezmoi diff` and show the output to the user. You must **NEVER** run `chezmoi apply` or suggest the user run it, to prevent target data loss.
+**For existing managed files:** Never edit target files — always edit the source files, then run `chezmoi diff --use-builtin-diff` to check the changes. You must **NEVER** run `chezmoi apply` or suggest the user run it, to prevent target data loss.
 
-**For new unmanaged files or directories:** Create them in the target state first (e.g., `~/<path>`), then prompt the user to run `chezmoi add <target-path>` themselves, so `chezmoi` automatically evaluates permissions and assigns the correct source prefixes (like `dot_` or `private_`).
-Because `chezmoi add` is a risky action, you must prompt the user to run it themselves instead of doing it automatically. Do not scaffold them from scratch in the source tree unless you are absolutely certain of the required prefixes.
+**Creating new dotfiles:** You are banned from scaffolding or creating new configurations from scratch in the destination and source directories. If a new configuration is needed, you must instruct the user to create the file in their destination directory and run chezmoi add <target-path> themselves.
 
 **Exception for new secrets:** When creating a new `private_` file, always author it directly in the source tree as a template using `onepasswordRead` — never paste secret values directly into a target file. If an existing target file was edited directly and must be preserved, use `chezmoi re-add` instead — but if the source template calls any `onepassword*` function, abort and ask the user to re-template manually, to avoid rendering secrets into the source.
 
-## Command flags
+## chezmoi Commands and Permissions
 
-Always include `--verbose` in every suggested chezmoi command. For commands that modify state, always suggest the command with `--dry-run --verbose` first as a preview, then the same command with `--verbose` only to actually execute.
+### State-modifying commands (You CANNOT run; you CAN suggest)
 
-**State-modifying commands** (preview-first pattern): `apply`, `add`, `re-add`, `update`, `forget`, `merge`, `merge-all`
+`add`, `apply`, `forget`, `merge-all`, `merge`, `re-add`, `update`
 
-**NEVER run `chezmoi apply`**.
-You must **NEVER** suggest the user run it, to prevent target data loss.
+You must **NEVER** run these state-modifying commands yourself to prevent data loss. You may only _suggest_ the user run them. When suggesting, always provide a preview command (`--dry-run --verbose`) first, followed by the execution command (`--verbose`).
 
-**Read-only commands** (`--verbose` only): `diff`, `status`, `cat`, `managed`, `unmanaged`, `data`, `doctor`, `execute-template`, `edit`
+### Read-only commands (You CAN run)
 
-**Diff in terminal:** The configured `diff_tool` is VS Code, so `chezmoi diff` opens a VS Code window and produces no terminal output. When running in an agent/terminal context, always pass `--use-builtin-diff` to see the unified diff inline: `chezmoi diff --use-builtin-diff`.
+`diff`, `status`, `cat`, `managed`, `unmanaged`, `data`, `doctor`, `execute-template`, `edit`
 
-**Exceptions:** Do not add flags to `chezmoi git` or `chezmoi cd` — these are passthroughs to git and a shell respectively.
+You are free to execute these commands. Always include the `--verbose` flag.
 
-## Templates
+### Diff in terminal
 
-Data variable `machine_type` is `"personal"` or `"work"` — if unset or has an unexpected value, stop and ask the user to fix `~/.config/chezmoi/chezmoi.toml` before continuing.
-
-**Heredoc pitfall:** Inside `<<'EOF'` heredocs, never use `-}}` (right whitespace trim) — it strips the trailing newline and merges the next line. Use `{{- if … }}` (left trim only) or `{{ if … }}` (no trim).
-
-## Homebrew packages
-
-The Homebrew packages script (see the `homebrew` key in the configuration block above) is the single source of truth for all Homebrew packages. `brew bundle` is never destructive — removing a package from the template does **not** uninstall it; instruct the user to run `brew uninstall <pkg>` manually first. Do not run `brew uninstall` yourself — decline even if explicitly asked.
+Use `chezmoi diff --use-builtin-diff` instead of `chezmoi diff` — the configured `diff_tool` is VS Code, so `chezmoi diff` produces no terminal output.
 
 ## `remove_` targets
 
-Files that must never exist are enforced absent by chezmoi `remove_` source files. The current list of enforced-absent targets is in the "Enforced absent" section of [`MANAGED.txt`](/MANAGED.txt).
+Files enforced absent are managed via `remove_` source files. (See "Enforced absent" in `MANAGED.txt`).
 
-**Convention:** Every `remove_` source file must contain a valid comment (e.g. `#`) that briefly explains the exact outcome and links to the relevant decision record in [`docs/decisions/`](/docs/decisions/). chezmoi ignores this content — only the filename triggers the remove. The comment links the enforcement to the decision record that justifies it.
+- **To add:** Write a decision record in `docs/decisions/`. Create `home/[path/]remove_dot_<name>` containing a comment linking to the decision. Update `.chezmoiignore` if needed. Commit.
+- **To revert:** Mark decision superseded. `trash` the `remove_` file. Re-manage with `chezmoi add <target>` or create source manually. Update `.chezmoiignore`. Commit.
 
-### Adding a new `remove_` target
+_(Note: Let the user handle `chezmoi apply` for these changes.)_
 
-1. Write a decision record in `docs/decisions/NNNN-<slug>.md` explaining why the file must be absent.
-2. Create the chezmoi source file at `home/[path/]remove_dot_<name>`.
-3. Write a comment inside the file explaining the exact outcome and linking to the decision:
-   ```txt
-   # This file instructs chezmoi to delete `~/<target>` if it exists.
-   # Decision: /docs/decisions/NNNN-<slug>.md
-   ```
-4. If the target is under a broadly-ignored directory, update [`home/.chezmoiignore`](/home/.chezmoiignore) to explicitly un-ignore its path.
-5. You must **NEVER** run or suggest running `chezmoi apply`. Stop and let the user manage application.
-6. Commit (`MANAGED.txt` regenerates automatically via pre-commit hook).
+## Git commit conventions
 
-### Reverting a `remove_` target (re-enabling a file)
-
-1. Mark the decision record as superseded: set `status: superseded` and add `superseded-by: NNNN-<slug>.md` if a replacement decision exists.
-2. `trash home/[path/]remove_dot_<name>` — delete the source file(s).
-3. If re-managing the file: `chezmoi add <target-path>` or create a source file manually.
-4. Update [`home/.chezmoiignore`](/home/.chezmoiignore): the negation for the target may now need adjusting.
-5. Update any section in this file that described the specific file's absence.
-6. You must **NEVER** run or suggest running `chezmoi apply`. Stop and let the user manage application.
-7. Commit.
-
-## Commit conventions
-
-- The files in the `home/` directory are the product of this repository, so adding or changing content there should probably be a `feat` type of commit. However, this is just a suggestion and should be evaluated on a case-by-case basis.
-
-### Commit Scopes
-
-The commit scope is required in this repository. Because this repository manages configurations for many distinct tools, use your best judgement based on the following guiding principles rather than a strict whitelist. **You are completely free to invent new scopes not listed in these examples if they better describe the change.**
+The **commit scope** is required in this repository. Because this repository manages configurations for many distinct tools, use your best judgement based on the following guiding principles rather than a strict whitelist. **You are completely free to invent new scopes not listed in these examples if they better describe the change.**
 
 _Tip: You may run `git log --oneline -15` to glance at recently used scopes for context. However, these explicit written rules always take precedence over any formatting anomalies or deprecated conventions found in the repository history._
 
