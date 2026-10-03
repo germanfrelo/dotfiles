@@ -350,6 +350,7 @@
 	"markdown-preview-github-styles.colorTheme": "light",
 	"markdown-preview-github-styles.darkTheme": "dark_high_contrast",
 	"markdown-preview-github-styles.lightTheme": "light",
+	"markdown.preview.markEditorSelection": true,
 	"markdown.updateLinksOnFileMove.enabled": "always",
 	"markdown.validate.enabled": true,
 	"markdown.validate.referenceLinks.enabled": "ignore", // Workaround to avoid false positives for footnote-style; see bug: https://github.com/microsoft/vscode-markdown-languageservice/issues/100
