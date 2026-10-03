@@ -144,7 +144,7 @@
 	"explorer.fileNesting.enabled": true,
 	"explorer.fileNesting.expand": true,
 	"explorer.fileNesting.patterns": {
-		"//": "Last update at 02/07/2026, 18:47:26",
+		"//": "Last update at 10/2/2026, 11:36:41 AM",
 		".agent": ".agent, .claude, .cline, .codebuddy, .codex, .commandcode, .continue, .crush, .cursor, .factory, .gemini, .goose, .junie, .kilocode, .kiro, .kode, .mcpjam, .mux, .neovate, .opencode, .openhands, .pi, .pochi, .qoder, .qwen, .roo, .trae, .windsurf, .zencoder",
 		".clang-tidy": ".clang-format, .clangd, compile_commands.json",
 		".env": "*.env, .env.*, .envrc, env.d.ts",
@@ -251,6 +251,7 @@
 		"*.xaml": "$(capture).xaml.cs"
 	},
 	"extensions.autoUpdate": "off",
+	"fileNestingUpdater.autoUpdateInterval": 10080, // 7 days (default = 3 days)
 	"files.associations": {
 		// editorconfig
 		"*dot_editorconfig": "editorconfig",
