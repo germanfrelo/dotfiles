@@ -1,3 +1,10 @@
+<!--
+TODO: Single Source of Truth Architecture
+Problem: Currently, software installation is conditionally managed by `machine_type` (in the setup script), but dotfile configurations are applied universally without checking `machine_type`.
+Goal: Implement a single-source-of-truth approach where managed software is strictly linked with its configurations. No dotfile should be applied if its corresponding software is not applied to the current machine type.
+Possible approach: Use a templated `.chezmoiignore` file to ignore specific configuration folders (e.g., `private_dot_config/discord/`) if `.machine_type` does not match, ensuring config deployment perfectly mirrors software installation.
+-->
+
 # dotfiles
 
 My [dotfiles](https://dotfiles.github.io/) across multiple machines, managed with [chezmoi][url-chezmoi].
