@@ -598,7 +598,7 @@ Add `before_` or `after_` to control when a script runs relative to file/directo
 ```text
 run_before_setup.sh                          # runs before any file updates
 run_after_setup.sh                           # runs after all file updates
-run_once_before_install-packages.sh.tmpl     # common pattern
+run_onchange_before_install-packages.sh.tmpl     # common pattern
 ```
 
 [Application order](https://chezmoi.io/reference/application-order/): `run_before_` scripts → file/directory updates (sorted alphabetically by target name, after stripping all attributes) → `run_after_` scripts.
@@ -619,7 +619,7 @@ Inside `<<'EOF'` heredocs in shell scripts, never use `-}}` (right whitespace tr
 
 ### Homebrew packages
 
-`home/.chezmoiscripts/darwin/run_once_before_install-packages-darwin.sh.tmpl` is the single source of truth for all Homebrew packages.
+`home/.chezmoiscripts/darwin/run_onchange_before_install-packages-darwin.sh.tmpl` is the single source of truth for all Homebrew packages.
 
 `brew bundle` is intentionally **not destructive** — removing a package from the template does **not** uninstall it. You must run `brew uninstall <pkg>` manually first; the template removal is bookkeeping only.
 
@@ -627,7 +627,7 @@ Inside `<<'EOF'` heredocs in shell scripts, never use `-}}` (right whitespace tr
 
 ```sh
 # Re-render the template
-chezmoi execute-template --verbose < home/.chezmoiscripts/darwin/run_once_before_install-packages-darwin.sh.tmpl > /tmp/rendered.sh
+chezmoi execute-template --verbose < home/.chezmoiscripts/darwin/run_onchange_before_install-packages-darwin.sh.tmpl > /tmp/rendered.sh
 
 # Extract and sort the tracked list
 awk '/<<.*BUNDLED_PACKAGES_EOF/{f=1;next} /^BUNDLED_PACKAGES_EOF/{f=0} f && /^(brew|cask|mas)/{gsub(/ #.*/, ""); print}' /tmp/rendered.sh | sort > /tmp/brewfile-template.txt
