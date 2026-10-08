@@ -1,6 +1,6 @@
 ---
 status: accepted
-date: 2026-08-20
+date: 2026-10-08
 ---
 
 # Repos directory path architecture
@@ -29,11 +29,10 @@ Chosen option: **Option 3 (Hybrid architecture)**, because it provides bulletpro
 
 ### 1. The core definition (the source of truth)
 
-The physical string of the repository directory will strictly exist in only **three** specific files in the `dotfiles` repository:
+The physical string of the repository directory will strictly exist in only **one** specific file in the `dotfiles` repository:
 
-1. `.chezmoi.toml.tmpl`: Used for Chezmoi's `source_dir`.
+1. ~~`.chezmoi.toml.tmpl`: Used for chezmoi's `source_dir`.~~ [^1]
 2. `.zshrc`: Used as the pure shell fallback logic.
-3. `.chezmoiscripts/darwin/run_once_after_clone-github-repos.sh`: Used for the initial machine bootstrap.
 
 ### 2. Shell injection
 
@@ -50,5 +49,7 @@ Any scripts written in other repositories must **never** hardcode the root path.
 ## Consequences
 
 - **Positive:** Repositories can be executed in CI environments or on different machines without path failures.
-- **Positive:** Moving the physical folder in the future only requires updating 3 predictable files in `dotfiles`.
+- **Positive:** Moving the physical folder in the future only requires updating one predictable file in `dotfiles`.
 - **Negative:** None.
+
+[^1]: `.chezmoi.toml.tmpl` previously hardcoded this, but it now relies entirely on the dynamic `--source` flag passed during `chezmoi init` to persist the location.
