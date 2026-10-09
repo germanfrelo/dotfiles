@@ -1,4 +1,9 @@
 # work.Brewfile
+
+# ❗️ IMPORTANT: Do *NOT* install Node.js or nvm via Homebrew:
+# - node: use a Node version manager like nvm.
+# - nvm: managing nvm via Homebrew is unsupported.
+
 brew "aria2"
 brew "bash"
 brew "bat"
