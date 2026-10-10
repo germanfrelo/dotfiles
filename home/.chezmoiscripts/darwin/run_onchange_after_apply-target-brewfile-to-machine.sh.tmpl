@@ -1,0 +1,55 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/usr/bin/env bash
+
+# ========================================
+# Apply Target Brewfile to Machine
+#
+# WORKFLOW
+# Dependency management in this repository spans three distinct layers:
+# 1. Local machine: The packages installed on your Mac
+# 2. Target Brewfile: The ~/.config/homebrew/{machine_type}/Brewfile file
+# 3. Source Brewfile: This repository
+#
+# A. DAILY WORKFLOW: The data flows UP the layers (1 -> 2 -> 3). You manually run `brew install/uninstall` to update the local machine. A custom function set in your `.zshrc` invisibly updates the target Brewfile in the background. You manually run `chezmoi re-add` to update the source Brewfile. This script never executes.
+#
+# B. PULLING REMOTE CHANGES: The data flows DOWN the layers (3 -> 2 -> 1). When you run `chezmoi apply`, chezmoi handles (3 -> 2) by overwriting the target Brewfile with the contents of the source Brewfile. Then, this script automatically triggers to handle (2 -> 1):
+# - It automatically installs any new dependencies added to the target Brewfile.
+# - It scans the local machine and safely PROMPTS you to uninstall missing dependencies.
+#
+# WHEN DOES IT RUN?
+# Because it uses `run_onchange_after_`, it will ONLY execute if two conditions are met:
+# 1. You explicitly run `chezmoi apply`.
+# 2. The source Brewfile is modified (detected via the cryptographic hash in the CONFIGURATION block below).
+# (Running `chezmoi apply` for unrelated dotfiles will NOT trigger this script).
+#
+# DEPENDENCIES:
+# - brew (Homebrew) - Must be installed manually before running this script.
+# ========================================
+
+# Exit immediately if a command exits with a non-zero status or an undefined variable is referenced.
+set -euo pipefail
+
+# ----- CONFIGURATION -----
+
+# Condition to trigger this script automatically during the next 'chezmoi apply' if the source Brewfile is modified.
+# hash: {{ include (printf "private_dot_config/homebrew/%s/Brewfile" .machine_type) | sha256sum }}
+
+# Define the absolute path to the target Brewfile based on the machine type.
+BREWFILE="{{ .chezmoi.homeDir }}/.config/homebrew/{{ .machine_type }}/Brewfile"
+
+# ----- PRE-FLIGHT CHECKS -----
+
+# Fail immediately if Homebrew is not installed.
+if ! command -v brew &>/dev/null; then
+	echo "  ⚠ Homebrew is NOT installed. Install it manually from https://brew.sh/."
+	exit 1
+fi
+
+# ----- EXECUTION -----
+
+echo "  ↓ Reconciling local dependencies against the target Brewfile..."
+brew bundle cleanup --install --no-upgrade --file="${BREWFILE}"
+
+echo "  ✓ Homebrew dependencies synced."
+
+{{- end -}}
