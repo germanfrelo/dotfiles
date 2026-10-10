@@ -346,13 +346,13 @@ setopt no_auto_menu  # require an extra TAB press to open the completion menu
 
 # ==================================================
 
-# Warn if any chezmoi-managed file has drifted from its source.
-# Runs once per top-level shell (SHLVL=1) — skipped in subshells and nested zsh invocations.
+# Display custom messages above the prompt in new shell sessions.
+# IMPORTANT: Keep at the end of .zshrc to prevent z4h from clearing these messages.
+
 if (( SHLVL == 1 )); then
-    _chezmoi_status="$(chezmoi status 2>/dev/null)"
-    if [[ -n "${_chezmoi_status}" ]]; then
-        print -P "%F{yellow}⚠ chezmoi: pending changes or drift detected — run \`chezmoi diff\` to review:%f"
-        print "${_chezmoi_status}"
+    # CHEZMOI:
+    # Warn if 'chezmoi status' returns output.
+    if [[ -n "$(chezmoi status 2>/dev/null)" ]]; then
+        print -P "%F{yellow}chezmoi: warning: 'chezmoi status' is reporting changes, run it to review.%f"
     fi
-    unset _chezmoi_status
 fi
