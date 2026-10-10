@@ -23,22 +23,24 @@ chezmoi uses a declarative approach for dotfiles, but package installation requi
 - Option 3: Monolithic `Brewfile.tmpl` with Go conditionals
 - Option 4: Interactive Zsh Wrapper
 - Option 5: Template Orchestration (`common.Brewfile` + `personal.Brewfile` concatenated via `.chezmoitemplates`)
-- Option 6: Dual Raw Target Files with Automated Sync
+- Option 6: Dual Raw Target Files with Background Zsh Wrapper
+- Option 7: Dual Raw Target Files with Startup Drift Alerts
 
 ## Decision Outcome
 
-Chosen option: "Option 6: Dual Raw Target Files with Automated Sync", because it elegantly solves the "Common vs Specific" package problem while safely automating both additions and subtractions, and it requires absolutely zero Go templating. This ensures `brew bundle add` and `chezmoi re-add` can safely operate on the files without destroying conditional logic.
+Chosen option: "Option 7: Dual Raw Target Files with Startup Drift Alerts", because it forces the user into the good habit of running `brew bundle add/remove` manually, treating Brewfile synchronization identically to standard dotfile synchronization. It elegantly solves the "Common vs Specific" machine problem while relying entirely on native tooling, removing complex wrapper logic while keeping the user completely safe from accidental drift.
 
 ### Consequences
 
-- Good, because the user can just type `brew install <pkg>` and the Zsh wrapper handles appending it to the target Brewfile in the background.
-- Good, because `chezmoi re-add` works flawlessly since the Brewfiles contain zero Go templating logic to destroy.
-- Good, because cross-machine drift is natively alerted via `chezmoi status` hash changes when sibling files update remotely.
-- Bad, because pulling common packages from another machine requires manually copy-pasting lines between two files when alerted, rather than auto-resolving.
+- Good, because `chezmoi re-add` works flawlessly since the target Brewfiles contain zero Go templating logic to destroy.
+- Good, because if the user forgets to update their Brewfile, standard terminal startups immediately warn them of the drift (using fast, synchronous checks) exactly like `chezmoi status` does.
+- Good, because the complex and fragile background Zsh wrapper is completely eliminated.
+- Bad, because the user must remember to manually type `brew bundle add <pkg>` after installing a new tool, adding a manual step to their workflow.
+- Bad, because executing `brew bundle check` and `brew bundle cleanup` during terminal startup introduces a slight lag when opening new tabs.
 
 ### Confirmation
 
-The workflow can be confirmed by pulling remote changes that affect an ignored Brewfile; running `chezmoi diff` will explicitly show the script's hash changing, proving the native alert system works. Furthermore, running `brew bundle cleanup --install` interactively via `chezmoi apply` successfully prompts before removing unlisted packages.
+The workflow can be confirmed by pulling remote changes that affect an ignored Brewfile; running `chezmoi diff` will explicitly show the script's hash changing. Furthermore, installing a package via `brew install` without tracking it will immediately trigger a yellow terminal warning on the next tab open, demanding reconciliation.
 
 ## Pros and Cons of the Options
 
@@ -79,13 +81,22 @@ We attempted to consolidate packages into a single `~/.config/homebrew/Brewfile`
 - Good, because there was no interactive prompt; invisible background execution.
 - Bad, because `brew bundle add` natively alphabetizes and groups (tap, brew, cask, mas) the entire target file. When `chezmoi diff` compared the native globally-sorted file against the linearly-concatenated Chezmoi template, the resulting diff was unreadable, showing massive line reordering. This proved that Chezmoi templates and native Homebrew commands cannot concurrently manage the layout of the same file.
 
-### Option 6: Dual Raw Target Files with Automated Sync
+### Option 6: Dual Raw Target Files with Background Zsh Wrapper
 
-This architecture maintains exactly two independent source files: `personal/Brewfile` and `work/Brewfile`. A custom Zsh wrapper natively executes install/uninstall commands in the terminal and forks a background job to blindly update the user's specific target file. The `run_onchange_after_apply-target-brewfile-to-machine.sh.tmpl` script automatically triggers when `chezmoi apply` is executed and either source Brewfile hash changes.
+This architecture maintained two independent source files (`personal/Brewfile` and `work/Brewfile`). A custom Zsh wrapper natively executed install/uninstall commands in the terminal and forked a background job to blindly update the user's specific target file.
 
-- Good, because it eliminates Go templating in target files, allowing `chezmoi re-add` to work safely.
-- Good, because `chezmoi diff` natively surfaces cross-machine drift via explicit hash changes.
-- Good, because it leverages `brew bundle cleanup --install` seamlessly connected to standard input, gracefully handling uninstalls without crashing.
+- Good, because it eliminated Go templating in target files, allowing `chezmoi re-add` to work safely.
+- Good, because the sync happened invisibly in the background.
+- Bad, because the wrapper added significant complexity and essentially abstracted away a core responsibility of the developer, discouraging manual discipline.
+
+### Option 7: Dual Raw Target Files with Startup Drift Alerts
+
+This is the current architecture. The repository maintains exactly two independent source files (`personal/Brewfile` and `work/Brewfile`). The user is expected to manually run `brew bundle add/remove` after modifying packages on their OS. If they forget, `.zshrc` explicitly runs `brew bundle check` and `brew bundle cleanup` during terminal startup to detect OS-vs-Brewfile drift, rendering a yellow warning identical to `chezmoi status`.
+
+- Good, because it forces the user into the good habit of treating package dependencies identically to file dependencies (manual reconciliation).
+- Good, because the codebase remains entirely free of fragile wrapper functions.
+- Good, because cross-machine drift is natively surfaced.
+- Bad, because Homebrew checks are significantly slower than Chezmoi checks, adding a ~1-2 second penalty to terminal initialization.
 
 ## More Information
 
