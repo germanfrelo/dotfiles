@@ -250,25 +250,36 @@ No interactive prompt; invisible background execution.
 
 `brew bundle add` natively alphabetizes and groups (tap, brew, cask, mas) the entire target file. When `chezmoi diff` compared the native globally-sorted file against the linearly-concatenated Chezmoi template, the resulting diff was unreadable, showing massive line reordering. This proved that Chezmoi templates and native Homebrew commands cannot concurrently manage the layout of the same file.
 
-### Raw Split Target Files with Background Reconciliation
+### Dual Raw Target Files with Automated Sync (Current)
 
 #### Description
 
-1. **Raw Source Files:** The dotfiles repository maintains three independent source files: `common.Brewfile`, `personal.Brewfile`, and `work.Brewfile`. They are synced directly to `~/.config/homebrew/` without template concatenation.
-2. **Target Isolation:** `~/.config/homebrew/` will contain `common.Brewfile` alongside exactly one specific file (`personal.Brewfile` OR `work.Brewfile`), controlled by Chezmoi's `.chezmoiignore` negations.
-3. **Background Wrapper:** The `brew`, `mas`, and `npm` Zsh aliases execute the native install command, return the prompt instantly, and fork a background job. The background job blindly executes `brew bundle add <pkg> --file=~/.config/homebrew/<specific>.Brewfile`, defaulting all un-categorized installations to the machine-specific file.
-4. **Sweeping Uninstalls:** The wrapper intercepts `uninstall` commands and iterates through all available `.Brewfile`s on the machine, silently executing `brew bundle remove` to ensure the package is dropped from whichever file it resides in.
+This architecture solves the "Common vs Specific" package problem and safely automates both additions and subtractions.
 
-#### Pros
+1. **Dual Source Files:** The repository maintains exactly two independent source files: `personal/Brewfile` and `work/Brewfile`.
+2. **Background Wrapper:** The `brew`, `mas`, and `npm` Zsh aliases natively execute the install/uninstall command in the terminal and fork a background job. The background job blindly executes `brew bundle add/remove` against the user's specific target file (`~/.config/homebrew/{{ .machine_type }}/Brewfile`).
+3. **The Git Hook (Cross-Machine Alert):** Because the `personal` file is `.chezmoiignore`'d on a `work` machine, `chezmoi status` will hide remote updates to it. A Husky `post-merge` hook monitors `git pull` for changes to _any_ Brewfile and prints an alert to run `code --diff` so the user can manually copy "common" packages between the two files.
+4. **The Chezmoi Automation (Local Sync):** The script `run_onchange_after_apply-target-brewfile-to-machine.sh.tmpl` automatically triggers when `chezmoi apply` overwrites the target Brewfile. It unconditionally runs `brew bundle cleanup --install`.
 
-- **Uninterrupted Terminal Flow:** The user executes `brew install <pkg>` normally without interactive prompts.
-- **Native Formatting:** Because `brew bundle add` targets raw, independent files, Homebrew automatically alphabetizes the packages and injects API descriptions natively without triggering template conflicts in Chezmoi.
-- **Asynchronous Reconciliation:** The default routing to the machine-specific file acts as a local buffer. The user can periodically run `chezmoi status`, review a clean `chezmoi diff`, and either run `chezmoi re-add` (if the package is machine-specific) or manually cut-and-paste the declaration to `common.Brewfile` before re-adding.
+#### The `cleanup --install` Magic
 
-#### Cons
+Normally, `brew bundle cleanup` crashes headless scripts if there are extraneous packages because it prompts `[y/N]` without a human to answer.
 
-- **Temporary Misclassification:** A package that globally belongs in `common.Brewfile` will temporarily live in the machine-specific file until the user manually reconciles it during the next `chezmoi status` review.
-- **MAS App Auto-healing:** `brew bundle add` does not support Mac App Store apps. The wrapper must manually append (`echo`) them to the bottom of the file. However, Homebrew automatically re-sorts the entire file upon the execution of the next standard `brew bundle add`, making this self-healing.
+However, because `chezmoi apply` connects standard input to the user's terminal, the script behaves flawlessly:
+
+1. It installs any new packages added to the Brewfile.
+2. It scans the Mac for extraneous packages NOT in the Brewfile.
+3. It seamlessly pauses `chezmoi apply` and natively prompts the user `[y/N]` before uninstalling them, enforcing perfect symmetry while remaining automated.
+
+If the user hits `N` (intentionally keeping an unlisted package), the script exits with code 1, intentionally failing the `chezmoi apply`. This correctly forces the user to resolve the drift by manually adding the package to their Brewfile and applying again.
+
+#### Chronological Workflow Example
+
+1. **The Pull:** You run `git pull`.
+2. **The Git Alert:** The `post-merge` hook detects `personal/Brewfile` changed and alerts you to run `code --diff`.
+3. **The Surgical Edit:** You review the diff, copy desired packages to your source `work/Brewfile` in VS Code, and save.
+4. **The Deployment:** You run `chezmoi apply`, which copies your updated `work/Brewfile` to the target directory.
+5. **The Execution:** The `run_onchange_after` script automatically runs `brew bundle cleanup --install`, seamlessly installing additions and prompting you to remove subtractions.
 
 ## More Information
 

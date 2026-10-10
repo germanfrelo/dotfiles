@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
+. ./.husky/scripts/check-brewfiles.sh
 . ./.husky/scripts/check-package-lock.sh
