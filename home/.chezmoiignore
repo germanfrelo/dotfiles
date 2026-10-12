@@ -77,6 +77,8 @@ Obsidian/
 Pictures/
 Public/
 .CFUserTextEncoding
+.env.zsh
 .viminfo
 .zsh_history
+.zshrc.local
 .zshrc.zwc

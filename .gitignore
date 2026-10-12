@@ -1,3 +1,13 @@
+### Custom repository rules ###
+
+# Machine-local environment overrides and their chezmoi source representations
+.env.*
+*dot_env.*
+.zshrc.local
+*dot_zshrc.local*
+
+# ---
+
 # Created by https://www.toptal.com/developers/gitignore/api/git,node,zsh
 # Edit at https://www.toptal.com/developers/gitignore?templates=git,node,zsh
 
