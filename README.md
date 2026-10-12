@@ -37,3 +37,32 @@ See [MANAGED.txt](/MANAGED.txt) for the full file list.
 - [Prettier](https://prettier.io/) — formats JS, JSON, Markdown, and YAML.
 - [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) — lints all Markdown files.
 - [Husky](https://typicode.github.io/husky/) + [lint-staged](https://github.com/lint-staged/lint-staged) — enforces formatting on every commit.
+
+## Bootstrapping a new machine
+
+After `chezmoi` completes its initial run on a fresh machine, execute the following manual bootstrap actions in order.
+
+### 1. Reload your shell session
+
+```sh
+exec zsh
+```
+
+### 2. SSH (`personal` only)
+
+Right after all packages are installed via chezmoi and before proceeding with any Git operations:
+
+#### 2.1. Enable managing SSH with 1Password
+
+1. Open the 1Password desktop app and log in.
+2. Navigate to `Settings` → `Developer` and verify that `Use the SSH Agent` is enabled.
+
+This activates the 1Password agent socket referenced in `~/.ssh/config`, allowing Git to authenticate network operations via your SSH key.
+
+#### 2.2. Switch this 'dotfiles' repository's remote from HTTPS to SSH
+
+Since `chezmoi init` cloned this repository over HTTPS during the initial bootstrapping, switch its remote to SSH:
+
+```sh
+cd "$(chezmoi source-path)/.." && git remote set-url origin git@github.com:germanfrelo/dotfiles.git
+```
