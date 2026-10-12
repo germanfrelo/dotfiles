@@ -66,3 +66,85 @@ Since `chezmoi init` cloned this repository over HTTPS during the initial bootst
 ```sh
 cd "$(chezmoi source-path)/.." && git remote set-url origin git@github.com:germanfrelo/dotfiles.git
 ```
+
+### 3. Local repositories (`personal` only)
+
+Select and **batch** clone _your_ GitHub repositories locally. Authenticate and choose one of the batch cloning methods.
+
+Reference: [GitHub CLI manual](https://cli.github.com/manual/).
+
+#### 3.1. Authenticate via GitHub CLI
+
+Run:
+
+```sh
+gh auth login
+```
+
+During the interactive prompts, select:
+
+- **What account do you want to log into?** `GitHub.com`.
+- **What is your preferred protocol for Git operations?** `SSH`.
+- **Upload your SSH public key to your GitHub account?** `Skip` (your SSH key is already registered on your GitHub account).
+- **How would you like to authenticate GitHub CLI?** `Login with a web browser`.
+
+#### 3.2A. Interactive method (recommended)
+
+> [!NOTE]
+> This method requires [`fzf`](https://github.com/junegunn/fzf). If it's not installed, either [install it using Homebrew](https://github.com/junegunn/fzf#installation) (recommended) or use the alternative [manual method](#32b-manual-method-fallback) below.
+
+Review and select the repos you want to clone interactively (`Ctrl+A` to select all, `Tab` on `dotfiles` or unwanted entries to deselect, `Enter` to clone):
+
+**Source repos:**
+
+```sh
+# Clone owned source repos into $REPOS_DIR
+cd "${REPOS_DIR}"
+if command -v fzf >/dev/null 2>&1; then
+  gh repo list --source --no-archived --limit 1000 --json name --jq '.[].name' \
+    | fzf -m --bind 'ctrl-a:select-all,ctrl-d:deselect-all' --header 'Tab: toggle | Ctrl+A: select all | Enter: clone' \
+    | xargs -n 1 sh -c 'echo "----------" && gh repo clone "$1"' _
+else
+  echo "fzf not found. Either install it ('brew install fzf') or use the fallback method below." >&2
+fi
+```
+
+**Forks:**
+
+```sh
+# Clone personal account forks into $FORKS_DIR
+cd "${FORKS_DIR}"
+if command -v fzf >/dev/null 2>&1; then
+  gh repo list --fork --no-archived --limit 1000 --json name --jq '.[].name' \
+    | fzf -m --bind 'ctrl-a:select-all,ctrl-d:deselect-all' --header 'Tab: toggle | Ctrl+A: select all | Enter: clone' \
+    | xargs -n 1 sh -c 'echo "----------" && gh repo clone --no-upstream "$1"' _
+else
+  echo "fzf not found. Either install it ('brew install fzf') or use the fallback method below." >&2
+fi
+```
+
+#### 3.2B. Manual method (fallback)
+
+**Source repos:**
+
+```sh
+# 1. Export the repository names to a temporary file and open it in your editor:
+cd "${REPOS_DIR}"
+gh repo list --source --no-archived --limit 1000 --json name --jq '.[].name' > /tmp/repos.txt
+code /tmp/repos.txt
+
+# 2. Remove any unwanted repositories, save and run:
+xargs -n 1 sh -c 'echo "----------" && gh repo clone "$1"' _ < /tmp/repos.txt
+```
+
+**Forks:**
+
+```sh
+# 1. Export the repository names to a temporary file and open it in your editor:
+cd "${FORKS_DIR}"
+gh repo list --fork --no-archived --limit 1000 --json name --jq '.[].name' > /tmp/forks.txt
+code /tmp/forks.txt
+
+# 2. Remove any unwanted repositories, save and run:
+xargs -n 1 sh -c 'echo "----------" && gh repo clone --no-upstream "$1"' _ < /tmp/forks.txt
+```
