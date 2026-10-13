@@ -319,4 +319,8 @@ if (( SHLVL == 1 )) && command -v chezmoi >/dev/null 2>&1; then
     if [[ -n "$(chezmoi status 2>/dev/null)" ]]; then
         print -P "%F{yellow}chezmoi: warning: 'chezmoi status' is reporting changes, run it to review.%f"
     fi
+    # Warn if 'chezmoi unmanaged' returns output.
+    if [[ -n "$(chezmoi unmanaged 2>/dev/null)" ]]; then
+        print -P "%F{yellow}chezmoi: warning: unmanaged files detected; run 'chezmoi unmanaged' to review.%f"
+    fi
 fi
