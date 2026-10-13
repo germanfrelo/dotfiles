@@ -31,3 +31,6 @@
 
 # style(chezmoi): Consolidate and sort .chezmoiignore rules
 306690958d61693846e531f13e3ababb62e71f24
+
+# style(vscode): Format CSS snippets arrays to wrap
+147573a60b8fce1c5e7415f6fb3419d6b15fab15
