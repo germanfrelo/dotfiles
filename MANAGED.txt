@@ -53,12 +53,13 @@
 │   │           ├── keybindings.json
 │   │           ├── settings.json
 │   │           └── snippets
-│   │               └── css.json
+│   │               ├── css.json
+│   │               └── markdown.json
 │   └── Preferences
 │       └── com.MrKai77.Loop.plist
 └── svgo.config.js
 
-25 directories, 34 files
+25 directories, 35 files
 
 ## Enforced absent
 
