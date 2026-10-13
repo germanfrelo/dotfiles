@@ -453,7 +453,6 @@
 		"*.plist": "binaryPlistEditor.edit",
 		"*.svg": "default"
 	},
-	"workbench.experimental.modernUIEditorTabStyle": "pill",
 	"workbench.iconTheme": "material-icon-theme",
 	"workbench.list.smoothScrolling": true,
 	"workbench.settings.showAISearchToggle": true,
