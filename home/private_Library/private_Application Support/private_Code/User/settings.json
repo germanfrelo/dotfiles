@@ -444,8 +444,6 @@
 	"workbench.browser.enableChatTools": true,
 	"workbench.editor.highlightModifiedTabs": true,
 	"workbench.editor.pinnedTabsOnSeparateRow": true,
-	"workbench.editor.tabSizingFixedMaxWidth": 320,
-	"workbench.editor.tabSizingFixedMinWidth": 160,
 	"workbench.editor.useModal": "off",
 	"workbench.editor.wrapTabs": true,
 	"workbench.editorAssociations": {
