@@ -6,6 +6,7 @@
  */
 const config = {
 	quoteProps: "consistent",
+	plugins: ["prettier-plugin-multiline-arrays"],
 	overrides: [
 		{
 			files: ["*.js", "*.jsx", "*.vue"],
@@ -23,6 +24,12 @@ const config = {
 			files: ["**/*dot_gemini/**/*.json*"],
 			options: {
 				useTabs: false,
+			},
+		},
+		{
+			files: ["**/snippets/*.json"],
+			options: {
+				multilineArraysWrapThreshold: 0,
 			},
 		},
 	],
