@@ -313,7 +313,7 @@ setopt no_auto_menu  # require an extra TAB press to open the completion menu
 # Display custom messages above the prompt in new shell sessions.
 # IMPORTANT: Keep at the end of .zshrc to prevent z4h from clearing these messages.
 
-if (( SHLVL == 1 )); then
+if (( SHLVL == 1 )) && command -v chezmoi >/dev/null 2>&1; then
     # CHEZMOI:
     # Warn if 'chezmoi status' returns output.
     if [[ -n "$(chezmoi status 2>/dev/null)" ]]; then
