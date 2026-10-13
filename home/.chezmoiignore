@@ -66,7 +66,8 @@ Library/**/*
 !Library/Application Support/Code/
 !Library/Application Support/Code/User/
 !Library/Application Support/Code/User/prompts/**
-!Library/Application Support/Code/User/snippets/**
+!Library/Application Support/Code/User/snippets/
+!Library/Application Support/Code/User/snippets/*.json
 !Library/Application Support/Code/User/keybindings.json
 !Library/Application Support/Code/User/settings.json
 !Library/Preferences/
