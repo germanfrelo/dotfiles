@@ -356,7 +356,7 @@
 	"markdown.preview.markEditorSelection": true,
 	"markdown.preview.scrollEditorWithPreview": false,
 	"markdown.preview.scrollPreviewWithEditor": false,
-	"markdown.updateLinksOnFileMove.enabled": "always",
+	"markdown.updateLinksOnFileMove.enabled": "prompt",
 	"markdown.validate.enabled": true,
 	"markdown.validate.referenceLinks.enabled": "ignore", // Workaround to avoid false positives for footnote-style; see bug: https://github.com/microsoft/vscode-markdown-languageservice/issues/100
 	"markdownlint.config": {
