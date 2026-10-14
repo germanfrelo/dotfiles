@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+# shellcheck disable=SC2034 # Keep the complete ANSI color palette intact.
 
 # Reference: https://antigravity.google/docs/cli/statusline
 

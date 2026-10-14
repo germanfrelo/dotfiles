@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Reference: https://antigravity.google/docs/cli/title
 
@@ -8,11 +8,11 @@ set -euo pipefail
 DATA=$(cat)
 
 # Extract fields using jq
-eval $(echo "$DATA" | jq -r '
+eval "$(echo "$DATA" | jq -r '
   "STATE=\"\(.agent_state // "idle")\"
    CWD=\"\(.workspace.current_dir // "")\"
   "
-' 2>/dev/null || echo 'STATE="idle" CWD=""')
+' 2>/dev/null || echo 'STATE="idle" CWD=""')"
 
 # Try to extract CitC workspace name from CWD
 if [ -n "$CWD" ]; then

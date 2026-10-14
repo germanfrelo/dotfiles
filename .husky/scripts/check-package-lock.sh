@@ -18,8 +18,8 @@ if [ ! -f "package-lock.json" ]; then
 fi
 
 # Check for changes in package-lock.json
-if ! git diff --quiet HEAD@{1} HEAD -- package-lock.json >/dev/null 2>&1; then
-	if ! git rev-parse --verify HEAD@{1} >/dev/null 2>&1; then
+if ! git diff --quiet 'HEAD@{1}' HEAD -- package-lock.json >/dev/null 2>&1; then
+	if ! git rev-parse --verify 'HEAD@{1}' >/dev/null 2>&1; then
 		echo "📦ℹ️ Initial checkout. Run 'npm ci' to install dependencies."
 	else
 		echo "📦❗ package-lock.json has changed. Run 'npm ci' to update dependencies."

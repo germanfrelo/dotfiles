@@ -39,7 +39,10 @@
 		"editor.defaultFormatter": "charliermarsh.ruff"
 	},
 	"[shellscript]": {
-		"editor.defaultFormatter": null // Language unsupported by Prettier.
+		"editor.codeActionsOnSave": {
+			"source.fixAll.shellLsp": "explicit"
+		},
+		"editor.defaultFormatter": "stubbedev.shell-lsp"
 	},
 	"accessibility.underlineLinks": true,
 	"better-todo-tree.filtering.excludeGlobs": [
@@ -268,10 +271,10 @@
 	"extensions.autoUpdate": "off",
 	"fileNestingUpdater.autoUpdateInterval": 10080, // 7 days (default = 3 days)
 	"files.associations": {
+		"**/.git/hooks/*": "shellscript",
+		"**/.husky/*": "shellscript",
 		"CODEOWNERS": "properties",
-		"LICENSE": "plaintext",
-		"post-merge": "shellscript",
-		"pre-commit": "shellscript"
+		"LICENSE": "plaintext"
 	},
 	"files.insertFinalNewline": true,
 	"files.trimFinalNewlines": true,
@@ -408,6 +411,8 @@
 	},
 	"search.searchEditor.doubleClickBehaviour": "selectWord",
 	"search.searchEditor.reusePriorSearchConfiguration": true,
+	"shellLsp.format.spaceRedirects": true,
+	"shellLsp.format.switchCaseIndent": true,
 	"stylelint.validate": [
 		"css", // Default
 		"postcss", // Default

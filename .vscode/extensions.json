@@ -4,6 +4,8 @@
 		"EditorConfig.EditorConfig",
 		"esbenp.prettier-vscode",
 		// Ghostty
-		"kazuito.ghostty"
+		"kazuito.ghostty",
+		// Shell
+		"stubbedev.shell-lsp"
 	]
 }

@@ -1,3 +1,5 @@
+# shellcheck shell=zsh
+
 # Do not modify this file and keep it in the home directory (~/.zshenv) if:
 # you are using zsh4humans, and
 # your zsh dotfiles (.zshrc, etc.) are moved from the home directory to ~/.config/zsh

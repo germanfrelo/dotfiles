@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Regenerate MANAGED.txt only when staged changes affect the managed file list.
 # This avoids bundling an auto-generated MANAGED.txt update into commits that only touch unrelated files (e.g. documentation, config outside home/).
 #

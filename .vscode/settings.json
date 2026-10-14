@@ -2,6 +2,12 @@
 	"[markdown]": {
 		"editor.renderWhitespace": "boundary"
 	},
+	"[shellscript]": {
+		"editor.codeActionsOnSave": {
+			"source.fixAll.shellLsp": "explicit"
+		},
+		"editor.defaultFormatter": "stubbedev.shell-lsp"
+	},
 	"cSpell.ignoreWords": [],
 	"cSpell.words": [
 		"chezmoi",
@@ -32,6 +38,9 @@
 		// json
 		"*.json.tmpl": "json",
 
+		// plaintext
+		"*p10k.zsh": "plaintext",
+
 		// properties
 		"**/*ncdu/*config*": "properties",
 		"*npmrc": "properties", // See https://github.com/microsoft/vscode/pull/92397
@@ -44,5 +53,7 @@
 
 		// toml
 		"*.toml.tmpl": "toml"
-	}
+	},
+	"shellLsp.format.spaceRedirects": true,
+	"shellLsp.format.switchCaseIndent": true
 }
