@@ -32,20 +32,15 @@
 		// json
 		"*.json.tmpl": "json",
 
-		// plaintext
-		"LICENSE": "plaintext",
-
 		// properties
 		"**/*ncdu/*config*": "properties",
 		"*npmrc": "properties", // See https://github.com/microsoft/vscode/pull/92397
-		"CODEOWNERS": "properties",
 
 		// shellscript
 		"*.sh.tmpl": "shellscript",
 		"*zprofile": "shellscript",
 		"*zshenv": "shellscript",
 		"*zshrc": "shellscript",
-		"pre-commit": "shellscript",
 
 		// toml
 		"*.toml.tmpl": "toml"

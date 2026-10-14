@@ -268,35 +268,10 @@
 	"extensions.autoUpdate": "off",
 	"fileNestingUpdater.autoUpdateInterval": 10080, // 7 days (default = 3 days)
 	"files.associations": {
-		// editorconfig
-		"*dot_editorconfig": "editorconfig",
-
-		// ignore
-		"*ignore": "ignore",
-
-		// ini
-		"**/*git/*config*": "ini",
-
-		// json
-		"*.json.tmpl": "json",
-
-		// plaintext
-		"LICENSE": "plaintext",
-
-		// properties
-		"**/*ncdu/*config*": "properties",
-		"*npmrc": "properties", // See https://github.com/microsoft/vscode/pull/92397
 		"CODEOWNERS": "properties",
-
-		// shellscript
-		"*.sh.tmpl": "shellscript",
-		"*zprofile": "shellscript",
-		"*zshenv": "shellscript",
-		"*zshrc": "shellscript",
-		"pre-commit": "shellscript",
-
-		// toml
-		"*.toml.tmpl": "toml"
+		"LICENSE": "plaintext",
+		"post-merge": "shellscript",
+		"pre-commit": "shellscript"
 	},
 	"files.insertFinalNewline": true,
 	"files.trimFinalNewlines": true,
