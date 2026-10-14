@@ -11,12 +11,12 @@
 
 # Periodic auto-update on Zsh startup: 'ask' or 'no'.
 # You can manually run `z4h update` to update everything.
-zstyle ':z4h:' auto-update      'ask'
+zstyle ':z4h:' auto-update 'ask'
 # Ask whether to auto-update this often; has no effect if auto-update is 'no'.
 zstyle ':z4h:' auto-update-days '7'
 
 # Keyboard type: 'mac' or 'pc'.
-zstyle ':z4h:bindkey' keyboard  'mac'
+zstyle ':z4h:bindkey' keyboard 'mac'
 
 # Start tmux if not already in tmux.
 zstyle ':z4h:' start-tmux command tmux -u new -A -D -t z4h
@@ -35,16 +35,16 @@ zstyle ':z4h:autosuggestions' forward-char 'accept'
 zstyle ':z4h:fzf-complete' recurse-dirs 'no'
 
 # Enable direnv to automatically source .envrc files.
-zstyle ':z4h:direnv'         enable 'yes'
+zstyle ':z4h:direnv' enable 'yes'
 # Show "loading" and "unloading" notifications from direnv.
 zstyle ':z4h:direnv:success' notify 'yes'
 
 # Enable ('yes') or disable ('no') automatic teleportation of z4h over
 # SSH when connecting to these hosts.
-zstyle ':z4h:ssh:example-hostname1'   enable 'yes'
+zstyle ':z4h:ssh:example-hostname1' enable 'yes'
 zstyle ':z4h:ssh:*.example-hostname2' enable 'no'
 # The default value if none of the overrides above match the hostname.
-zstyle ':z4h:ssh:*'                   enable 'no'
+zstyle ':z4h:ssh:*' enable 'no'
 
 # Send these files over to the remote host when connecting over SSH to the
 # enabled hosts.
@@ -136,8 +136,8 @@ z4h source "${NVM_DIR}/nvm.sh" "${NVM_DIR}/bash_completion"
 
 # Define key bindings.
 
-z4h bindkey undo Ctrl+/   Shift+Tab  # undo the last command line change
-z4h bindkey redo Option+/            # redo the last undone command line change
+z4h bindkey undo Ctrl+/ Shift+Tab # undo the last command line change
+z4h bindkey redo Option+/         # redo the last undone command line change
 
 # z4h binds these to directory navigation by default internally.
 # I explicitly bind them to 'z4h-do-nothing' to disable that behavior.
@@ -168,11 +168,11 @@ function gbignore() {
 	local msg_prefix="chore(git): Add commit "
 	local msg_suffix=" to blame ignore list"
 
-	commit_hash="$(git rev-parse HEAD 2>/dev/null)" || {
+	commit_hash="$(git rev-parse HEAD 2> /dev/null)" || {
 		print -P "%F{red}Error: not a git repository or no commits.%f" >&2
 		return 1
 	}
-	short_hash="$(git rev-parse --short HEAD 2>/dev/null)"
+	short_hash="$(git rev-parse --short HEAD 2> /dev/null)"
 	commit_title="$(git log -1 --format=%s)"
 	title_lower="${commit_title:l}"
 
@@ -182,7 +182,7 @@ function gbignore() {
 	fi
 
 	case "${title_lower}" in
-		style*:*|chore*:*|refactor*:*) ;;
+		style*:* | chore*:* | refactor*:*) ;;
 		*)
 			print -P "%F{red}Aborted: \"${commit_title}\" does not match style, chore, or refactor.%f" >&2
 			return 1
@@ -202,7 +202,7 @@ function gbignore() {
 	printf "\n# %s\n%s\n" "${commit_title}" "${commit_hash}" >> .git-blame-ignore-revs
 
 	if git commit -q --no-verify --only .git-blame-ignore-revs -m "${msg_prefix}${short_hash}${msg_suffix}"; then
-		new_hash="$(git rev-parse --short HEAD 2>/dev/null)"
+		new_hash="$(git rev-parse --short HEAD 2> /dev/null)"
 		print -P "%F{green}Done: Added commit ${short_hash} to .git-blame-ignore-revs (created commit ${new_hash}).%f"
 	else
 		print -P "%F{red}Error: Failed to commit .git-blame-ignore-revs.%f" >&2
@@ -310,22 +310,22 @@ alias ls="${aliases[ls]:-ls} -A"
 
 # Set shell options: https://zsh.sourceforge.io/Doc/Release/Options.html
 
-setopt glob_dots     # no special treatment for file names with a leading dot
-setopt no_auto_menu  # require an extra TAB press to open the completion menu
+setopt glob_dots    # no special treatment for file names with a leading dot
+setopt no_auto_menu # require an extra TAB press to open the completion menu
 
 # ==================================================
 
 # Display custom messages above the prompt in new shell sessions.
 # IMPORTANT: Keep at the end of .zshrc to prevent z4h from clearing these messages.
 
-if (( SHLVL == 1 )) && command -v chezmoi >/dev/null 2>&1; then
-    # CHEZMOI:
-    # Warn if 'chezmoi status' returns output.
-    if [[ -n "$(chezmoi status 2>/dev/null)" ]]; then
-        print -P "%F{yellow}chezmoi: warning: 'chezmoi status' is reporting changes, run it to review.%f"
-    fi
-    # Warn if 'chezmoi unmanaged' returns output.
-    if [[ -n "$(chezmoi unmanaged 2>/dev/null)" ]]; then
-        print -P "%F{yellow}chezmoi: warning: unmanaged files detected; run 'chezmoi unmanaged' to review.%f"
-    fi
+if ((SHLVL == 1)) && command -v chezmoi > /dev/null 2>&1; then
+	# CHEZMOI:
+	# Warn if 'chezmoi status' returns output.
+	if [[ -n "$(chezmoi status 2> /dev/null)" ]]; then
+		print -P "%F{yellow}chezmoi: warning: 'chezmoi status' is reporting changes, run it to review.%f"
+	fi
+	# Warn if 'chezmoi unmanaged' returns output.
+	if [[ -n "$(chezmoi unmanaged 2> /dev/null)" ]]; then
+		print -P "%F{yellow}chezmoi: warning: unmanaged files detected; run 'chezmoi unmanaged' to review.%f"
+	fi
 fi
