@@ -53,6 +53,7 @@
 .terminfo/
 .Trash/
 .vscode/
+.vscode-dictation/
 .vscode-shared/
 .zsh_sessions/
 Applications/
