@@ -2,9 +2,11 @@
 	"[astro][css][html]": {
 		"prettier.printWidth": 9999
 	},
-	"[ignore][ini][plaintext][properties][shellscript]": {
-		// Unset Prettier as default formatter for unsupported languages.
-		"editor.defaultFormatter": null
+	"[ignore]": {
+		"editor.defaultFormatter": null // Language unsupported by Prettier.
+	},
+	"[ini]": {
+		"editor.defaultFormatter": null // Language unsupported by Prettier.
 	},
 	"[javascript][javascriptreact][typescript][typescriptreact][vue]": {
 		"prettier.singleAttributePerLine": true
@@ -23,12 +25,21 @@
 		},
 		"editor.unicodeHighlight.invisibleCharacters": true // Overrides default value of "false".
 	},
+	"[plaintext]": {
+		"editor.defaultFormatter": null // Language unsupported by Prettier.
+	},
+	"[properties]": {
+		"editor.defaultFormatter": null // Language unsupported by Prettier.
+	},
 	"[python]": {
 		"editor.codeActionsOnSave": {
 			"source.fixAll.ruff": "explicit",
 			"source.organizeImports.ruff": "explicit"
 		},
 		"editor.defaultFormatter": "charliermarsh.ruff"
+	},
+	"[shellscript]": {
+		"editor.defaultFormatter": null // Language unsupported by Prettier.
 	},
 	"accessibility.underlineLinks": true,
 	"better-todo-tree.filtering.excludeGlobs": [
