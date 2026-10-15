@@ -3,7 +3,7 @@ status: accepted
 date: 2026-10-12
 ---
 
-# Personal GitHub Repositories Cloning and Storage Architecture
+# Personal GitHub Repositories Storage and Cloning
 
 ## Context and Problem Statement
 

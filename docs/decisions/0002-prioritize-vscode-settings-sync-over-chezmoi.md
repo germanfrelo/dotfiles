@@ -3,7 +3,7 @@ status: accepted
 date: 2026-06-02
 ---
 
-# VS Code Settings Sync is primary; chezmoi is a secondary git-tracked backup
+# Prioritize VS Code settings sync over chezmoi
 
 ## Context and Problem Statement
 

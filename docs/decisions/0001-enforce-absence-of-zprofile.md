@@ -3,7 +3,7 @@ status: accepted
 date: 2026-05-28
 ---
 
-# Remove .zprofile — zsh4humans handles Homebrew environment automatically
+# Enforce absence of .zprofile — zsh4humans handles Homebrew environment automatically
 
 ## Context and Problem Statement
 

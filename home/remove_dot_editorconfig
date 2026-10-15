@@ -1,2 +1,2 @@
 # This file instructs chezmoi to delete `~/.editorconfig` if it exists.
-# Decision: /docs/decisions/0003-remove-editorconfig.md
+# Decision: /docs/decisions/0003-enforce-absence-of-home-editorconfig.md

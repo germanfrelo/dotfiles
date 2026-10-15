@@ -3,7 +3,7 @@ status: accepted
 date: 2026-06-22
 ---
 
-# Remove ~/.editorconfig — prevent Prettier configuration hijacking
+# Enforce absence of ~/.editorconfig — prevent Prettier configuration hijacking
 
 ## Context and Problem Statement
 
@@ -29,7 +29,7 @@ When Prettier resolves its configuration hierarchy, the discovery of an `.editor
 
 ## Decision Outcome
 
-Chosen option: **Remove `~/.editorconfig` entirely**, because eliminating the file prevents Prettier from silently entering local configuration mode, ensuring it respects `settings.json` overrides. This solves the root cause at the file-system level, preventing global dotfiles from polluting local project or editor formatting environments.
+Chosen option: **Enforce absence of `~/.editorconfig` entirely**, because eliminating the file prevents Prettier from silently entering local configuration mode, ensuring it respects `settings.json` overrides. This solves the root cause at the file-system level, preventing global dotfiles from polluting local project or editor formatting environments.
 
 ## Consequences
 

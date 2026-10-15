@@ -1,4 +1,4 @@
 # shellcheck shell=zsh
 
 # This file instructs chezmoi to delete `~/.config/zsh/.zprofile` if it exists.
-# Decision: /docs/decisions/0001-remove-zprofile.md
+# Decision: /docs/decisions/0001-enforce-absence-of-zprofile.md
