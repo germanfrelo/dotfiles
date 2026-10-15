@@ -241,7 +241,7 @@ unset index
 alias repos='${REPOS_DIR}'
 
 # List all files and directories in columns
-alias eza="eza -F --all --group-directories-first"
+alias eza="eza --classify --all --group-directories-first"
 # Same as above, but displaying extended metadata as a table
 alias ezal="eza --long --header --smart-group --flags --time-style=iso --no-user --git-repos"
 # Show the contents of the current directory as a tree, including hidden files and directories
@@ -254,7 +254,7 @@ alias tree3="tree -L 3"
 alias bat="bat --paging=never"
 
 # Find patterns in files using regular expressions
-alias grep="grep -i"
+alias grep="grep --ignore-case"
 
 # Actions on files and directories
 alias cp="cp -iv"
@@ -268,10 +268,10 @@ alias gls="gl --stat"
 alias glt="git log --graph --pretty=format:'%C(yellow)%h%Creset%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)%an%Creset'"
 alias gunstage="git restore --staged ." # restore the index
 alias gstashu="git stash --include-untracked"
-alias gstat="git status -sb"
+alias gstat="git status --short --branch"
 # https://github.com/Phantas0s/.dotfiles/blob/master/aliases/aliases
 # alias gs='git status'
-# alias gss='git status -s'
+# alias gss='git status --short'
 # alias ga='git add'
 # alias gp='git push'
 # alias gpraise='git blame'
@@ -281,7 +281,7 @@ alias gstat="git status -sb"
 # alias gpt='git push --tag'
 # alias gtd='git tag --delete'
 # alias gtdr='git tag --delete origin'
-# alias grb='git branch -r' # display remote branch
+# alias grb='git branch --remotes' # display remote branch
 # alias gplo='git pull origin'
 # alias gb='git branch '
 # alias gc='git commit'
@@ -291,7 +291,7 @@ alias gstat="git status -sb"
 # alias gr='git remote'
 # alias grs='git remote show'
 # alias glol='git log --graph --abbrev-commit --oneline --decorate'
-# alias gclean="git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d" # Delete local branch merged with master
+# alias gclean="git branch --merged | grep --invert-match '\\*\\|master\\|develop' | xargs --max-args=1 git branch --delete" # Delete local branch merged with master
 # alias gblog="git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:red)%(refname:short)%(color:reset) - %(color:yellow)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:blue)%(committerdate:relative)%(color:reset))'" # git log for each branches
 # alias gsub="git submodule update --remote" # pull submodules
 # alias gj="git-jump" # Open in vim quickfix list files of interest (git diff, merged...)
