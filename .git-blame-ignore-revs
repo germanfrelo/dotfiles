@@ -34,3 +34,6 @@
 
 # style(vscode): Format CSS snippets arrays to wrap
 147573a60b8fce1c5e7415f6fb3419d6b15fab15
+
+# style: Format shell scripts with shell-lsp
+8ced2fa416f4dbfb381860a0f901d1c4b11e52e2
