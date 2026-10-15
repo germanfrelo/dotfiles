@@ -161,9 +161,34 @@ function md() { [[ $# == 1 ]] && mkdir -p -- "$1" && cd -- "$1" || return; }
 compdef _directories md
 
 # Adds the current commit to .git-blame-ignore-revs and commits the file.
-# Only runs if the commit title matches one of the following types (case-insensitive): style, refactor, chore.
-# Skips automatically if the commit is itself a .git-blame-ignore-revs update.
-function gbignore() {
+#
+# Validation tiers (case-insensitive):
+#   - Allowed:    style (formatting changes that do not affect the meaning of the code).
+#   - Ambiguous:  docs, chore, refactor (prints terminal notice; allowed if non-breaking).
+#   - Restricted: feat, fix, perf, test, ci, build, or any breaking change (!).
+#                 Aborts by default; requires -f / --force to override.
+#
+# Usage:
+#   blame-ignore [-f | --force]
+function blame-ignore() {
+	local force=0
+	while [[ $# -gt 0 ]]; do
+		case "$1" in
+			-f | --force)
+				force=1
+				shift
+				;;
+			-h | --help)
+				print "Usage: blame-ignore [-f|--force]"
+				return 0
+				;;
+			*)
+				print -P "%F{red}Error: Unknown option \"$1\". Usage: blame-ignore [-f|--force]%f" >&2
+				return 1
+				;;
+		esac
+	done
+
 	local commit_hash short_hash commit_title title_lower new_hash repo_root ignore_file
 	local msg_prefix="chore(git): Add commit "
 	local msg_suffix=" to blame ignore list"
@@ -183,14 +208,6 @@ function gbignore() {
 		return 1
 	fi
 
-	case "${title_lower}" in
-		style*:* | chore*:* | refactor*:*) ;;
-		*)
-			print -P "%F{red}Aborted: \"${commit_title}\" does not match style, chore, or refactor.%f" >&2
-			return 1
-			;;
-	esac
-
 	if [[ ! -f "${ignore_file}" ]]; then
 		print -P "%F{red}Error: .git-blame-ignore-revs not found in ${repo_root}.%f" >&2
 		return 1
@@ -200,6 +217,28 @@ function gbignore() {
 		print -P "%F{yellow}Skipped: Commit ${short_hash} is already in .git-blame-ignore-revs.%f" >&2
 		return 0
 	fi
+
+	case "${title_lower}" in
+		style(|\(*\)):*)
+			# Tier 1: Safe formatting — proceed silently
+			;;
+		(docs|chore|refactor)(|\(*\)):*)
+			# Tier 2: Ambiguous — proceed with cautionary notice
+			print -P "%F{yellow}Notice: Commit \"${commit_title}\" may contain functional changes. Ensure it is purely mechanical before ignoring.%f"
+			;;
+		*)
+			# Tier 3: Restricted — requires force override
+			if ((! force)); then
+				if [[ "${title_lower}" == *'!'*:* || "${title_lower}" == *'!'* ]]; then
+					print -P "%F{red}Aborted: Breaking changes (!) alter behavior and cannot be ignored by git blame (use --force to override).%f" >&2
+				else
+					print -P "%F{red}Aborted: \"${commit_title}\" is restricted. Use --force to override.%f" >&2
+				fi
+				return 1
+			fi
+			print -P "%F{yellow}Warning: Forcing ignore for restricted commit \"${commit_title}\".%f"
+			;;
+	esac
 
 	printf "\n# %s\n%s\n" "${commit_title}" "${commit_hash}" >> "${ignore_file}"
 
