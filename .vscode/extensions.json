@@ -5,7 +5,11 @@
 		"esbenp.prettier-vscode",
 		// Ghostty
 		"kazuito.ghostty",
+		// Markdown
+		"DavidAnson.vscode-markdownlint",
 		// Shell
-		"stubbedev.shell-lsp"
+		"stubbedev.shell-lsp",
+		// TOML
+		"tamasfe.even-better-toml"
 	]
 }

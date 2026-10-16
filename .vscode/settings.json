@@ -1,6 +1,23 @@
 {
+	"[ghostty]": {
+		"editor.defaultFormatter": "kazuito.ghostty"
+	},
+	"[ignore]": {
+		"editor.defaultFormatter": null // Language unsupported by Prettier.
+	},
+	"[ini]": {
+		"editor.defaultFormatter": null // Language unsupported by Prettier.
+	},
 	"[markdown]": {
-		"editor.renderWhitespace": "boundary"
+		"editor.codeActionsOnSave": {
+			"source.fixAll.markdownlint": "explicit"
+		}
+	},
+	"[plaintext]": {
+		"editor.defaultFormatter": null // Language unsupported by Prettier.
+	},
+	"[properties]": {
+		"editor.defaultFormatter": null // Language unsupported by Prettier.
 	},
 	"[shellscript]": {
 		"editor.codeActionsOnSave": {
@@ -8,21 +25,9 @@
 		},
 		"editor.defaultFormatter": "stubbedev.shell-lsp"
 	},
-	"cSpell.ignoreWords": [],
-	"cSpell.words": [
-		"chezmoi",
-		"chezmoiignore",
-		"chezmoiroot",
-		"chezmoiscripts",
-		"create-pull-request",
-		"darwin",
-		"github",
-		"linux",
-		"onepassword",
-		"onepasswordRead",
-		"peter-evans",
-		"tmpl"
-	],
+	"[toml]": {
+		"editor.defaultFormatter": "tamasfe.even-better-toml"
+	},
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	"editor.formatOnSave": true,
 	"files.associations": {
