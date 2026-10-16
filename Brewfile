@@ -1,4 +1,5 @@
-# Brewfile for dotfiles project-level dependencies
+# Brewfile for dotfiles project-level dependencies.
 
-tap "ewhauser/tap"
+# Refs: https://github.com/ewhauser/shuck
+tap "ewhauser/tap", trusted: true
 brew "shuck-cli"

@@ -1,75 +1,134 @@
 # dotfiles
 
-My dotfiles, managed with [chezmoi](https://www.chezmoi.io/).
+My [dotfiles][url-dotfiles] managed with [chezmoi][url-chezmoi].
 
-## Managed files
+> [!IMPORTANT]
+>
+> - Compatible with **macOS only**.
+> - Proficiency with **chezmoi** is required.
 
-See [MANAGED.txt](/MANAGED.txt) for the full file list.
+## Architecture
 
-## Repository layout
+This repository manages **software** and **configuration files** across different **machine types**.
 
-| Path              | Purpose                                     |
-| ----------------- | ------------------------------------------- |
-| `home/`           | Chezmoi source root (`.chezmoiroot = home`) |
-| `docs/chezmoi.md` | Personal chezmoi reference and cheat sheet  |
-| `scripts/`        | Automation scripts                          |
-| `.husky/`         | Git hook scripts                            |
-| `.agents/rules/`  | On-demand workspace rules                   |
-| `AGENTS.md`       | Always-on workspace rules                   |
+### Machine types
 
-## Features
+The available options are defined in [`.chezmoi.toml.tmpl`][file-chezmoi-config]. Currently:
 
-- **Always-current managed file list** — the pre-commit hook regenerates and auto-stages `MANAGED.txt` whenever files in the chezmoi source root (`home/`) or the generator script (`scripts/managed.js`) are staged, with no manual step required.
-- **Unified chezmoi reference** — [`docs/chezmoi.md`](/docs/chezmoi.md) documents every command, workflow, and template pattern with examples.
-- **AI-ready agent instructions** — `AGENTS.md` provides always-on constraints and invariants, while `.agents/rules/` provides on-demand domain rules.
-- **Guardrails on every commit** — Prettier formatting is enforced on staged files via Husky + lint-staged; post-checkout and post-merge hooks warn when `package-lock.json` or the chezmoi source state change and prompt to sync.
-- **Automated dependency review** — a GitHub Action scans every pull request for dependency vulnerabilities and licence issues before merge.
+- **`personal`**
+- **`work`**
 
-## npm scripts
+During the [initial setup](#initialization), you will be **prompted to select either one** for your machine. Your choice will be stored in your local chezmoi configuration file in `$HOME/.config/chezmoi/chezmoi.toml` to dynamically resolve which software and configuration files to apply.
 
-| Script               | Description                                                     |
-| -------------------- | --------------------------------------------------------------- |
-| `managed`            | Regenerates `MANAGED.txt` from the current chezmoi source state |
-| `format`             | Formats all files with Prettier and shuck                       |
-| `format:check`       | Checks formatting with Prettier and shuck without writing       |
-| `format:shell`       | Formats shell scripts with shuck                                |
-| `format:shell:check` | Checks shell script formatting with shuck                       |
-| `lint:shell`         | Lints shell scripts with shuck                                  |
+For more details, see the [chezmoi machine-to-machine management guide][url-chezmoi-manage-machine].
 
-## Tooling
+### Software
 
-- [Prettier](https://prettier.io/) — formats JS, JSON, Markdown, and YAML.
-- [shuck](https://github.com/ewhauser/shuck) — lints and formats shell scripts (Bash, Zsh, POSIX sh).
-- [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) — lints all Markdown files.
-- [Husky](https://typicode.github.io/husky/) + [lint-staged](https://github.com/lint-staged/lint-staged) — enforces formatting on every commit.
+Provisioned by [**Homebrew**][url-homebrew].
 
-## Development
+Supported package types:
+
+- **CLI tools** (`formulae`)
+- **GUI apps** and **fonts** (`casks`)
+
+The **package list** is declared in the [package installation script][file-script-install-packages] as an embedded `Brewfile`. It's divided into groups: common packages shared across machines, and machine-specific groups.
+
+The **script runs** `brew bundle install` to install the declared packages before configuration files are applied, both **on initial setup** and **whenever the package list changes**. Removing a package from the list does _not_ automatically uninstall it from your machine; you also need to run `brew uninstall <package>`.
+
+### Configuration files
+
+**Source files** are in the [`home/`][dir-home] subdirectory in this repository (as configured in [`.chezmoiroot`][file-chezmoi-root]).
+
+**Target files** are in your `$HOME` directory.
+
+**Ignored files** are declared in [`.chezmoiignore`][file-chezmoi-ignore].
+
+To see the **list of all managed target files**, run `chezmoi managed` or inspect [`MANAGED.txt`][file-managed-txt].
+
+> [!NOTE]
+> **`MANAGED.txt`** is an automated, self-updating directory tree **snapshot of all managed target files**. It's a custom feature of this repository.
+>
+> When changes in `home/` are committed, [`.husky/pre-commit`][file-pre-commit-hook] automatically runs [`scripts/managed.js`][file-managed-js] to update `MANAGED.txt` and stages it.
+>
+> Manual regeneration is rarely needed, but can be triggered via `npm run managed`.
+
+## Initial setup
+
+To set up **a new machine with this repository** for the first time:
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/)
-- [Homebrew](https://brew.sh)
+1. **Install Homebrew** as described at [brew.sh][url-homebrew].
+2. **Install chezmoi** with Homebrew by running `brew install chezmoi`.
 
-### Setup
+### Initialization
 
-Execute these steps in order to install dependencies and activate Git hooks:
+Initialize chezmoi with this repository into either:
 
-1. Install Node.js dependencies and activate Git hooks declared in [`package.json`](/package.json):
+- the default path (`~/.local/share/chezmoi`):
+
+  ```sh
+  chezmoi init germanfrelo/dotfiles
+  ```
+
+- a custom path:
+
+  ```sh
+  chezmoi --source </path/to/dotfiles> init germanfrelo/dotfiles
+  ```
+
+This will prompt you to select a machine type, clone this repository into the specified directory, and generate your local chezmoi config file. For more details, see the [`chezmoi init` reference][url-chezmoi-ref-init].
+
+### Review and apply
+
+1. **Check differences:** Preview what changes chezmoi will make to your machine by running `chezmoi diff`.
+2. **Edit locally (optional):** Make local adjustments as described in the [chezmoi usage FAQ][url-chezmoi-edit-dotfiles] (do _not_ commit to Git yet).
+3. **Apply changes:** Run `chezmoi apply --verbose`.
+4. **Reboot:** Restart your machine to ensure all changes take effect.
+
+## Post-setup
+
+In your local dotfiles repository directory, once [Node.js][doc-node-npm] is installed, install the development dependencies to activate Git hooks (which keep [`MANAGED.txt`][file-managed-txt] synchronized) and shell linting tools:
+
+- **Node.js** dependencies:
+
+  ```sh
+  npm install
+  ```
+
+- **Homebrew** dependencies (declared in [Brewfile][file-brewfile]):
+
+  ```sh
+  brew bundle install --file=./Brewfile
+  ```
+
+## Updating from remote
+
+To update your machine with the **latest changes** from the remote repo:
+
+1. **Pull** the latest changes:
 
    ```sh
-   npm install
+   chezmoi git pull -- --autostash --rebase
    ```
 
-2. Trust the third-party tap for shell tooling and install Homebrew dependencies declared in [`Brewfile`](/Brewfile):
+2. **Check** the differences:
 
    ```sh
-   brew trust ewhauser/tap
-   brew bundle --file=./Brewfile
+   chezmoi diff
    ```
+
+3. **Apply** the changes:
+
+   ```sh
+   chezmoi apply
+   ```
+
+For more details, see the [chezmoi daily operations guide][url-chezmoi-daily-operations].
 
 ## Bootstrapping a new machine
 
-After `chezmoi` completes its initial run on a fresh machine, execute the following manual bootstrap actions in order.
+After `chezmoi` completes the initial setup on a fresh machine, execute the following manual bootstrap actions in order.
 
 ### 1. Reload your shell session
 
@@ -100,7 +159,7 @@ cd "$(chezmoi source-path)/.." && git remote set-url origin git@github.com:germa
 
 Select and **batch** clone _your_ GitHub repositories locally. Authenticate and choose one of the batch cloning methods.
 
-Reference: [GitHub CLI manual](https://cli.github.com/manual/).
+Reference: [GitHub CLI manual][url-github-cli-manual].
 
 #### 3.1. Authenticate via GitHub CLI
 
@@ -120,7 +179,7 @@ During the interactive prompts, select:
 #### 3.2A. Interactive method (recommended)
 
 > [!NOTE]
-> This method requires [`fzf`](https://github.com/junegunn/fzf). If it's not installed, either [install it using Homebrew](https://github.com/junegunn/fzf#installation) (recommended) or use the alternative [manual method](#32b-manual-method-fallback) below.
+> This method requires [`fzf`][url-fzf]. If it's not installed, either [install it using Homebrew][url-fzf-installation] (recommended) or use the alternative [manual method](#32b-manual-method-fallback) below.
 
 Review and select the repos you want to clone interactively (`Ctrl+A` to select all, `Tab` on `dotfiles` or unwanted entries to deselect, `Enter` to clone):
 
@@ -177,3 +236,24 @@ code /tmp/forks.txt
 # 2. Remove any unwanted repositories, save and run:
 xargs -n 1 sh -c 'echo "----------" && gh repo clone --no-upstream "$1"' _ < /tmp/forks.txt
 ```
+
+[dir-home]: /home/
+[doc-node-npm]: /docs/set-up/how-to-node-npm.md
+[file-brewfile]: /Brewfile
+[file-chezmoi-config]: /home/.chezmoi.toml.tmpl
+[file-chezmoi-ignore]: /home/.chezmoiignore
+[file-chezmoi-root]: /.chezmoiroot
+[file-managed-js]: /scripts/managed.js
+[file-managed-txt]: /MANAGED.txt
+[file-pre-commit-hook]: /.husky/pre-commit
+[file-script-install-packages]: /home/.chezmoiscripts/darwin/run_onchange_before_install-packages-darwin.sh.tmpl
+[url-chezmoi]: https://www.chezmoi.io/
+[url-chezmoi-daily-operations]: https://www.chezmoi.io/user-guide/daily-operations/
+[url-chezmoi-edit-dotfiles]: https://www.chezmoi.io/user-guide/frequently-asked-questions/usage/#how-do-i-edit-my-dotfiles-with-chezmoi
+[url-chezmoi-manage-machine]: https://www.chezmoi.io/user-guide/manage-machine-to-machine-differences/
+[url-chezmoi-ref-init]: https://www.chezmoi.io/reference/commands/init/
+[url-dotfiles]: https://dotfiles.github.io/
+[url-fzf]: https://github.com/junegunn/fzf
+[url-fzf-installation]: https://github.com/junegunn/fzf#installation
+[url-github-cli-manual]: https://cli.github.com/manual/
+[url-homebrew]: https://brew.sh/
