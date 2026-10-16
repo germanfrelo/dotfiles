@@ -47,6 +47,9 @@
 		},
 		"editor.defaultFormatter": "stubbedev.shell-lsp"
 	},
+	"[toml]": {
+		"editor.defaultFormatter": "tamasfe.even-better-toml"
+	},
 	"accessibility.underlineLinks": true,
 	"better-todo-tree.filtering.excludeGlobs": [
 		"**/node_modules/*/**", // Default
