@@ -1,150 +1,103 @@
 # dotfiles
 
-My dotfiles, managed with [chezmoi](https://www.chezmoi.io/).
+My [**dotfiles**](https://dotfiles.github.io/) across different **macOS** machines, managed with [**chezmoi**][url-chezmoi].
 
-## Managed files
+## Overview
 
-See [MANAGED.txt](/MANAGED.txt) for the full file list.
+This repo manages both **software** and **configurations** for **`personal`** and **`work`** macOS machines.
 
-## Repository layout
+### First initialization
 
-| Path              | Purpose                                                    |
-| ----------------- | ---------------------------------------------------------- |
-| `home/`           | Chezmoi source root (`.chezmoiroot = home`)                |
-| `docs/chezmoi.md` | Personal chezmoi reference and cheat sheet                 |
-| `scripts/`        | Automation scripts                                         |
-| `.husky/`         | Git hook scripts                                           |
-| `AGENTS.md`       | AI agent instructions with machine-readable chezmoi config |
+During the first run of `chezmoi --source </your/preferred/source/dir> init germanfrelo`, chezmoi will:
 
-## Features
+1. Execute [this chezmoi config template][file-chezmoi-config] to **prompt you to choose a machine type** (`personal` or `work`).
+2. **Clone this repo** into the configured source directory (`</your/preferred/source/dir>`).
+3. **Generate your local chezmoi config file** (`~/.config/chezmoi/chezmoi.toml`) using the template with your choice. This will be used by chezmoi to automatically determine which software and configurations to apply.
 
-- **Always-current managed file list** — the pre-commit hook regenerates and auto-stages `MANAGED.txt` whenever files in the chezmoi source root (`home/`) or the generator script (`scripts/managed.js`) are staged, with no manual step required.
-- **Unified chezmoi reference** — [`docs/chezmoi.md`](/docs/chezmoi.md) documents every command, workflow, and template pattern with examples.
-- **AI-ready agent instructions** — `AGENTS.md` gives Copilot and other AI agents full context on repo conventions, chezmoi source structure, and configuration deviations from chezmoi defaults.
-- **Guardrails on every commit** — Prettier formatting is enforced on staged files via Husky + lint-staged; post-checkout and post-merge hooks warn when `package-lock.json` changes and prompt to run `npm ci`.
-- **Automated dependency review** — a GitHub Action scans every pull request for dependency vulnerabilities and licence issues before merge.
+For more details, see the [`chezmoi init` reference][url-chezmoi-ref-init].
 
-## npm scripts
+### Day-to-day execution
 
-| Script         | Description                                                     |
-| -------------- | --------------------------------------------------------------- |
-| `managed`      | Regenerates `MANAGED.txt` from the current chezmoi source state |
-| `format`       | Formats all files with Prettier                                 |
-| `format:check` | Checks formatting without writing                               |
+Whenever you run `chezmoi apply`, chezmoi executes the changes in a strict order:
 
-## Tooling
+1. First, a chezmoi script automatically installs and reconciles the managed **software**.
+2. Then, **configurations** are applied to the machine.
 
-- [Prettier](https://prettier.io/) — formats JS, JSON, Markdown, and YAML.
-- [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) — lints all Markdown files.
-- [Husky](https://typicode.github.io/husky/) + [lint-staged](https://github.com/lint-staged/lint-staged) — enforces formatting on every commit.
+## 1. Software
 
-## Bootstrapping a new machine
+Managed with **Homebrew**, which handles:
 
-After `chezmoi` completes its initial run on a fresh machine, execute the following manual bootstrap actions in order.
+- **CLI tools** (`formulae`)
+- **GUI apps and fonts** (`casks`)
 
-### 1. Reload your shell session
+These packages are controlled **declaratively** by [this setup script][file-script-install-packages], which ensures Homebrew is installed and then evaluates a dynamic `Brewfile` split into two categories:
 
-```sh
-exec zsh
-```
+- Packages **shared** across all machines.
+- Packages **specific** to the selected machine type (`personal` or `work`).
 
-### 2. SSH (`personal` only)
-
-Right after all packages are installed via chezmoi and before proceeding with any Git operations:
-
-#### 2.1. Enable managing SSH with 1Password
-
-1. Open the 1Password desktop app and log in.
-2. Navigate to `Settings` → `Developer` and verify that `Use the SSH Agent` is enabled.
-
-This activates the 1Password agent socket referenced in `~/.ssh/config`, allowing Git to authenticate network operations via your SSH key.
-
-#### 2.2. Switch this 'dotfiles' repository's remote from HTTPS to SSH
-
-Since `chezmoi init` cloned this repository over HTTPS during the initial bootstrapping, switch its remote to SSH:
-
-```sh
-cd "$(chezmoi source-path)/.." && git remote set-url origin git@github.com:germanfrelo/dotfiles.git
-```
-
-### 3. Local repositories (`personal` only)
-
-Select and **batch** clone _your_ GitHub repositories locally. Authenticate and choose one of the batch cloning methods.
-
-Reference: [GitHub CLI manual](https://cli.github.com/manual/).
-
-#### 3.1. Authenticate via GitHub CLI
-
-Run:
-
-```sh
-gh auth login
-```
-
-During the interactive prompts, select:
-
-- **What account do you want to log into?** `GitHub.com`.
-- **What is your preferred protocol for Git operations?** `SSH`.
-- **Upload your SSH public key to your GitHub account?** `Skip` (your SSH key is already registered on your GitHub account).
-- **How would you like to authenticate GitHub CLI?** `Login with a web browser`.
-
-#### 3.2A. Interactive method (recommended)
+Because it is a `run_onchange_` script, it automatically re-runs to reconcile your system state whenever this package list is modified.
 
 > [!NOTE]
-> This method requires [`fzf`](https://github.com/junegunn/fzf). If it's not installed, either [install it using Homebrew](https://github.com/junegunn/fzf#installation) (recommended) or use the alternative [manual method](#32b-manual-method-fallback) below.
+> Removing a package from the script does **not** automatically uninstall it from your system; you must also run `brew uninstall <pkg>` manually.
 
-Review and select the repos you want to clone interactively (`Ctrl+A` to select all, `Tab` on `dotfiles` or unwanted entries to deselect, `Enter` to clone):
+## 2. Configurations
 
-**Source repos:**
+The managed configuration files:
 
-```sh
-# Clone owned source repos into $REPOS_DIR
-cd "${REPOS_DIR}"
-if command -v fzf >/dev/null 2>&1; then
-  gh repo list --source --no-archived --limit 1000 --json name --jq '.[].name' \
-    | fzf -m --bind 'ctrl-a:select-all,ctrl-d:deselect-all' --header 'Tab: toggle | Ctrl+A: select all | Enter: clone' \
-    | xargs -n 1 sh -c 'echo "----------" && gh repo clone "$1"' _
-else
-  echo "fzf not found. Either install it ('brew install fzf') or use the fallback method below." >&2
-fi
-```
+- **Source files:** in [`home/`][dir-home].
+- **Target files:** in the `$HOME/` directory of your local machine. You can see a real-time index/snapshot of them in [`MANAGED.txt`][file-managed-txt], which is _automatically_ (re)generated by [`scripts/managed.js`][file-managed-js] and [`.husky/pre-commit`][file-pre-commit-hook] whenever source files (in [`home/`][dir-home]) are staged. This ensures it is always up-to-date with the current source state without any manual steps. It can also be _manually_ regenerated by running the npm script command `npm run managed` (see [package.json][file-pkg-json]).
 
-**Forks:**
+## Initial setup <!-- Simple, classic, accurate -->
 
-```sh
-# Clone personal account forks into $FORKS_DIR
-cd "${FORKS_DIR}"
-if command -v fzf >/dev/null 2>&1; then
-  gh repo list --fork --no-archived --limit 1000 --json name --jq '.[].name' \
-    | fzf -m --bind 'ctrl-a:select-all,ctrl-d:deselect-all' --header 'Tab: toggle | Ctrl+A: select all | Enter: clone' \
-    | xargs -n 1 sh -c 'echo "----------" && gh repo clone --no-upstream "$1"' _
-else
-  echo "fzf not found. Either install it ('brew install fzf') or use the fallback method below." >&2
-fi
-```
+## First-time setup <!-- Matches the introductory text perfectly -->
 
-#### 3.2B. Manual method (fallback)
+## Installation <!-- Standard GitHub repository convention -->
 
-**Source repos:**
+## Bootstrapping <!-- Professional term, implies pulling in the rest of the environment -->
 
-```sh
-# 1. Export the repository names to a temporary file and open it in your editor:
-cd "${REPOS_DIR}"
-gh repo list --source --no-archived --limit 1000 --json name --jq '.[].name' > /tmp/repos.txt
-code /tmp/repos.txt
+To initialize chezmoi with this repo on your machine **for the first time**:
 
-# 2. Remove any unwanted repositories, save and run:
-xargs -n 1 sh -c 'echo "----------" && gh repo clone "$1"' _ < /tmp/repos.txt
-```
+1. **Install Homebrew** as described at [brew.sh][url-homebrew].
+2. **Install chezmoi** with Homebrew by running `brew install chezmoi`.
+3. **Initialize chezmoi with this repo** by running `chezmoi --source </your/preferred/source/dir> init germanfrelo`.
+4. **Install the dependencies** by running `cd $(chezmoi source-path) && npm install`.
+5. **Check what changes chezmoi will make** to your home directory by running `chezmoi diff`.
+6. **Edit the changes**, if necessary, as described on the [chezmoi usage page][url-chezmoi-edit-dotfiles].
+7. **Apply all the changes** by running `chezmoi apply --verbose`.
+8. **Restart your machine** to ensure all changes take effect.
 
-**Forks:**
+## Maintenance
 
-```sh
-# 1. Export the repository names to a temporary file and open it in your editor:
-cd "${FORKS_DIR}"
-gh repo list --fork --no-archived --limit 1000 --json name --jq '.[].name' > /tmp/forks.txt
-code /tmp/forks.txt
+To **update** your machine with the **latest changes** from the remote repo:
 
-# 2. Remove any unwanted repositories, save and run:
-xargs -n 1 sh -c 'echo "----------" && gh repo clone --no-upstream "$1"' _ < /tmp/forks.txt
-```
+1. Pull the latest changes:
+
+   ```sh
+   chezmoi git pull -- --autostash --rebase
+   ```
+
+2. Show the differences:
+
+   ```sh
+   chezmoi diff
+   ```
+
+3. Apply the changes:
+
+   ```sh
+   chezmoi apply
+   ```
+
+For more details, see the [chezmoi daily operations guide](https://www.chezmoi.io/user-guide/daily-operations/).
+
+[dir-home]: /home/
+[file-chezmoi-config]: /home/.chezmoi.toml.tmpl
+[file-managed-js]: /scripts/managed.js
+[file-managed-txt]: /MANAGED.txt
+[file-pkg-json]: /package.json
+[file-pre-commit-hook]: /.husky/pre-commit
+[file-script-install-packages]: /home/.chezmoiscripts/darwin/run_onchange_before_install-packages-darwin.sh.tmpl
+[url-chezmoi]: https://www.chezmoi.io/
+[url-chezmoi-edit-dotfiles]: https://www.chezmoi.io/user-guide/frequently-asked-questions/usage/#how-do-i-edit-my-dotfiles-with-chezmoi
+[url-chezmoi-ref-init]: https://www.chezmoi.io/reference/commands/init/
+[url-homebrew]: https://brew.sh/
