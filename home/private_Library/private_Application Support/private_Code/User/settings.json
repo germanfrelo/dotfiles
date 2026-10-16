@@ -2,6 +2,9 @@
 	"[astro][css][html]": {
 		"prettier.printWidth": 9999
 	},
+	"[ghostty]": {
+		"editor.defaultFormatter": "kazuito.ghostty"
+	},
 	"[ignore]": {
 		"editor.defaultFormatter": null // Language unsupported by Prettier.
 	},
