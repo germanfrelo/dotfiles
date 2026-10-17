@@ -1,63 +1,24 @@
 {
-	"[ghostty]": {
-		"editor.defaultFormatter": "kazuito.ghostty"
-	},
-	"[ignore]": {
-		"editor.defaultFormatter": null // Language unsupported by Prettier.
-	},
-	"[ini]": {
-		"editor.defaultFormatter": null // Language unsupported by Prettier.
-	},
-	"[markdown]": {
-		"editor.codeActionsOnSave": {
-			"source.fixAll.markdownlint": "explicit"
-		}
-	},
-	"[plaintext]": {
-		"editor.defaultFormatter": null // Language unsupported by Prettier.
-	},
-	"[properties]": {
-		"editor.defaultFormatter": null // Language unsupported by Prettier.
-	},
 	"[shellscript]": {
 		"editor.codeActionsOnSave": {
 			"source.fixAll.shellLsp": "explicit"
 		},
 		"editor.defaultFormatter": "stubbedev.shell-lsp"
 	},
-	"[toml]": {
-		"editor.defaultFormatter": "tamasfe.even-better-toml"
-	},
-	"editor.defaultFormatter": "esbenp.prettier-vscode",
-	"editor.formatOnSave": true,
 	"files.associations": {
-		// editorconfig
-		"*dot_editorconfig": "editorconfig",
-
-		// ignore
-		"*ignore": "ignore",
-
-		// ini
-		"**/*git/*config*": "ini",
-
-		// json
+		// Associates non-standard chezmoi filenames (dot_* prefixes, *.tmpl templates) with their intended languages.
 		"*.json.tmpl": "json",
-
-		// plaintext
-		"*p10k.zsh": "plaintext",
-
-		// properties
-		"**/*ncdu/*config*": "properties",
-		"*npmrc": "properties", // See https://github.com/microsoft/vscode/pull/92397
-
-		// shellscript
 		"*.sh.tmpl": "shellscript",
+		"*.toml.tmpl": "toml",
+		"**/*git/*config*": "ini",
+		"**/*ncdu/*config*": "properties",
+		"*dot_editorconfig": "editorconfig",
+		"*ignore": "ignore",
+		"*npmrc": "properties", // See https://github.com/microsoft/vscode/pull/92397
+		"*p10k.zsh": "plaintext",
 		"*zprofile": "shellscript",
 		"*zshenv": "shellscript",
-		"*zshrc": "shellscript",
-
-		// toml
-		"*.toml.tmpl": "toml"
+		"*zshrc": "shellscript"
 	},
 	"shellLsp.format.spaceRedirects": true,
 	"shellLsp.format.switchCaseIndent": true
