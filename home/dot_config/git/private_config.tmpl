@@ -45,6 +45,11 @@
 [blame]
 	ignoreRevsFile = :(optional).git-blame-ignore-revs
 
+# Reuse recorded resolution of conflicted merges.
+# Ref. https://git-scm.com/docs/git-rerere
+[rerere]
+	enabled = true
+
 # ------ EXTERNAL TOOLS ------
 
 # --- Editor ---
