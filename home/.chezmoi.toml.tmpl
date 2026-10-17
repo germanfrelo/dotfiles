@@ -1,25 +1,26 @@
 # ========================================
-# chezmoi config file template
+# chezmoi configuration
+# https://www.chezmoi.io/reference/configuration-file/
 # https://www.chezmoi.io/reference/special-files/chezmoi-format-tmpl/
 # ========================================
 
-# ----- CORE CONFIGURATION -----
+# ------ CORE CONFIGURATION ------
 
 # Persists the custom source directory passed via '--source' during 'chezmoi init' so future commands remember it.
 sourceDir = {{ .chezmoi.sourceDir | quote }}
 
-# ----- TEMPLATE DATA -----
+# ------ TEMPLATE DATA ------
 
 # Prompts the user to choose the machine type during 'chezmoi init'.
 {{- $machine_type := promptChoiceOnce . "machine_type" "Machine type" (list "personal" "work") }}
 [data]
 	machine_type = {{ $machine_type | quote }}
 
-# ----- EDITOR -----
+# ------ EDITOR ------
 
 # ❗️ IMPORTANT: Do NOT set 'edit.command'. By default, chezmoi uses the text editor defined via the '$VISUAL' shell environment variable in '$ZDOTDIR/.zshrc'. This is the desired behavior.
 
-# ----- DIFF -----
+# ------ DIFF ------
 
 # Use VS Code as the diff tool.
 [diff]
@@ -32,7 +33,7 @@ sourceDir = {{ .chezmoi.sourceDir | quote }}
 	command = "plutil"
 	args = ["-convert", "xml1", "-o", "-", "-"]
 
-# ----- MERGE -----
+# ------ MERGE ------
 
 # Use VS Code as the merge tool.
 [merge]
