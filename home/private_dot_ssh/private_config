@@ -1,3 +1,8 @@
+# ========================================
+# SSH client configuration
+# https://man.openbsd.org/ssh_config
+# ========================================
+
 Include ~/.ssh/config.local
 
 Host *

@@ -1,5 +1,7 @@
-# Dependabot version updates documentation:
+# ========================================
+# Dependabot configuration
 # https://docs.github.com/en/code-security/reference/supply-chain-security/dependabot-options-reference
+# ========================================
 
 version: 2
 updates:

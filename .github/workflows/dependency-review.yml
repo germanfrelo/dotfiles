@@ -1,6 +1,9 @@
-# GitHub Dependency Review Action
-# Scans the pull requests for dependency changes and will raise an error if any vulnerabilities or invalid licenses are being introduced.
-# Repo: https://github.com/actions/dependency-review-action
+# ========================================
+# GitHub Dependency Review workflow
+# https://github.com/actions/dependency-review-action
+#
+# Scans pull requests for dependency changes and raises an error if vulnerabilities or invalid licenses are introduced.
+# ========================================
 
 name: "Dependency Review"
 on: [pull_request]

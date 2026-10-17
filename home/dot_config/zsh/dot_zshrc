@@ -1,13 +1,11 @@
 # shellcheck shell=zsh
 
-# =======================================================================
-# Personal Zsh configuration file. It is strongly recommended to keep all
-# shell customization and configuration (including exported environment
-# variables such as PATH) in this file or in files sourced from it.
+# ========================================
+# Zsh configuration
+# https://github.com/romkatv/zsh4humans/blob/v5/README.md
 #
-# Documentation: https://github.com/romkatv/zsh4humans/blob/v5/README.md
-
-# =======================================================================
+# Keep all shell customization and configuration (including exported environment variables such as PATH) in this file or in files sourced from it.
+# ========================================
 
 # Periodic auto-update on Zsh startup: 'ask' or 'no'.
 # You can manually run `z4h update` to update everything.

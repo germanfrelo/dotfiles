@@ -1,13 +1,16 @@
+# ========================================
+# ncdu configuration
+# https://dev.yorhel.nl/ncdu/man#configuration
+# ========================================
+
 # TODO: When adding Windows/Linux support, convert this file to a chezmoi template (config.tmpl) and guard `--delete-command` with `{{ if eq .chezmoi.os "darwin" }}...{{ end }}`.
 
-# Documentation: https://dev.yorhel.nl/ncdu/man#configuration
-
-# --- Scan options ---
+# ------ SCAN OPTIONS ------
 
 # Do not cross filesystem boundaries (prevents scanning external drives/network mounts)
 --one-file-system
 
-# --- Interface options ---
+# ------ INTERFACE OPTIONS ------
 
 # Show the item counts column
 --show-itemcount

@@ -1,3 +1,8 @@
+# ========================================
+# Global Git ignore configuration
+# https://git-scm.com/docs/gitignore
+# ========================================
+
 # Created by https://www.toptal.com/developers/gitignore/api/git,homebrew,macos,node,ssh,visualstudiocode,zsh
 # Edit at https://www.toptal.com/developers/gitignore?templates=git,homebrew,macos,node,ssh,visualstudiocode,zsh
 

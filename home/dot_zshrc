@@ -1,5 +1,5 @@
 # shellcheck shell=zsh
 
-# This file exists only to make chezmoi watch ~/.zshrc for writes by tools that ignore $ZDOTDIR.
-# Real zsh config lives in $ZDOTDIR (~/.config/zsh/.zshrc).
-# If a program has modified this file, move its changes to $ZDOTDIR/.zshrc and restore this stub by running: chezmoi apply -v ~/.zshrc
+# ⚠️ WARNING: Do NOT add Zsh configuration here or remove this file.
+# This stub exists only so chezmoi detects writes to `~/.zshrc` by tools that ignore `$ZDOTDIR` (real configuration lives in `$ZDOTDIR/.zshrc`).
+# If a program modifies `~/.zshrc`, move its changes to `$ZDOTDIR/.zshrc` and restore this stub by running: chezmoi apply --verbose ~/.zshrc

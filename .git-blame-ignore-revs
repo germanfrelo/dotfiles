@@ -1,15 +1,18 @@
-# Ignore these commits when running `git blame`.
+# ========================================
+# Git blame ignore revisions
+# https://git-scm.com/docs/git-blame#Documentation/git-blame.txt---ignore-revs-fileltfilegt
 #
-# This file lists commit hashes that should be ignored by `git blame`.
-# These revisions usually consist of code formatting changes.
-#
-# To enable this locally, run this command once in your terminal:
+# Commit hashes to ignore when running `git blame` (typically formatting-only commits).
+# To enable locally if not set in global Git config:
 # git config blame.ignoreRevsFile .git-blame-ignore-revs
+# ========================================
 
-# --- INSTRUCTIONS ---
+# ------ INSTRUCTIONS ------
 # - Precede each commit hash with a comment containing the first line of its commit message.
 # - Append new commits to the bottom of the file in chronological order.
 # - Use the full 40-character hash, not a short hash.
+
+# ------ REVISIONS ------
 
 # style(zsh): Reformat gbignore with tab indentation
 2d4083363063c0c811899a0018f22f2d40b1688d

@@ -1,9 +1,9 @@
-// prettier.config.js, .prettierrc.js, prettier.config.mjs, or .prettierrc.mjs
+// ========================================
+// Prettier configuration
+// https://prettier.io/docs/configuration
+// ========================================
 
-/**
- * @see https://prettier.io/docs/en/configuration.html
- * @type {import("prettier").Config}
- */
+/** @type {import("prettier").Config} */
 const config = {
 	quoteProps: "consistent",
 	plugins: ["prettier-plugin-multiline-arrays"],

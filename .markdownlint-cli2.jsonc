@@ -1,6 +1,9 @@
-// Configuration for markdownlint-cli2.
-// Note: Using JSONC as the file format allows auto-completion and comments.
-// Ref.: https://github.com/DavidAnson/markdownlint-cli2
+// ========================================
+// markdownlint-cli2 configuration
+// https://github.com/DavidAnson/markdownlint-cli2
+//
+// ℹ️ NOTE: Using JSONC as the file format allows auto-completion and comments.
+// ========================================
 {
 	"globs": ["**/*.md"], // Lint all .md files in the current directory and its subdirectories
 	"gitignore": true,

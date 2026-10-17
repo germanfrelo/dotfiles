@@ -1,4 +1,9 @@
-### Custom repository rules ###
+# ========================================
+# Project Git ignore configuration
+# https://git-scm.com/docs/gitignore
+# ========================================
+
+# ------ CUSTOM RULES ------
 
 # Machine-local environment overrides and their chezmoi source representations
 .env.*
@@ -6,7 +11,7 @@
 .zshrc.local
 *dot_zshrc.local*
 
-# ---
+# ------ GENERATED RULES (TOPTAL) ------
 
 # Created by https://www.toptal.com/developers/gitignore/api/git,node,zsh
 # Edit at https://www.toptal.com/developers/gitignore?templates=git,node,zsh

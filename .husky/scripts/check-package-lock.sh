@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
-# Checks for package-lock.json changes, and if found, prompts to run 'npm ci'.
+# ========================================
+# Package lock change check script
+#
+# Checks for package-lock.json changes after checkout or merge and prompts to run 'npm ci'.
+# ========================================
 
 # Check if inside a git repository
 if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then

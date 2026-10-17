@@ -1,3 +1,8 @@
 #!/usr/bin/env bash
 
+# ========================================
+# Git post-merge hook
+# https://typicode.github.io/husky/
+# ========================================
+
 . ./.husky/scripts/check-package-lock.sh

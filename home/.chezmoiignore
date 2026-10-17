@@ -1,21 +1,18 @@
-# .chezmoiignore
+# ========================================
+# chezmoi ignore configuration
+# https://www.chezmoi.io/reference/special-files/chezmoiignore/
+# https://www.chezmoi.io/user-guide/manage-machine-to-machine-differences/#ignore-files-or-a-directory-on-different-machines
 #
-# List of patterns that chezmoi should ignore.
-# Patterns are relative to the destination directory (usually $HOME), not the source directory (this repository).
-# It's interpreted as a template, whether or not it has a .tmpl extension.
+# Patterns that chezmoi should ignore, relative to the destination directory (usually $HOME), not the source directory (this repository).
+# Interpreted as a template, whether or not it has a .tmpl extension.
 #
-# NOTE:
-# `dir/**/*` ignores all contents recursively, but NOT `dir/` itself (saving you from writing `!dir/`).
-# However, to manage a nested file, you MUST STILL explicitly negate (`!`) every intermediate directory in its path (e.g., `!dir/sub/`).
-#
-# References:
-# - https://www.chezmoi.io/reference/special-files/chezmoiignore/
-# - https://www.chezmoi.io/user-guide/manage-machine-to-machine-differences/#ignore-files-or-a-directory-on-different-machines
+# ℹ️ NOTE: `dir/**/*` ignores all contents recursively, but NOT `dir/` itself (saving you from writing `!dir/`). However, to manage a nested file, you MUST STILL explicitly negate (`!`) every intermediate directory in its path (e.g., `!dir/sub/`).
+# ========================================
 
-# GLOBAL PATTERNS
+# ------ GLOBAL PATTERNS ------
 **/.DS_Store
 
-# HOME DIRECTORY PATTERNS
+# ------ HOME DIRECTORY PATTERNS ------
 # Sorted alphabetically, with directories grouped at the top.
 .afirma/
 .cache/
