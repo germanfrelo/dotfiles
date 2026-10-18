@@ -31,7 +31,7 @@
 !.config/ncdu/config
 !.config/zsh/
 !.config/zsh/.p10k.zsh
-!.config/zsh/.zprofile # Required to allow chezmoi to see and execute the 'remove_' operation for this file (see 'home/private_dot_config/zsh/remove_dot_zprofile')
+!.config/zsh/.zprofile # Required to allow chezmoi to see and execute the 'remove_' operation for this file (see 'home/dot_config/zsh/remove_dot_zprofile')
 !.config/zsh/.zshenv
 !.config/zsh/.zshrc
 .copilot/

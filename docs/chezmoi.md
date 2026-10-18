@@ -611,7 +611,7 @@ Repo-specific notes not covered by the reference above.
 
 ### 1Password CLI and `chezmoi diff`
 
-`chezmoi diff` and `chezmoi cat` on `home/private_dot_config/private_git/private_config.tmpl` (git config) hang if the 1Password CLI is not authenticated. Use `cat "$XDG_CONFIG_HOME/git/config"` directly for inspection when 1Password is unavailable.
+`chezmoi diff` and `chezmoi cat` on `home/dot_config/git/private_config.tmpl` (git config) hang if the 1Password CLI is not authenticated. Use `cat "$XDG_CONFIG_HOME/git/config"` directly for inspection when 1Password is unavailable.
 
 ### Heredoc pitfall in templates
 
@@ -642,3 +642,43 @@ code --diff /tmp/brewfile-current.txt /tmp/brewfile-template.txt
 
 Red (left only) = installed but not tracked → add to template or uninstall manually.
 Green (right only) = tracked but not installed → will be installed on next `chezmoi apply`.
+
+### Re-evaluating chezmoi Attributes and Prefixes
+
+When adding a target using `chezmoi add`, chezmoi takes a snapshot of the file permissions on your local filesystem at that specific moment. If a directory or file had mode `0700` or `0600` (e.g. from an active `umask 077` or restrictive defaults), chezmoi permanently prefixes it in the source tree with `private_`.
+
+Because `chezmoi apply` repeatedly re-enforces `private_` permissions (`0700`/`0600`) back onto your destination, permissions can appear permanently locked unless deliberately re-evaluated.
+
+To adjust or strip an attribute prefix:
+
+#### Approach 1: Rename directly in the source repository (Recommended)
+
+When working directly inside this dotfiles repository, the cleanest method is renaming the source file or directory using Git:
+
+```sh
+# Example: Strip private_ attribute from a directory in source
+git mv home/private_dot_config home/dot_config
+
+# Example: Strip private_ attribute from a non-sensitive file
+git mv home/dot_config/git/private_ignore home/dot_config/git/ignore
+```
+
+On your next `chezmoi apply`, chezmoi detects the permission difference and updates the target mode on disk to match the revised source attribute (e.g., updating directory permissions to `0755` or file permissions to `0644`).
+
+#### Approach 2: Use `chezmoi chattr`
+
+To toggle attributes via the chezmoi CLI without editing source filenames manually:
+
+```sh
+# Remove the private attribute from a managed target
+chezmoi chattr -private ~/.config
+```
+
+#### Approach 3: Re-add the target file
+
+Alternatively, adjust the target permissions on your local filesystem first, then pull the state into chezmoi:
+
+```sh
+chmod 755 ~/.config
+chezmoi re-add ~/.config
+```

@@ -106,5 +106,5 @@ The z4h author (romkatv) confirmed this directly in [zsh4humans issue #351](http
 ## Consequences
 
 - `.zprofile` is entirely absent from the dotfiles.
-- chezmoi [`remove_` source files](https://www.chezmoi.io/reference/source-state-attributes/) are used to enforce this: `home/private_dot_config/zsh/remove_dot_zprofile` (guards `$ZDOTDIR/.zprofile`) and `home/remove_dot_zprofile` (guards `~/.zprofile`). chezmoi deletes the target files on every `chezmoi apply`, preventing accidental re-creation by any tool or agent.
+- chezmoi [`remove_` source files](https://www.chezmoi.io/reference/source-state-attributes/) are used to enforce this: `home/dot_config/zsh/remove_dot_zprofile` (guards `$ZDOTDIR/.zprofile`) and `home/remove_dot_zprofile` (guards `~/.zprofile`). chezmoi deletes the target files on every `chezmoi apply`, preventing accidental re-creation by any tool or agent.
 - If z4h is ever replaced or removed, the Homebrew environment setup must be restored manually (e.g. by re-adding `eval "$(brew shellenv)"` to `~/.zshrc` or `~/.zprofile`).
