@@ -75,34 +75,6 @@
 	"colorize.colorized_colors": ["HEXA", "RGB", "HSL", "OKLAB", "OKLCH"],
 	"colorize.include": ["**/*.json"],
 	"colorize.languages": ["json"],
-	"cSpell.ignorePaths": [
-		// Default
-		"package-lock.json",
-		"node_modules",
-		"vscode-extension",
-		".git/objects",
-		".vscode",
-		".vscode-insiders",
-		// Custom
-		"package.json",
-		"**/settings.json",
-		"**/*.config.*"
-	],
-	"cSpell.language": "en,es,en-GB,en-US,es-ES",
-	"cSpell.languageSettings": [
-		{
-			// e.g. "HTML" and "html" are treated as different words.
-			"caseSensitive": true,
-			"languageId": "markdown"
-		}
-	],
-	"cSpell.userWords": [
-		"Freixinós",
-		"germanfrelo",
-		"nvmrc",
-		"svgo.config.js",
-		"ZDOTDIR"
-	],
 	"CSSNavigation.enableDefinitionCodeLens": true,
 	"CSSNavigation.enableReferenceCodeLens": true,
 	"debug.allowBreakpointsEverywhere": true,
