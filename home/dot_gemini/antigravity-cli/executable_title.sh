@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# shellcheck disable=SC2250,SC2292,SC2312,SL2020 # Preserve upstream Antigravity CLI 'title.sh' script without modifications.
+
 # Reference: https://antigravity.google/docs/cli/title
 
 set -euo pipefail
