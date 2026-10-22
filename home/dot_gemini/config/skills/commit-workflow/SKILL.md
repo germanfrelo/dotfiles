@@ -13,7 +13,7 @@ description: "Reviews changes, proposes atomic commits, and writes commit messag
    - **Body**:
      - **Structure**: Structure the body cause-first (state the trigger, origin, or cause first, followed by the resolution and rationale).
      - **Composition**: Use prose paragraphs for a single cohesive change or a flat bulleted list for parallel changes of equal weight.
-     - **Formatting**: Use semantic line breaks (write each logical sentence as a single unbroken line, separated by blank lines between paragraphs) unless the repository explicitly configures a commit linter or guidelines enforcing a body line length limit. Format list items as single unbroken lines ending with a full stop.
+     - **Formatting**: Use semantic line breaks (write each logical sentence as a single unbroken line, separated by blank lines between paragraphs) unless the repository explicitly configures a commit linter or guidelines enforcing a body line length limit. Format list items as single unbroken lines ending with a full stop. Wrap in backticks technical entities: paths, extensions, commands, flags, attributes, settings, enums, packages, languages, linter codes, and code snippets.
    - **Title**:
      - **Derivation**: Synthesize the overarching intent from the drafted body; focus on the high-level outcome rather than mechanical implementation details.
      - **Format**: Follow strictly `type: Title` (or `type(scope): Title` when scope is used: lowercase type and scope, uppercase first letter after the colon).
