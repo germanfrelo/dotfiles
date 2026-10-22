@@ -23,6 +23,7 @@
     },
     "globalPermissionGrants": {
       "allow": [
+        "command(brew info)",
         "command(cat)",
         "command(echo)",
         "command(find)",
@@ -36,8 +37,12 @@
         "command(grep)",
         "command(head)",
         "command(ls)",
+        "command(npm info)",
+        "command(npm search)",
+        "command(npm view)",
         "command(tail)",
         "command(wc)",
+        "command(which)",
         "read_url(agentskills.io)",
         "read_url(antigravity.google)",
         "read_url(chezmoi.io)",
