@@ -49,7 +49,6 @@
     },
     "permissionGrantsV2Migrated": true,
     "remoteControlEnabled": true,
-    "remoteControlHostname": "{{ .chezmoi.hostname }}",
     "sandboxEnabledAtV2Migration": true,
     "themeMode": "THEME_MODE_INHERIT"
   }
