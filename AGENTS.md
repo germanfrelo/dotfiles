@@ -24,7 +24,14 @@ The **source state root** is `$(chezmoi source-path)`, which resolves to the `ho
 
 ### Type (required)
 
-Managed files under `home/` are the repository's deliverable—use `feat`, `fix`, `refactor`, etc. (even for `.md` rule and skill files). Reserve `docs` for repository documentation (`README.md`, root `AGENTS.md`, `docs/`).
+Categorize commits by functional intent and delivered impact rather than file location:
+
+- **Deliverables (`feat`, `fix`):** Any change that adds, updates, or fixes delivered configuration settings, CLI tools, aliases, packages, machine runtime behavior, or executable AI rules/skills under `home/dot_gemini/`. Never use `chore`, `style`, or `docs` for behavioral changes.
+- **Non-behavioral edits:**
+  - **`refactor`:** Restructures source templates, conditionals, attributes, or syntax without altering functional runtime behavior or introducing new capabilities.
+  - **`docs`:** Repository documentation (`README.md`, root `AGENTS.md`, `docs/`) and strictly comment-only edits within managed configs under `home/`.
+  - **`style`:** Code formatting, Prettier/linter reformatting, whitespace, or indentation with no logic change.
+  - **`chore`:** Repository maintenance, devDependencies, linter configurations, and Git blame ignore lists.
 
 ### Scope (required)
 
@@ -34,9 +41,10 @@ Managed files under `home/` are the repository's deliverable—use `feat`, `fix`
   - AI rules and skills (`home/dot_gemini/config/rules/`, `home/dot_gemini/config/skills/`, or root `AGENTS.md`) → `ai`.
   - `home/dot_gemini/` app settings and CLI config (excluding rules and skills) → `antigravity`.
   - `home/.chezmoiscripts/**/*install-packages*` or `home/.chezmoiscripts/**/*brewfile*` → `homebrew` (all package installation changes, including template directives and renames).
-  - `.chezmoi*` config/templates and other `.chezmoiscripts/` → `chezmoi`.
+  - `home/.chezmoi*` config files and templates (e.g., `.chezmoi.toml.tmpl`, `.chezmoiignore`) and other `.chezmoiscripts/` → `chezmoi`.
   - Root `README.md` → `readme`.
   - `docs/decisions/` → `decisions`.
+  - `docs/runbooks/` → `runbooks`.
   - `scripts/` → `scripts`.
 
 ## Repository path resolution
