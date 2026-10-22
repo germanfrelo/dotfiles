@@ -1,4 +1,5 @@
 # shellcheck shell=zsh
+# shellcheck disable=SC1091,SC2250,SC2292 # Preserve upstream zsh4humans bootstrap code without modifications.
 
 # Documentation: https://github.com/romkatv/zsh4humans/blob/v5/README.md
 #
