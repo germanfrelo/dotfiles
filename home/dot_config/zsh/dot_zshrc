@@ -263,13 +263,6 @@ function blame-ignore() {
 
 # Define aliases.
 
-# Editors
-
-# VS Code: if not inside its integrated terminal, open a new window.
-if [[ "$TERM_PROGRAM" != "vscode" ]]; then
-	alias code="code --new-window"
-fi
-
 # Files and directories
 
 # Recently visited directories
