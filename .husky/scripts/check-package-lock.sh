@@ -13,7 +13,7 @@ if ! git rev-parse --quiet HEAD > /dev/null 2>&1; then
 fi
 
 # Check if package-lock.json exists
-if [ ! -f "package-lock.json" ]; then
+if [[ ! -f "package-lock.json" ]]; then
 	exit 0 # Skip silently
 fi
 
