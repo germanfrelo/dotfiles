@@ -446,7 +446,6 @@
 	"workbench.editor.useModal": "off",
 	"workbench.editorAssociations": {
 		"*.copilotmd": "vscode.markdown.preview.editor", // Default
-		"*.md": "vscode.markdown.editor",
 		"*.plist": "binaryPlistEditor.edit",
 		"*.svg": "default"
 	},
