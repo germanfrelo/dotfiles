@@ -1,10 +1,10 @@
 ---
 trigger: model_decision
-description: "Conventions for any project containing a package.json file."
+description: "package.json configuration and maintenance conventions. Applies when creating or modifying package.json files."
 ---
 
-# Package JSON Conventions
+# package.json Conventions
 
-- Use `"type": "module"` in `package.json`.
+- Use `"type": "module"` in `package.json` for new projects; do not switch existing CommonJS packages to ESM unless requested.
 - Set `"private": true` in `package.json` unless it explicitly sets `publishConfig` or the README documents the package as a published library.
-- After changing any field in `package.json`, run `npm install` to update `package-lock.json`.
+- After modifying dependencies or package metadata in `package.json`, run `npm install` to update `package-lock.json`.

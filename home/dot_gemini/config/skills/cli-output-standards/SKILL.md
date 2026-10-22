@@ -1,42 +1,32 @@
 ---
 name: cli-output-standards
-description: Use this skill when the user asks the agent to write, refactor, or generate Node.js scripts, shell scripts, or any code that produces console output. It enforces a strict icon-based formatting system for terminal logs.
+description: "Enforces a standardized icon-based formatting system for terminal logs. Use when writing, refactoring, or generating Node.js scripts, shell scripts, or CLI code that produces console output."
 ---
 
 # CLI Output Standards
 
-This skill provides the runbook for formatting terminal output, ensuring that all scripts produce scannable, standardized logs using a consistent `Emoji + State/Action` prefix.
+1. **Select state icon**: Prefix each status log with its corresponding icon followed by a space:
+   - `✅` **Success / OK / Up-To-Date**: Check passes or operation succeeds.
+   - `⏭️` **Skipped / Ignored / Dry-Run**: Item is intentionally bypassed or dry-run.
+   - `⚠️` **Warning / Non-Fatal Error**: Check fails but execution continues.
+   - `❌` **Fatal Error / Operation Failed**: Operation aborts or API call fails.
+   - `🔄` **Action / Updating / Fetching**: Value is modified or resource is fetched.
+   - `➕` **Created / Added**: New resource is generated.
+   - `🗃️` **Archived / State Change**: Resource lifecycle state changes.
 
-## Steps
-
-When writing or editing CLI output logic, follow these steps to format the logs:
-
-1. **Determine the output state**: Identify what the log represents and apply the exact corresponding icon:
-   - `✅` **Success / OK / Up-to-date**: A check passes or an operation succeeds.
-   - `⏭️ ` **Skipped / Ignored / Dry-run**: Intentionally bypassing an item (Requires trailing space).
-   - `⚠️ ` **Warning / Non-fatal error**: A check fails but the script continues (Requires trailing space).
-   - `❌` **Fatal Error / Operation failed**: An operation aborts or API fails.
-   - `🔄` **Action / Updating / Fetching data**: Iterating or modifying values.
-   - `➕` **New item added / Created**: Generating a new resource.
-   - `🗃️ ` **Archived / State change**: A lifecycle state change (Requires trailing space).
-
-2. **Align sub-items**: When printing status for sub-items (like checking multiple files within a repo), align the status icons vertically by padding the prefix with spaces.
+2. **Align sub-item columns**: When logging multiple sub-items (e.g., per-file checks within a repository), pad labels with trailing spaces so status icons align vertically:
 
    ```text
      LICENSE:      ✅ ok
-     package.json: ⏭️  not found (skipping)
+     package.json: ⏭️ not found (skipping)
    ```
 
-3. **Simplify object diffs**: Do not print bulky `[old] -> [new]` diffs for large JSON objects or arrays. Instead, simply report that the field was updated.
+3. **Summarize object updates**: Report updated field names instead of printing bulky `[old] -> [new]` diffs for large objects or arrays:
 
    ```text
        🔄 updated _derived.generalSettings
    ```
 
-4. **Format progress indicators**: Use a hyphen for list progress instead of an icon to prevent visual fatigue.
+4. **Format progress counters**: Prefix batch progress lines with a plain hyphen (`- [1/22] repo-name`) instead of an emoji to avoid visual noise.
 
-   ```text
-   - [1/22] repo-name
-   ```
-
-5. **Verify the output**: Before finalizing the task, run the script (or run a dry-run) in the terminal to verify that the icons render correctly and that all colons are perfectly aligned vertically.
+5. **Verify terminal alignment**: Run the script (or `--dry-run`) in the terminal to confirm icons and colons align vertically.

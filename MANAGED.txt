@@ -26,11 +26,11 @@
 │       ├── rules
 │       │   ├── _markdown-rules-shared.md
 │       │   ├── developer-profile.md
-│       │   ├── documentation-conventions.md
 │       │   ├── general-conventions.md
 │       │   ├── javascript-conventions.md
 │       │   ├── markdown-conventions.md
 │       │   ├── package-json-conventions.md
+│       │   ├── readme-conventions.md
 │       │   └── safe-deletion.md
 │       └── skills
 │           ├── cli-output-standards

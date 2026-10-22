@@ -1,14 +1,10 @@
 ---
 trigger: model_decision
-description: "Markdown writing conventions"
+description: "Markdown writing and linting conventions. Applies when creating or editing Markdown files."
 ---
 
 # Markdown Conventions
 
-## Rules
-
 @[Shared Markdown Rules](_markdown-rules-shared.md)
-
-## Commands
-
-After creating or modifying an `.md` file, check `package.json` scripts or local configurations, and run any configured Markdown formatters and linters.
+<!-- prettier-ignore -->
+- After creating or modifying a `.md` file, run any Markdown formatters and linters configured in the workspace or `package.json`.

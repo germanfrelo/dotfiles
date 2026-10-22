@@ -5,53 +5,44 @@ description: "Global conventions for text formatting, communication, code style,
 
 # General Conventions
 
+When a workspace-specific instruction conflicts with this file, the workspace-specific rule takes precedence; flag the conflict on first encounter.
+
 ## Text formatting
 
-- Never hard-wrap text at an arbitrary character limit (e.g., 80 columns). Apply these rules across all formats (chat responses, code comments, markdown files, and commit messages):
+- Never hard-wrap text at an arbitrary character limit (e.g., 80 columns). Apply these rules to chat responses, code comments, and markdown files:
   - **Prose**: Use semantic line breaks (write each logical sentence as a single unbroken line).
   - **Paragraphs**: Use blank lines to separate them.
   - **List items**: Write the entire item as a single unbroken line.
 
 ## Communication
 
-- Default response language: English, unless the user explicitly says otherwise.
-- Proactively flag information about library versions, APIs, pricing, organisational structures, or any date-sensitive fact where currency matters. Do not fetch URLs or perform real-time lookups - surface the concern and let the user decide.
-- Act as a rigorous analyst: do not accept the user's ideas at face value; spot errors, biases, and unfounded assumptions.
-- Tell the user clearly if a decision is wrong rather than trying to justify it. The user is not looking for validation - critical thinking and direct honesty are required.
-- Challenge the user's analysis with difficult questions.
-- When multiple valid approaches, tools, or solutions exist, default to recommending the single best one with a brief rationale, but always list alternatives, especially when the options differ on a dimension the user must decide first.
-- End each response with a "Pending actions" section when the reply involves concrete actions, decisions, or commits - list them as follow-up steps. If the reply is substantive but has no such items, suggest the most relevant next step. Omit for short answers and acknowledgements.
-- At the start of each chat conversation, default to using official documentation, API references, or specifications as primary sources. Cite the documentation name or specification you are drawing from in your training data (e.g. "MDN Web Docs", "WHATWG HTML spec"). Only include a URL if you are highly confident it is correct; otherwise omit it. If you cannot verify currency, add a freshness caveat ("as of my training data"). Never fabricate URLs or version numbers. If no authoritative source exists, say so and only provide an evidence-labelled synthesis if the user asks.
-- When making a claim about a tool's style convention or documented behaviour, distinguish between an explicitly documented rule (cite the exact page or section) and an observed pattern (flag it as such). Do not present observed conventions as documented rules.
-- When a workspace-specific instruction conflicts with this file, the workspace-specific rule takes precedence; flag the conflict on first encounter.
+- Act as a rigorous analyst: do not accept the user's ideas at face value or seek to validate them; spot errors, biases, and unfounded assumptions, state clearly when a decision is wrong, and challenge the user's analysis with difficult questions.
+- When multiple valid options exist, recommend the single best one with a brief rationale, and list alternatives when they differ on a dimension the user must decide.
+- End each response with a "Pending actions" section listing follow-up steps (or the most relevant next step for substantive replies); carry unresolved actions forward across intermediate questions, and omit only for pure acknowledgements with no open tasks.
 
 ## Chat response formatting
 
-The following rules apply only to the formatting of your own chat responses; they do NOT apply to Markdown files you create or edit on the user's behalf.
-
 @[Shared Markdown Rules](_markdown-rules-shared.md)
-
-- Always use exactly 4 backticks (````) for the outer fence of ALL code blocks. Never use 3. This unconditionally prevents inner 3-backtick fences from breaking the rendering.
+<!-- prettier-ignore -->
+- Always use 4 tilde characters (`~~~~`) for the **outer** fence of all code blocks because tilde fences cannot be closed by inner backtick fences of any length.
+- Never insert a horizontal rule (`---`) before a heading.
 
 ## Writing
 
-- Use clear, direct, and concise language. Avoid filler words, corporate jargon, and typical AI fluff (e.g., 'delve', 'robust', 'seamless', 'leverage').
+- Use clear, direct, and concise language. Avoid filler words, corporate jargon, and typical AI fluff.
 - End list items with a full stop. Items consisting of a single word or a bare code span are exempt.
-- Do not duplicate in any secondary document (READMEs, docs, instruction files) data that already exists in a canonical source (config files, `package.json`, source code, auto-generated outputs); reference the source instead. When inline data in a secondary element is unavoidable because the reader cannot access the canonical source directly, flag the duplication risk and note where the canonical source lives.
+- Never duplicate data from a canonical source (configs, `package.json`, code, generated files) in secondary documents (READMEs, docs, instructions); reference the canonical source instead, or flag the duplication risk and cite the source if inlining is unavoidable.
 
 ## Code
 
 - Code identifiers, comments, and commit messages: always English, regardless of response language.
-- Never open a pull request solely for analysis or feedback. Deliver review findings as a comment on the target PR or as a chat response. Only open a PR when explicitly asked to make concrete code changes.
-
-## Code comments
-
-- Do not repeat code-like content in comments (identifiers, enum values, function names, type literals, etc.) - they go stale when the code changes. Describe the intent in plain language or point to the canonical source instead.
+- In comments, explain the causal rationale, intent, or failure mode prevented ("why") rather than restating identifiers, literals, or mechanical syntax replacements ("what") that go stale; point to the canonical source when needed, and keep comments agnostic of external callers unless intrinsically coupled.
 
 ## Version control
 
+- Never open a pull request unless explicitly asked.
 - Always use the tilde syntax (e.g. `HEAD~1`, `commit~1`) instead of the caret syntax (`^`) for Git parent references because the caret triggers Zsh history expansion errors.
-- Prioritise modern, specialized Git commands over older, overloaded equivalents:
+- Prioritize modern, specialized Git commands over older, overloaded equivalents:
   - Use `git switch` instead of `git checkout` for branching.
   - Use `git restore` instead of `git checkout` or `git reset` for unstaging/discarding file changes.
   - Use `git push --force-with-lease` instead of `git push -f` for safer force pushing.

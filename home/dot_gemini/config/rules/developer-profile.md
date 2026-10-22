@@ -13,8 +13,8 @@ Front-end Web Developer.
 
 Always assume the latest stable versions for the following:
 
-- OS: macOS
-- Shell: Zsh
-- Package manager: Homebrew
-- JavaScript runtime: Node.js & npm (via nvm)
-- Code editor: Visual Studio Code
+- OS: macOS.
+- Shell: Zsh.
+- Package manager: Homebrew.
+- JavaScript runtime: Node.js & npm (via nvm).
+- Code editor: Visual Studio Code.

@@ -1,22 +1,18 @@
 ---
 name: evaluate-antigravity-rules
-description: Evaluates and modifies Antigravity rule files for correctness, structure, and token efficiency. Use when auditing or editing rules in .gemini/config/rules/.
+description: "Evaluates and optimizes Antigravity rule files. Use when reviewing or editing AGENTS.md, GEMINI.md, **/.agents/rules/*.md, or ~/.gemini/config/rules/*.md."
 ---
 
 # Evaluate Antigravity Rules
 
-This skill provides the standard workflow for evaluating, creating, and modifying Antigravity rule files (`.md` files).
+## 1. Audit rule file
 
-## When to use this skill
+- **Specification compliance**: Fetch the official [Antigravity rules documentation](https://antigravity.google/docs/rules.md) (via `read_url_content` or `curl -fsSL`). Audit every section and line of the target file painstakingly against the fetched specification, treating each element as non-compliant until verified against the official documentation.
+- **Quality and consistency**: Check for logical contradictions, semantic ambiguity without clear operational criteria, deeply nested conditional branching, and composition conflicts with ancestor rules or included files.
+- **Token efficiency**: Ensure instructions are concise, self-contained, and free of conventions already enforced automatically by linters, formatters, or Git hooks.
 
-Use this skill when you are asked to review, edit, or create Antigravity rules, ensuring they comply with YAML frontmatter standards and structural conventions.
+## 2. Report findings and apply changes
 
-## How to use it
-
-When creating or editing a rule file, follow this workflow in order:
-
-1. **Evaluate content**: Proactively identify all gaps, contradictions, and improvement opportunities in the file. Keep each instruction short and self-contained. Include a brief because-clause when a rule chooses between alternatives. Include code examples when the rule concerns syntax or API usage. Skip conventions already enforced automatically by tools.
-2. **Ensure proper structure**: When adding a new bullet, insert it adjacent to topically related bullets within the same section. Do not reorder adjacent unreferenced bullets. Reference canonical sources instead of duplicating hardcoded values.
-3. **Format YAML frontmatter**: Every `.md` file inside `rules/` must start with YAML frontmatter declaring a valid `trigger` (`always_on`, `model_decision`, `glob`, or `manual`). Include a `description` field for `model_decision` rules. For a `glob` trigger, you MUST include a `globs` field with a comma-separated list of file glob patterns. `AGENTS.md` and `GEMINI.md` do not use YAML frontmatter.
-4. **Propose changes**: If the request would violate these standards, point out the conflict and propose a compliant alternative. Propose your changes clearly to the user and ask for approval.
-5. **Apply edits**: Once approved, use your file editing tools to apply the changes directly. Only modify the specific rules or bullets that require changes.
+- Report findings organized by category (frontmatter, structure, contradictions, ambiguity, cognitive load, composition, token budget) with line numbers and rationale.
+- Wait for explicit user confirmation before editing the file.
+- Upon confirmation, modify only what is necessary to resolve the audit findings, without adding unrelated rules.

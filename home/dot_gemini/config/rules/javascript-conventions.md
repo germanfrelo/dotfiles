@@ -5,11 +5,11 @@ description: "JavaScript and Node.js module architecture conventions. Applies to
 
 # JavaScript Conventions
 
-- Use ESM (`import`/`export`). Never use CommonJS (`require`, `module.exports`) in new files. Do not migrate existing CommonJS files unless explicitly asked; when importing a CommonJS module from ESM, use default import syntax.
-- Use native `fetch` (Node 18+). Do not add `node-fetch`, `axios`, or similar HTTP libraries unless native fetch lacks a required feature (e.g., HTTP/2, streaming uploads, automatic retries); document the missing capability in a code comment. Always check `response.ok` and throw on non-2xx responses. Use `AbortSignal.timeout(ms)` to enforce request timeouts.
-- Use Node built-ins (`fs/promises`, `path`, `crypto`, `os`) whenever they provide the required functionality. Only add an npm package if the built-in lacks a specific needed feature; document that feature in a comment.
-- Extract shared constants (API base URLs, filesystem paths, auth key names, timeouts, retry counts) into `config.js` and import from it. Script-local constants used in only one file may remain inline. Never hardcode shared values in individual scripts.
-- Extract shared utility functions used by two or more scripts into `utils.js` - typical candidates: reading and JSON-parsing a file, git operations, string normalisation, filesystem helpers. Prefer a named utility (e.g. `loadJson(filePath)`) over repeating `readFile` + `JSON.parse` inline.
-- Extract HTTP fetch helpers, auth header builders, rate-limit sleeps, and per-resource fetch functions into a dedicated `<service>-api.js` (e.g. `github-api.js`). The main script should contain only control flow, not raw `fetch` calls.
-- When extracting a function to a shared module, convert any outer-scope variables it closes over into explicit parameters (e.g. `githubHeaders(token)` not `githubHeaders()` closing over `token`).
-- Split code into separate modules from the start - do not wait for scripts to grow large before extracting shared code.
+- Use ESM (`import`/`export`) in all new files. Do not migrate existing CommonJS files unless asked; import CommonJS modules into ESM via default imports.
+- Prefer Node built-ins (`fs/promises`, `path`, `crypto`, `os`) and native `fetch` (Node 18+) over third-party packages (`axios`, `node-fetch`, etc.); only add a package when a built-in lacks a required feature (e.g., HTTP/2, streaming uploads, retries) and document why in a comment.
+- With `fetch`, always check `response.ok` (throwing on non-2xx responses) and enforce timeouts via `AbortSignal.timeout(ms)`.
+- Modularize from the start rather than waiting for scripts to grow:
+  - **`config.js`**: Shared constants (API base URLs, paths, auth key names, timeouts, retry counts); keep single-script constants inline.
+  - **`utils.js`**: Helpers shared by two or more scripts (e.g., `loadJson(filePath)` instead of repeating `readFile` + `JSON.parse`, Git wrappers, string/path helpers).
+  - **`<service>-api.js`** (e.g., `github-api.js`): HTTP helpers, auth headers, rate-limit sleeps, and resource fetchers so entry scripts contain only control flow.
+- Pass dependencies as explicit parameters in shared modules rather than closing over outer-scope variables (e.g., `githubHeaders(token)`, not `githubHeaders()`).

@@ -1,12 +1,10 @@
 ---
 trigger: always_on
-description: "Safe file deletion practices to prevent accidental data loss."
+description: "Safe deletion constraints for files and directories to prevent accidental data loss."
 ---
 
 # Safe Deletion
 
-- Always use `trash` (not `rm`) for file and directory deletions.
-- Use `rm` only when authoring scripts or CI pipelines.
-- If `trash` fails, propose the `rm` alternative and wait for explicit approval before executing.
-- If deleting via globs/wildcards, list the matching files and wait for explicit approval before executing.
-- Never run `rm` on system or root home paths (`/`, `/bin`, `/etc`, `$HOME`, `~`). Refuse immediately; there is no override.
+- Always use `trash` instead of `rm` to delete files or directories (use `rm` only inside authored scripts or CI pipelines); if `trash` fails, propose `rm` and wait for explicit user approval.
+- Before deleting with globs or wildcards, list all matching paths and wait for explicit user approval.
+- Never run `rm` on system or root home paths (`/`, `/bin`, `/etc`, `$HOME`, `~`); refuse immediately with no override.
