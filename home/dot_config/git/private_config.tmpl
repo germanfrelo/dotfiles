@@ -61,7 +61,7 @@
 [diff]
 	tool = vscode
 [difftool "vscode"]
-	cmd = code --wait --diff $LOCAL $REMOTE
+	cmd = code --wait --diff "$LOCAL" "$REMOTE"
 
 # --- Merge ---
 
@@ -70,4 +70,4 @@
 [merge]
 	tool = vscode
 [mergetool "vscode"]
-	cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
+	cmd = code --wait --merge "$REMOTE" "$LOCAL" "$BASE" "$MERGED"
