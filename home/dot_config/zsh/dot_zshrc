@@ -80,11 +80,13 @@ path=(~/bin $path)
 # Preferred editor for CLI tools.
 
 # VS Code
-# https://code.visualstudio.com/docs/editor/command-line
-export EDITOR="code --wait"
-export VISUAL="code --wait"
-# If not inside VS Code's integrated terminal, open a new window.
-if [[ "$TERM_PROGRAM" != "vscode" ]]; then
+# https://code.visualstudio.com/docs/configure/command-line
+# Inside VS Code's integrated terminal: Reuses the current window.
+# Outside: Opens a new window to keep temporary CLI edits separate from unrelated active workspaces.
+if [[ "$TERM_PROGRAM" == "vscode" ]]; then
+	export EDITOR="code --wait"
+	export VISUAL="code --wait"
+else
 	export EDITOR="code --wait --new-window"
 	export VISUAL="code --wait --new-window"
 fi
