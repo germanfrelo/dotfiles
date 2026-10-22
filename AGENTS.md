@@ -18,7 +18,7 @@ The **source state root** is `$(chezmoi source-path)`, which resolves to the `ho
 - **Existing managed files:** Edit only source files under `home/`, then verify with `chezmoi diff --use-builtin-diff`. Never edit destination files directly.
 - **New dotfiles:** Never scaffold new configurations from scratch in source or destination directories; instruct the user to create the destination file and run `chezmoi add <target-path>`.
 - **Secrets exception:** Author new `private_` files directly in the source tree as templates using `onepasswordRead` (never paste raw secrets). If an existing destination file was edited directly, verify the source template does not use `onepassword*` before suggesting `chezmoi re-add`; if it does use `onepassword*`, abort and ask the user to re-template manually.
-- **Enforced absent files:** Enforce absent files by creating `home/<path>/remove_dot_<name>` containing a comment linking to its decision record in `docs/decisions/` (see [ADR 0003](/docs/decisions/0003-enforce-absence-of-home-editorconfig.md)); if the target path is inside an ignored directory, add an explicit negation (`!`) in [`home/.chezmoiignore`](/home/.chezmoiignore).
+- **Enforced absent files:** Follow the [Enforcing Absent Files Runbook](/docs/runbooks/enforcing-absent-files.md) to declare, verify, or revert absent dotfiles.
 
 ## Commit conventions
 
