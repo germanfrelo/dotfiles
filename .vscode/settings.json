@@ -20,6 +20,5 @@
 		"*zshenv": "shellscript",
 		"*zshrc": "shellscript"
 	},
-	"shellLsp.format.spaceRedirects": true,
 	"shellLsp.format.switchCaseIndent": true
 }

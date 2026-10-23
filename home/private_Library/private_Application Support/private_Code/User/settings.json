@@ -417,7 +417,6 @@
 	},
 	"search.searchEditor.doubleClickBehaviour": "selectWord",
 	"search.searchEditor.reusePriorSearchConfiguration": true,
-	"shellLsp.format.spaceRedirects": true,
 	"shellLsp.format.switchCaseIndent": true,
 	"stylelint.validate": [
 		"css", // Default
