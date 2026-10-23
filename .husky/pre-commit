@@ -6,9 +6,9 @@
 # Triggers:
 #   - Any file under home/ is staged (chezmoi source root — the managed list may have changed)
 #   - scripts/managed.js is staged (the generator changed — its output should be updated)
-if git ls-files --cached --error-unmatch scripts/managed.js > /dev/null 2>&1; then
+if git ls-files --cached --error-unmatch scripts/managed.js >/dev/null 2>&1; then
 	if ! git diff --cached --quiet -- home/ scripts/managed.js; then
-		node scripts/managed.js > MANAGED.txt
+		node scripts/managed.js >MANAGED.txt
 		git add MANAGED.txt
 	fi
 fi

@@ -47,7 +47,7 @@ NUM_COLOR="${FG_BRIGHT_WHITE}${B}"
 	read -r BG_TASKS
 	read -r MODEL
 	read -r COLS
-} <<< "$(
+} <<<"$(
 	jq -r '
 		(.agent_state // "idle"),
 		(.context_window.used_percentage // 0),
@@ -59,7 +59,7 @@ NUM_COLOR="${FG_BRIGHT_WHITE}${B}"
 		(.task_count // 0),
 		(.model.display_name // ""),
 		(.terminal_width // 80)
-	' 2> /dev/null || printf "idle\n0\n\nfalse\nfalse\n0\n0\n0\n\n80\n"
+	' 2>/dev/null || printf "idle\n0\n\nfalse\nfalse\n0\n0\n0\n\n80\n"
 )"
 
 # ─── Computed Values ─────────────────────────────────────────────────────────
