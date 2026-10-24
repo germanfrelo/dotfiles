@@ -1,10 +1,4 @@
 {
-	"[shellscript]": {
-		"editor.codeActionsOnSave": {
-			"source.fixAll.shellLsp": "explicit"
-		},
-		"editor.defaultFormatter": "stubbedev.shell-lsp"
-	},
 	"files.associations": {
 		// Associates non-standard chezmoi filenames (dot_* prefixes, *.tmpl templates) with their intended languages.
 		"*.json.tmpl": "json",
@@ -19,6 +13,5 @@
 		"*zprofile": "shellscript",
 		"*zshenv": "shellscript",
 		"*zshrc": "shellscript"
-	},
-	"shellLsp.format.switchCaseIndent": true
+	}
 }

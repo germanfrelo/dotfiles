@@ -21,14 +21,21 @@
 	"type": "module",
 	"main": "",
 	"scripts": {
-		"format": "prettier --write .",
-		"format:check": "prettier --check .",
+		"format": "prettier --write . && npm run format:shell",
+		"format:check": "prettier --check . && npm run format:shell:check",
+		"format:shell": "git ls-files -z '*.sh' '*.sh.tmpl' '.husky/*' '*zshrc' '*zshenv' ':!.husky/_/**' | xargs -0 env SHUCK_EXPERIMENTAL=1 shuck format",
+		"format:shell:check": "git ls-files -z '*.sh' '*.sh.tmpl' '.husky/*' '*zshrc' '*zshenv' ':!.husky/_/**' | xargs -0 env SHUCK_EXPERIMENTAL=1 shuck format --check",
+		"lint:shell": "git ls-files -z '*.sh' '*.sh.tmpl' '.husky/*' '*zshrc' '*zshenv' ':!.husky/_/**' | xargs -0 shuck check",
 		"managed": "node scripts/managed.js > MANAGED.txt",
 		"prepare": "husky"
 	},
 	"lint-staged": {
 		"*.*": [
 			"prettier --write --ignore-unknown"
+		],
+		"{**/*.sh,**/*.sh.tmpl,.husky/!(_)*,**/*zshrc,**/*zshenv}": [
+			"env SHUCK_EXPERIMENTAL=1 shuck format",
+			"shuck check"
 		]
 	},
 	"devDependencies": {

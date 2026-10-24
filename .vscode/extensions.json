@@ -7,8 +7,6 @@
 		"kazuito.ghostty",
 		// Markdown
 		"DavidAnson.vscode-markdownlint",
-		// Shell
-		"stubbedev.shell-lsp",
 		// TOML
 		"tamasfe.even-better-toml"
 	]

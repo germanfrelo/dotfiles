@@ -1,5 +1,3 @@
-# shellcheck shell=zsh
-
 # =======================================================================
 # Personal Zsh configuration file. It is strongly recommended to keep all
 # shell customization and configuration (including exported environment
@@ -48,7 +46,7 @@ zstyle ':z4h:ssh:*' enable 'no'
 
 # Send these files over to the remote host when connecting over SSH to the
 # enabled hosts.
-# shellcheck disable=SC2088 # Tildes must stay literal so z4h resolves them on the remote machine.
+# shuck: disable=SC2088 # Tildes must stay literal so z4h resolves them on the remote machine.
 zstyle ':z4h:ssh:*' send-extra-files '~/.nanorc' '~/.env.zsh'
 
 # ==================================================
@@ -221,16 +219,16 @@ function blame-ignore() {
 	fi
 
 	case "${title_lower}" in
-		style(|\(*\)):*)
+		style:* | style\(*\):*)
 			# Tier 1: Safe formatting — proceed silently
 			;;
-		(docs|chore|refactor)(|\(*\)):*)
+		docs:* | chore:* | refactor:* | docs\(*\):* | chore\(*\):* | refactor\(*\):*)
 			# Tier 2: Ambiguous — proceed with cautionary notice
 			print -P "%F{yellow}Notice: Commit \"${commit_title}\" may contain functional changes. Ensure it is purely mechanical before ignoring.%f"
 			;;
 		*)
 			# Tier 3: Restricted — requires force override
-			if ((! force)); then
+			if ((!force)); then
 				if [[ "${title_lower}" == *'!'*:* || "${title_lower}" == *'!'* ]]; then
 					print -P "%F{red}Aborted: Breaking changes (!) alter behavior and cannot be ignored by git blame (use --force to override).%f" >&2
 				else
@@ -269,7 +267,7 @@ function blame-ignore() {
 # List
 alias dirs="dirs -v"
 # Quick access by index
-# shellcheck disable=SC2139 # The loop variable must expand when defined, before it is unset on the next line.
+# shuck: disable=SC2139 # The loop variable must expand when defined, before it is unset on the next line.
 for index in {1..9}; do alias "${index}"="cd +${index}"; done
 unset index
 
@@ -339,7 +337,7 @@ alias wget='wget --hsts-file="${XDG_CACHE_HOME}/wget-hsts"'
 
 # Add flags to existing aliases.
 
-# shellcheck disable=SC2139 # Must expand when defined to capture the existing alias and avoid infinite expansion loops.
+# shuck: disable=SC2139 # Must expand when defined to capture the existing alias and avoid infinite expansion loops.
 alias ls="${aliases[ls]:-ls} -A"
 
 # ==================================================

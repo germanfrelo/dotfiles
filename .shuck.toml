@@ -1,0 +1,12 @@
+[per-file-shell]
+"**/*.sh.tmpl" = "bash"
+"**/*zshrc" = "zsh"
+"**/*zshenv" = "zsh"
+
+[lint]
+per-file-ignores = { "**/*p10k.zsh" = ["ALL"] }
+
+[format]
+indent-style = "tab"
+switch-case-indent = true
+exclude = ["**/*gemini/antigravity-cli/*.sh", "**/*p10k.zsh"]
