@@ -1,9 +1,6 @@
 {
 	"[shellscript]": {
-		"editor.codeActionsOnSave": {
-			"source.fixAll.shellLsp": "explicit"
-		},
-		"editor.defaultFormatter": "stubbedev.shell-lsp"
+		"editor.defaultFormatter": null // Language unsupported by Prettier.
 	},
 	"files.associations": {
 		// Associates non-standard chezmoi filenames (dot_* prefixes, *.tmpl templates) with their intended languages.
@@ -19,6 +16,5 @@
 		"*zprofile": "shellscript",
 		"*zshenv": "shellscript",
 		"*zshrc": "shellscript"
-	},
-	"shellLsp.format.switchCaseIndent": true
+	}
 }

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# shellcheck disable=SC2034,SC2250,SC2292,SC2312,SC2338,SL1003,SL2020 # Preserve upstream Antigravity CLI 'statusline.sh' script without modifications.
+# shuck: disable=SC2034,SC2250,SC2292,SC2312,SC2338 # Preserve upstream Antigravity CLI 'statusline.sh' script without modifications.
 
 # Reference: https://antigravity.google/docs/cli/statusline
 

@@ -26,17 +26,45 @@ See [MANAGED.txt](/MANAGED.txt) for the full file list.
 
 ## npm scripts
 
-| Script         | Description                                                     |
-| -------------- | --------------------------------------------------------------- |
-| `managed`      | Regenerates `MANAGED.txt` from the current chezmoi source state |
-| `format`       | Formats all files with Prettier                                 |
-| `format:check` | Checks formatting without writing                               |
+| Script               | Description                                                     |
+| -------------------- | --------------------------------------------------------------- |
+| `managed`            | Regenerates `MANAGED.txt` from the current chezmoi source state |
+| `format`             | Formats all files with Prettier and shuck                       |
+| `format:check`       | Checks formatting with Prettier and shuck without writing       |
+| `format:shell`       | Formats shell scripts with shuck                                |
+| `format:shell:check` | Checks shell script formatting with shuck                       |
+| `lint:shell`         | Lints shell scripts with shuck                                  |
 
 ## Tooling
 
 - [Prettier](https://prettier.io/) — formats JS, JSON, Markdown, and YAML.
+- [shuck](https://github.com/ewhauser/shuck) — lints and formats shell scripts (Bash, Zsh, POSIX sh).
 - [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) — lints all Markdown files.
 - [Husky](https://typicode.github.io/husky/) + [lint-staged](https://github.com/lint-staged/lint-staged) — enforces formatting on every commit.
+
+## Development
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/)
+- [Homebrew](https://brew.sh)
+
+### Setup
+
+Execute these steps in order to install dependencies and activate Git hooks:
+
+1. Install Node.js dependencies and activate Git hooks declared in [`package.json`](/package.json):
+
+   ```sh
+   npm install
+   ```
+
+2. Trust the third-party tap for shell tooling and install Homebrew dependencies declared in [`Brewfile`](/Brewfile):
+
+   ```sh
+   brew trust ewhauser/tap
+   brew bundle --file=./Brewfile
+   ```
 
 ## Bootstrapping a new machine
 

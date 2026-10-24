@@ -42,10 +42,7 @@
 		"editor.defaultFormatter": "charliermarsh.ruff"
 	},
 	"[shellscript]": {
-		"editor.codeActionsOnSave": {
-			"source.fixAll.shellLsp": "explicit"
-		},
-		"editor.defaultFormatter": "stubbedev.shell-lsp"
+		"editor.defaultFormatter": null // Language unsupported by Prettier.
 	},
 	"[toml]": {
 		"editor.defaultFormatter": "tamasfe.even-better-toml"
@@ -417,7 +414,6 @@
 	},
 	"search.searchEditor.doubleClickBehaviour": "selectWord",
 	"search.searchEditor.reusePriorSearchConfiguration": true,
-	"shellLsp.format.switchCaseIndent": true,
 	"stylelint.validate": [
 		"css", // Default
 		"postcss", // Default
