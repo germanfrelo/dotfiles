@@ -8,19 +8,20 @@ See [MANAGED.txt](/MANAGED.txt) for the full file list.
 
 ## Repository layout
 
-| Path              | Purpose                                                    |
-| ----------------- | ---------------------------------------------------------- |
-| `home/`           | Chezmoi source root (`.chezmoiroot = home`)                |
-| `docs/chezmoi.md` | Personal chezmoi reference and cheat sheet                 |
-| `scripts/`        | Automation scripts                                         |
-| `.husky/`         | Git hook scripts                                           |
-| `AGENTS.md`       | AI agent instructions with machine-readable chezmoi config |
+| Path              | Purpose                                     |
+| ----------------- | ------------------------------------------- |
+| `home/`           | Chezmoi source root (`.chezmoiroot = home`) |
+| `docs/chezmoi.md` | Personal chezmoi reference and cheat sheet  |
+| `scripts/`        | Automation scripts                          |
+| `.husky/`         | Git hook scripts                            |
+| `.agents/rules/`  | On-demand workspace rules                   |
+| `AGENTS.md`       | Always-on workspace rules                   |
 
 ## Features
 
 - **Always-current managed file list** — the pre-commit hook regenerates and auto-stages `MANAGED.txt` whenever files in the chezmoi source root (`home/`) or the generator script (`scripts/managed.js`) are staged, with no manual step required.
 - **Unified chezmoi reference** — [`docs/chezmoi.md`](/docs/chezmoi.md) documents every command, workflow, and template pattern with examples.
-- **AI-ready agent instructions** — `AGENTS.md` gives AI agents full context on repository conventions, chezmoi source structure, and safety guardrails.
+- **AI-ready agent instructions** — `AGENTS.md` provides always-on constraints and invariants, while `.agents/rules/` provides on-demand domain rules.
 - **Guardrails on every commit** — Prettier formatting is enforced on staged files via Husky + lint-staged; post-checkout and post-merge hooks warn when `package-lock.json` changes and prompt to run `npm ci`.
 - **Automated dependency review** — a GitHub Action scans every pull request for dependency vulnerabilities and licence issues before merge.
 
