@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
 
-# Resolve path relative to this Git hook to prevent failures when invoked outside the repository root.
+# Note: Paths are resolved relative to this Git hook to prevent failures when invoked outside the repository root.
+
 . "$(dirname "${BASH_SOURCE[0]}")/scripts/check-package-lock.sh"
+. "$(dirname "${BASH_SOURCE[0]}")/scripts/check-chezmoi.sh"

@@ -22,7 +22,7 @@ See [MANAGED.txt](/MANAGED.txt) for the full file list.
 - **Always-current managed file list** — the pre-commit hook regenerates and auto-stages `MANAGED.txt` whenever files in the chezmoi source root (`home/`) or the generator script (`scripts/managed.js`) are staged, with no manual step required.
 - **Unified chezmoi reference** — [`docs/chezmoi.md`](/docs/chezmoi.md) documents every command, workflow, and template pattern with examples.
 - **AI-ready agent instructions** — `AGENTS.md` provides always-on constraints and invariants, while `.agents/rules/` provides on-demand domain rules.
-- **Guardrails on every commit** — Prettier formatting is enforced on staged files via Husky + lint-staged; post-checkout and post-merge hooks warn when `package-lock.json` changes and prompt to run `npm ci`.
+- **Guardrails on every commit** — Prettier formatting is enforced on staged files via Husky + lint-staged; post-checkout and post-merge hooks warn when `package-lock.json` or the chezmoi source state change and prompt to sync.
 - **Automated dependency review** — a GitHub Action scans every pull request for dependency vulnerabilities and licence issues before merge.
 
 ## npm scripts
