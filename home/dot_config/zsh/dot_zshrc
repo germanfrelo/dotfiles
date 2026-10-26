@@ -251,6 +251,24 @@ function blame-ignore() {
 	fi
 }
 
+# Check chezmoi dotfiles state and surface warnings.
+function cm-check() {
+	# Abort if chezmoi is not installed.
+	if ! command -v chezmoi >/dev/null 2>&1; then
+		return 0
+	fi
+
+	# Warn if 'chezmoi status' returns output.
+	if [[ -n "$(chezmoi status 2>/dev/null || true)" ]]; then
+		print -P "%F{yellow}chezmoi: warning: 'chezmoi status' reports pending changes.%f"
+	fi
+
+	# Warn if 'chezmoi unmanaged' returns output.
+	if [[ -n "$(chezmoi unmanaged 2>/dev/null || true)" ]]; then
+		print -P "%F{yellow}chezmoi: warning: 'chezmoi unmanaged' reports untracked files.%f"
+	fi
+}
+
 # ==================================================
 
 # Define named directories: ~w <=> Windows home directory on WSL.
@@ -352,17 +370,10 @@ setopt no_auto_menu # require an extra TAB press to open the completion menu
 
 # ==================================================
 
-# Display custom messages above the prompt in new shell sessions.
+# Display custom messages above the initial prompt in new interactive shell sessions.
 # IMPORTANT: Keep at the end of .zshrc to prevent z4h from clearing these messages.
 
-if ((SHLVL == 1)) && command -v chezmoi >/dev/null 2>&1; then
-	# CHEZMOI:
-	# Warn if 'chezmoi status' returns output.
-	if [[ -n "$(chezmoi status 2>/dev/null || true)" ]]; then
-		print -P "%F{yellow}chezmoi: warning: 'chezmoi status' reports pending changes.%f"
-	fi
-	# Warn if 'chezmoi unmanaged' returns output.
-	if [[ -n "$(chezmoi unmanaged 2>/dev/null || true)" ]]; then
-		print -P "%F{yellow}chezmoi: warning: 'chezmoi unmanaged' reports untracked files.%f"
-	fi
+# Run chezmoi checks once when opening a new interactive terminal tab, window, or tmux pane (skips subshells and scripts).
+if [[ -o interactive ]] && ((SHLVL <= 2)); then
+	cm-check
 fi
