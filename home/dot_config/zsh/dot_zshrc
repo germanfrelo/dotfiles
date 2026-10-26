@@ -330,6 +330,9 @@ alias gstat="git status --short --branch"
 # alias gsub="git submodule update --remote" # pull submodules
 # alias gj="git-jump" # Open in vim quickfix list files of interest (git diff, merged...)
 
+# Chezmoi
+alias cm="chezmoi"
+
 # wget (XDG location)
 alias wget='wget --hsts-file="${XDG_CACHE_HOME}/wget-hsts"'
 
