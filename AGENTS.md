@@ -2,22 +2,25 @@
 
 User's dotfiles across multiple macOS machines, managed with chezmoi. See [README.md](/README.md) for repository overview and bootstrapping guides.
 
-## Source structure
+## Source paths
 
-The **source state root** is `$(chezmoi source-path)`, which resolves to the `home/` subdirectory of this repository (not `~/.local/share/chezmoi`).
+This dotfiles repository **deviates from chezmoi's default locations**:
 
-## Pre-operation workflow
+- The **source directory** is **_not_ `~/.local/share/chezmoi`**.
+- The **root of the source state** is **_not_ the root of the source directory**, but the subdirectory `home/` (configured in `.chezmoiroot`).
 
-- **Invariant:** `chezmoi unmanaged` must return empty stdout; if unmanaged files are listed, stop and surface them to the user.
-- **Required checks:** Always run `chezmoi status`, `chezmoi unmanaged`, and `chezmoi ignored` before/after operations and before committing.
+When **referring or dynamically resolving the source paths**:
 
-## chezmoi commands and applying changes
+- **Source directory** (this repository path): `dirname "$(chezmoi source-path)"`.
+- **Root of the source state** (the root directory of the managed dotfiles): `chezmoi source-path`.
+
+## Guardrails
 
 - **Read-only commands (allowed):** `diff`, `status`, `cat`, `managed`, `unmanaged`, `ignored`, `data`, `doctor`, `execute-template`. Use `chezmoi diff --use-builtin-diff` in the terminal because default `chezmoi diff` opens VS Code without stdout.
 - **State-modifying commands (never execute):** `add`, `apply`, `forget`, `merge`, `merge-all`, `re-add`, `update`. When suggesting any state-modifying command, provide the preview (`--dry-run --verbose` or `-nv`) first, followed by the execution command (`--verbose` or `-v`).
-- **Existing managed files:** Edit only source files under `home/`, then verify with `chezmoi diff --use-builtin-diff`. Never edit destination files directly.
-- **New dotfiles:** Never scaffold new configurations from scratch in source or destination directories; instruct the user to create the destination file and run `chezmoi add <target-path>`.
-- **Secrets exception:** Author new `private_` files directly in the source tree as templates using `onepasswordRead` (never paste raw secrets). If an existing destination file was edited directly, verify the source template does not use `onepassword*` before suggesting `chezmoi re-add`; if it does use `onepassword*`, abort and ask the user to re-template manually.
+- **Destination file protection:** Never edit destination files directly; edit only source files under `home/`, then verify with `chezmoi diff --use-builtin-diff`.
+- **Scaffolding prohibition:** Never scaffold new configurations from scratch in source or destination directories; instruct the user to create the destination file and run `chezmoi add <target-path>`.
+- **Secrets security:** Author new `private_` files directly in the source tree as templates using `onepasswordRead` (never paste raw secrets). If an existing destination file was edited directly, verify the source template does not use `onepassword*` before suggesting `chezmoi re-add`; if it does use `onepassword*`, abort and ask the user to re-template manually.
 - **Enforced absent files:** Follow the [Enforcing Absent Files Runbook](/docs/runbooks/enforcing-absent-files.md) to declare, verify, or revert absent dotfiles.
 
 ## Commit conventions
@@ -46,10 +49,3 @@ Categorize commits by functional intent and delivered impact rather than file lo
   - `docs/decisions/` → `decisions`.
   - `docs/runbooks/` → `runbooks`.
   - `scripts/` → `scripts`.
-
-## Repository path resolution
-
-Never hardcode absolute or home-relative paths (`~/...`, `$HOME/...`, `os.homedir()`) when referencing the local repositories directory in scripts ([ADR 0005](/docs/decisions/0005-repos-directory-path-architecture.md)):
-
-1. **Relative paths (preferred):** Resolve sibling repositories relative to the script's location (e.g., `path.resolve(__dirname, '../../')` in Node.js, or `$(cd "$(dirname "$0")/../.." && pwd)` in Bash).
-2. **Environment variable fallback:** When relative resolution is impossible, read `$REPOS_DIR` with a relative fallback (e.g., `process.env.REPOS_DIR || path.resolve(__dirname, '../../')`) because GUI apps, Cron, and CI may lack shell environment variables.
