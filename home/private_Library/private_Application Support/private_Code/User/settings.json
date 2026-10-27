@@ -23,9 +23,6 @@
 			"source.fixAll.markdownlint": "explicit",
 			"source.organizeLinkDefinitions": "explicit"
 		},
-		"editor.quickSuggestions": {
-			"other": true // Show snippets in Markdown.
-		},
 		"editor.unicodeHighlight.invisibleCharacters": true // Overrides default value of "false".
 	},
 	"[plaintext]": {
