@@ -2,8 +2,14 @@
 	"[astro][css][html]": {
 		"prettier.printWidth": 9999
 	},
+	"[diff]": {
+		"editor.wordWrap": "on"
+	},
 	"[ghostty]": {
 		"editor.defaultFormatter": "kazuito.ghostty"
+	},
+	"[git-commit]": {
+		"editor.wordWrap": "on"
 	},
 	"[ignore]": {
 		"editor.defaultFormatter": null // Language unsupported by Prettier.
@@ -70,34 +76,6 @@
 	"colorize.colorized_colors": ["HEXA", "RGB", "HSL", "OKLAB", "OKLCH"],
 	"colorize.include": ["**/*.json"],
 	"colorize.languages": ["json"],
-	"cSpell.ignorePaths": [
-		// Default
-		"package-lock.json",
-		"node_modules",
-		"vscode-extension",
-		".git/objects",
-		".vscode",
-		".vscode-insiders",
-		// Custom
-		"package.json",
-		"**/settings.json",
-		"**/*.config.*"
-	],
-	"cSpell.language": "en,es,en-GB,en-US,es-ES",
-	"cSpell.languageSettings": [
-		{
-			// e.g. "HTML" and "html" are treated as different words.
-			"caseSensitive": true,
-			"languageId": "markdown"
-		}
-	],
-	"cSpell.userWords": [
-		"Freixinós",
-		"germanfrelo",
-		"nvmrc",
-		"svgo.config.js",
-		"ZDOTDIR"
-	],
 	"CSSNavigation.enableDefinitionCodeLens": true,
 	"CSSNavigation.enableReferenceCodeLens": true,
 	"debug.allowBreakpointsEverywhere": true,
@@ -283,15 +261,15 @@
 	"git-graph.date.format": "Relative",
 	"git.addAICoAuthor": "off",
 	"git.autofetch": true,
+	"git.blame.editorDecoration.disableHover": true,
 	"git.blame.editorDecoration.enabled": true,
-	"git.blame.editorDecoration.template": "${authorDateAgo} | ${authorName} | ${subject}",
-	"git.blame.statusBarItem.template": "${authorDateAgo} | ${subject}",
+	"git.blame.editorDecoration.template": "(${authorDateAgo}) \"${subject}\"",
+	"git.blame.statusBarItem.template": "(${authorDateAgo}) \"${subject}\"",
 	"git.enableCommitSigning": true,
 	"git.inputValidation": true,
 	"git.verboseCommit": true,
 	"github.branchProtection": true,
 	"github.copilot.chat.agent.autoFix": true,
-	"github.copilot.chat.cli.remote.enabled": true,
 	"github.copilot.chat.codesearch.enabled": true,
 	"github.copilot.chat.localIndex.enabled": true,
 	"github.copilot.enable": {
@@ -304,6 +282,7 @@
 	"github.copilot.nextEditSuggestions.enabled": true,
 	"githubPullRequests.focusedMode": "overview",
 	"githubPullRequests.pullBranch": "never",
+	"gitlens.currentLine.enabled": false,
 	"gitlens.views.branches.avatars": false,
 	"gitlens.views.commits.avatars": false,
 	"gitlens.views.fileHistory.avatars": false,
@@ -340,9 +319,8 @@
 	"js/ts.suggest.completeFunctionCalls": true,
 	"js/ts.suggest.names": false,
 	"js/ts.updateImportsOnFileMove.enabled": "always",
-	"markdown-preview-github-styles.colorTheme": "light",
+	"markdown-preview-github-styles.colorTheme": "system",
 	"markdown-preview-github-styles.darkTheme": "dark_high_contrast",
-	"markdown-preview-github-styles.lightTheme": "light",
 	"markdown.preview.markEditorSelection": true,
 	"markdown.preview.scrollEditorWithPreview": false,
 	"markdown.preview.scrollPreviewWithEditor": false,
@@ -434,6 +412,9 @@
 	"window.zoomLevel": 0.5,
 	"workbench.activityBar.compact": true,
 	"workbench.browser.enableChatTools": true,
+	"workbench.colorCustomizations": {
+		"git.blame.editorDecorationForeground": "#8C8C8C" // Minimum contrast (WCAG 2.1 AA)
+	},
 	"workbench.editor.highlightModifiedTabs": true,
 	"workbench.editor.pinnedTabsOnSeparateRow": true,
 	"workbench.editor.useModal": "off",
