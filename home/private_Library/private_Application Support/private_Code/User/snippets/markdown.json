@@ -1,5 +1,80 @@
-// Documentation: https://code.visualstudio.com/docs/editing/userdefinedsnippets
+// GitHub alerts: https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts
 {
+	"Insert alert": {
+		"prefix": "alert",
+		"body": [
+			"",
+			"> [!${1|NOTE,TIP,IMPORTANT,WARNING,CAUTION|}]",
+			"> ${2:Text}",
+			"${0}"
+		],
+		"description": "Insert GitHub alert blockquote."
+	},
+	"Insert alert NOTE": {
+		"prefix": [
+			"note",
+			"alert-note"
+		],
+		"body": [
+			"",
+			"> [!NOTE]",
+			"> ${1:Useful information that users should know, even when skimming content.}",
+			"${0}"
+		],
+		"description": "Insert note alert: Useful information that users should know, even when skimming content."
+	},
+	"Insert alert TIP": {
+		"prefix": [
+			"tip",
+			"alert-tip"
+		],
+		"body": [
+			"",
+			"> [!TIP]",
+			"> ${1:Helpful advice for doing things better or more easily.}",
+			"${0}"
+		],
+		"description": "Insert tip alert: Helpful advice for doing things better or more easily."
+	},
+	"Insert alert IMPORTANT": {
+		"prefix": [
+			"important",
+			"alert-important"
+		],
+		"body": [
+			"",
+			"> [!IMPORTANT]",
+			"> ${1:Key information users need to know to achieve their goal.}",
+			"${0}"
+		],
+		"description": "Insert important alert: Key information users need to know to achieve their goal."
+	},
+	"Insert alert WARNING": {
+		"prefix": [
+			"warning",
+			"alert-warning"
+		],
+		"body": [
+			"",
+			"> [!WARNING]",
+			"> ${1:Urgent info that needs immediate user attention to avoid problems.}",
+			"${0}"
+		],
+		"description": "Insert warning alert: Urgent info that needs immediate user attention to avoid problems."
+	},
+	"Insert alert CAUTION": {
+		"prefix": [
+			"caution",
+			"alert-caution"
+		],
+		"body": [
+			"",
+			"> [!CAUTION]",
+			"> ${1:Advises about risks or negative outcomes of certain actions.}",
+			"${0}"
+		],
+		"description": "Insert caution alert: Advises about risks or negative outcomes of certain actions."
+	},
 	"Insert table": {
 		"prefix": "table",
 		"body": [
