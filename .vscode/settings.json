@@ -4,7 +4,7 @@
 		"*.json.tmpl": "json",
 		"*.sh.tmpl": "shellscript",
 		"*.toml.tmpl": "toml",
-		"**/*git/*config*": "ini",
+		"**/*git/*config*": "properties", // See https://github.com/microsoft/vscode/pull/92397
 		"**/*ncdu/*config*": "properties",
 		"*dot_editorconfig": "editorconfig",
 		"*ignore": "ignore",
