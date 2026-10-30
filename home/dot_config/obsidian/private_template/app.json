@@ -1,0 +1,15 @@
+{
+	"settingsPopoutWindow": false,
+	"defaultViewMode": "source",
+	"livePreview": true,
+	"showLineNumber": true,
+	"focusNewTab": false,
+	"attachmentFolderPath": "assets",
+	"alwaysUpdateLinks": true,
+	"showUnsupportedFiles": true,
+	"userIgnoreFilters": [
+		".obsidian/**",
+		"content.config.reference.js"
+	],
+	"newFileLocation": "current"
+}

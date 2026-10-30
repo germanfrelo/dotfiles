@@ -12,6 +12,25 @@
 │   │   └── ignore
 │   ├── ncdu
 │   │   └── config
+│   ├── obsidian
+│   │   └── template
+│   │       ├── app.json
+│   │       ├── appearance.json
+│   │       ├── backlink.json
+│   │       ├── canvas.json
+│   │       ├── community-plugins.json
+│   │       ├── core-plugins.json
+│   │       ├── daily-notes.json
+│   │       ├── file-recovery.json
+│   │       ├── hotkeys.json
+│   │       ├── page-preview.json
+│   │       ├── plugins
+│   │       │   └── folder-bases
+│   │       │       └── data.json
+│   │       ├── snippets
+│   │       │   └── germanfrelo.css
+│   │       ├── switcher.json
+│   │       └── webviewer.json
 │   └── zsh
 │       ├── .p10k.zsh
 │       ├── .zshenv
@@ -59,7 +78,7 @@
 │       └── com.MrKai77.Loop.plist
 └── svgo.config.js
 
-25 directories, 35 files
+30 directories, 49 files
 
 ## Enforced absent
 

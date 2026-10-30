@@ -1,0 +1,10 @@
+{
+	"textFontFamily": "IBM Plex Sans,Atkinson Hyperlegible Next",
+	"monospaceFontFamily": "CommitMono,JetBrains Mono",
+	"translucency": false,
+	"showRibbon": false,
+	"cssTheme": "",
+	"enabledCssSnippets": [
+		"germanfrelo"
+	]
+}
