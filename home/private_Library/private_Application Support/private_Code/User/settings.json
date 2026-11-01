@@ -275,6 +275,7 @@
 		"**/.git/hooks/*": "shellscript",
 		"**/.husky/*": "shellscript",
 		"**/git/ignore": "ignore",
+		"**/ncdu/config": "properties",
 		"CODEOWNERS": "properties",
 		"LICENSE": "plaintext"
 	},
