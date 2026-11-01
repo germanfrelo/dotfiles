@@ -274,6 +274,7 @@
 	"files.associations": {
 		"**/.git/hooks/*": "shellscript",
 		"**/.husky/*": "shellscript",
+		"**/git/ignore": "ignore",
 		"CODEOWNERS": "properties",
 		"LICENSE": "plaintext"
 	},
