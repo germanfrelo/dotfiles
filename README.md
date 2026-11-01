@@ -67,6 +67,33 @@ Execute these steps in order to install dependencies and activate Git hooks:
    brew bundle --file=./Brewfile
    ```
 
+### Editor setup
+
+Chezmoi dotfile filenames (`dot_*` prefixes, `*.tmpl` extensions) prevent VS Code from detecting their intended file formats, causing it to disable syntax highlighting or assign incorrect language modes.
+
+To map them to their correct language identifiers, create a `.vscode/settings.json` file with the following:
+
+```json
+{
+  "files.associations": {
+    "*.json.tmpl": "json",
+    "*.sh.tmpl": "shellscript",
+    "*.toml.tmpl": "toml",
+    "**/*git/*config*": "properties",
+    "**/*ncdu/*config*": "properties",
+    "**/*ssh/*config*": "ssh_config",
+    "*Brewfile": "ruby",
+    "*dot_editorconfig": "editorconfig",
+    "*ignore": "ignore",
+    "*npmrc": "properties",
+    "*p10k.zsh": "plaintext",
+    "*zprofile": "shellscript",
+    "*zshenv": "shellscript",
+    "*zshrc*": "shellscript"
+  }
+}
+```
+
 ## Bootstrapping a new machine
 
 After `chezmoi` completes its initial run on a fresh machine, execute the following manual bootstrap actions in order.
